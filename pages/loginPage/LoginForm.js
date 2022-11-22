@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import {CheckBox} from '@react-native-community/checkbox'
+import { CheckBox } from 'react-native-elements'
 import {
   StyleSheet,
   Text,
@@ -8,21 +8,49 @@ import {
   TextInput,
   Button,
   TouchableOpacity,
+  Image
 } from "react-native";
  
+
 export default function LoginForm() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [isSelected, setSelection] = useState(false);
+  const [isSelectedMale, setSelectionMale] = useState(false);
+  const [isSelectedFemale, setSelectionFemale] = useState(false);
+
+  /**
+   * These functions are to prevent two checkboxes to be clicked at the same time.
+   * @param {*} currState 
+   */
+  const femaleClickHandler= (currState)=>{
+      if(!currState&&isSelectedMale){
+        setSelectionFemale(true);
+        setSelectionMale(false)
+      }else{
+        setSelectionFemale(!isSelectedFemale);
+      }
+  }
+  const maleClickHandler= (currState)=>{
+    if(!currState&&isSelectedFemale){
+      setSelectionMale(true);
+      setSelectionFemale(false)
+    }else{
+      setSelectionMale(!isSelectedMale);
+    }
+}
   return (
     <View style={styles.container}>
+      <Image 
+        source={require('../assests/logo.png')}
+        style={styles.logoContainer}
+      />
       <StatusBar style="auto" />
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
           placeholder="Name"
           placeholderTextColor="#003f5c"
-          onChangeText={(email) => setEmail(email)}
+          onChangeText={(name) => setName(name)}
         />
       </View>
  
@@ -31,25 +59,30 @@ export default function LoginForm() {
           style={styles.TextInput}
           placeholder="Phone Number"
           placeholderTextColor="#003f5c"
-          secureTextEntry={true}
-          onChangeText={(password) => setPassword(password)}
+          onChangeText={(phone) => setPhone(phone)}
         />
       </View>
-{/* 
-      <View style={styles.checkboxContainer}>
-        <CheckBox
-          value={isSelected}
-          onValueChange={setSelection}
-          style={styles.checkbox}
-        />
-        <Text style={styles.label}>Do you like React Native?</Text>
-      </View> */}
-
-      <TouchableOpacity>
-        <Text style={styles.forgot_button}>Forgot Password?</Text>
-      </TouchableOpacity>
- 
-      <TouchableOpacity style={styles.loginBtn}>
+      <View>
+        <CheckBox 
+          title="Male" 
+          checked={isSelectedMale}
+          onPress={()=>{maleClickHandler(isSelectedMale)}}
+          containerStyle={styles.checkbox}
+          checkedColor="#8D5238"
+          />
+        <CheckBox 
+          title="Female"
+          checked={isSelectedFemale} 
+          onPress={()=>{femaleClickHandler(isSelectedFemale)}}
+          containerStyle={styles.checkbox}
+          checkedColor="#8D5238"
+          />
+      </View>
+       
+      <TouchableOpacity style={styles.loginBtn} onPress={()=>{
+                    const gender = isSelectedMale ? 'male' : 'female';
+                    console.log(phone,name,gender);
+        }}>
         <Text style={styles.loginText}>Make an appointment</Text>
       </TouchableOpacity>
     </View>
@@ -77,18 +110,13 @@ const styles = StyleSheet.create({
   },
  
   TextInput: {
-    // height: 50,
-    // flex: 1,
-    // padding: 10,
-    // marginLeft: 20,
-    color: "white",
+    color: "black",
   },
- 
-  forgot_button: {
-    height: 30,
-    marginBottom: 30,
+  logoContainer: {
+    alignItems: "center",
+    flexDirection: "row",
+    marginBottom: 100,
   },
- 
   loginBtn: {
     width: "80%",
     borderRadius: 25,
@@ -107,7 +135,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   checkbox: {
-    alignSelf: "center",
+    borderColor: "#E5C492",
+    backgroundColor: "#E5C492"
   },
   label: {
     margin: 8,
