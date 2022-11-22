@@ -41,7 +41,7 @@ export default function LoginForm() {
   return (
     <View style={styles.container}>
       <Image 
-        source={require('../assests/logo.png')}
+        source={require('../assets/logo.png')}
         style={styles.logoContainer}
       />
       <StatusBar style="auto" />
