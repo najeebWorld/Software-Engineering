@@ -10,7 +10,7 @@ import {
   TouchableOpacity,
   Image
 } from "react-native";
- 
+
 
 export default function LoginForm() {
   const [name, setName] = useState("");
