@@ -11,12 +11,11 @@ import {
 } from "react-native";
 import LoginForm from "./pages/loginPage/LoginForm";
 import CalendarPage from "./pages/calendarPage/calendarPage";
+import CalendarScreen from "./pages/calendarPage/calender";
  
 export default function App() {
   return (
-    <LoginForm />
-    // <CalendarPage/>
-
+    <CalendarPage />
   )
 }
  

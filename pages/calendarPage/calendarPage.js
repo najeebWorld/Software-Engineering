@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { Dropdown } from 'react-native-element-dropdown';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import {
@@ -36,11 +36,17 @@ export default function CalendarPage() {
 
   const _today = moment(new Date()).format("YYYY-MM-DD")
   const _lastDay = moment(new Date()).add(14, 'day').format("YYYY-MM-DD");
-  const [_hour, setHour] = useState(null);
-  const [_selectedDate, setSelectedDate] = useState(null);
+  const [_hour, setHour] = useState("Choose Time");
+  const [_selectedDate, setSelectedDate] = useState(_today);
+  const [_chosenBarber, setChosenBarber] = useState("Choose Barber")
 
   
-  const changeOnDropDown = (item) => {
+  const changeOnDropDownBarber = (item) => {
+    setChosenBarber(item.label);
+    console.log(item.label);
+  }
+
+  const changeOnDropDownHour = (item) => {
     setHour(item.label);
     console.log(item.label);
   }
@@ -53,8 +59,8 @@ export default function CalendarPage() {
   }
 
   const OnBtnPress = () => {
-    if (_selectedDate != null && _hour != null) {
-      console.log("hello ", _selectedDate, _hour);
+    if (_chosenBarber && _selectedDate && _hour) {
+      console.log("Your chosen appointment is: ",_chosenBarber, _selectedDate, _hour);
     } else {
       console.log("try again...");
     }
@@ -69,26 +75,34 @@ export default function CalendarPage() {
     <Dropdown
         style={styles.dropdown}
         data={_barberData}
-        //iconStyle={styles.iconStyle}
         itemTextStyle={styles.downDropText}
         maxHeight={200}
         labelField="label"
         valueField="value"
         placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
-        onChange={changeOnDropDown}
-        placeholder="Choose Barber"
+        onChange={changeOnDropDownBarber}
+        placeholder={_chosenBarber}
       />
     </View>
 
     
     <View style={styles.CalContainer}>
+      <Fragment>
       <Calendar
-      onDayPress={dayPress}
       hideExtraDays={true}
       minDate={_today}
-      maxDate={_lastDay}  
+      maxDate={_lastDay}
+      onDayPress={day => setSelectedDate(day.dateString)}
+      markedDates={{
+              [_selectedDate]: {
+                selected: true,
+                selectedColor: '#E5C492',
+                selectedTextColor: 'black'
+              }
+            }}
       />
+      </Fragment>
     </View>
     
     <View>
@@ -102,14 +116,14 @@ export default function CalendarPage() {
         valueField="value"
         placeholderStyle={styles.placeholderStyle}
         selectedTextStyle={styles.selectedTextStyle}
-        onChange={changeOnDropDown}
-        placeholder="Choose Time"
+        onChange={changeOnDropDownHour}
+        placeholder={_hour}
         
       />
     </View>
 
     <TouchableOpacity style={styles.btn} 
-    onPress={OnBtnPress}>
+        onPress={OnBtnPress}>
         <Text style={styles.text}>Make an appointment</Text>
       </TouchableOpacity>
     
