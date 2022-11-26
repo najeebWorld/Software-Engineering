@@ -14,9 +14,7 @@ import CalendarPage from "./pages/calendarPage/calendarPage";
  
 export default function App() {
   return (
-    <LoginForm />
-    // <CalendarPage/>
-
+    <CalendarPage />
   )
 }
  
