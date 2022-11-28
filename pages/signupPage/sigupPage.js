@@ -6,6 +6,8 @@ import {
   StyleSheet,
   Text,
   View,
+  ScrollView,
+  SafeAreaView,
   TextInput,
   Button,
   TouchableOpacity,
@@ -13,9 +15,13 @@ import {
 } from "react-native";
 
 
-export default function LoginForm() {
+export default function SignupForm() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [verifypass, setVerify] = useState("");
+  const [error,setError] = useState(false);
   const [isSelectedMale, setSelectionMale] = useState(false);
   const [isSelectedFemale, setSelectionFemale] = useState(false);
 
@@ -40,26 +46,53 @@ export default function LoginForm() {
     }
 }
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Image 
         source={require('../assets/logo.png')}
-        style={styles.logoContainer}
+        style={styles.logoContainerSignUp}
       />
       <StatusBar style="auto" />
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
-          placeholder="Name"
+          placeholder="Full name"
           placeholderTextColor="#003f5c"
           onChangeText={(name) => setName(name)}
         />
       </View>
- 
+      <View style={styles.inputView}>
+        <TextInput
+          style={styles.TextInput}
+          placeholder="Email"
+          placeholderTextColor="#003f5c"
+          onChangeText={(email) => setEmail(email)}
+        />
+      </View>
+      <View style={error ? styles.inputViewError : styles.inputView}>
+        <TextInput
+          style={styles.TextInput}
+          placeholder={error ? "Passwords do not match" : "Password"}
+          placeholderTextColor="#003f5c"
+          secureTextEntry={true}
+          onChangeText={(password) => setPassword(password)}
+        />
+      </View>
+
+      <View style={error ? styles.inputViewError : styles.inputView}>
+        <TextInput
+          style={styles.TextInput}
+          placeholder={error ? "Passwords do not match" : "Confirm Password"}
+          placeholderTextColor="#003f5c"
+          secureTextEntry={true}
+          onChangeText={(password) => setVerify(password)}
+        />
+      </View>
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
           placeholder="Phone Number"
           placeholderTextColor="#003f5c"
+          secureTextEntry={true}
           onChangeText={(phone) => setPhone(phone)}
         />
       </View>
@@ -82,11 +115,15 @@ export default function LoginForm() {
        
       <TouchableOpacity style={styles.loginBtn} onPress={()=>{
                     const gender = isSelectedMale ? 'male' : 'female';
-                    console.log(phone,name,gender);
+                    if(password === verifypass){
+                        console.log(phone,name,gender,email,password);
+                    }else{
+                        setError(true);
+                    }
         }}>
-        <Text style={styles.loginText}>Make an appointment</Text>
+        <Text style={styles.loginText}>Sign up</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 }
  
