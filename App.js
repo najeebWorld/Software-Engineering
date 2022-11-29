@@ -9,12 +9,13 @@ import {
   Button,
   TouchableOpacity,
 } from "react-native";
+import SignupForm from "./pages/signupPage/sigupPage";
 import LoginForm from "./pages/loginPage/LoginForm";
 import CalendarPage from "./pages/calendarPage/calendarPage";
  
 export default function App() {
   return (
-    <CalendarPage />
+    <LoginForm />
   )
 }
  
