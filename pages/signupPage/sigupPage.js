@@ -15,7 +15,7 @@ import {
 } from "react-native";
 
 
-export default function SignupForm() {
+export default function SignupForm({navigation}) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -117,6 +117,7 @@ export default function SignupForm() {
                     const gender = isSelectedMale ? 'male' : 'female';
                     if(password === verifypass){
                         console.log(phone,name,gender,email,password);
+                        navigation.navigate('Login')
                     }else{
                         setError(true);
                     }

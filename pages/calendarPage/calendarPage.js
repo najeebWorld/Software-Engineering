@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import moment from "moment";
 
-export default function CalendarPage() {
+export default function CalendarPage({navigation}) {
   
   const _barberData = [
     { label: 'Eli', value: '1' },
