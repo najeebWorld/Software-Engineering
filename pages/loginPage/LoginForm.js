@@ -14,31 +14,9 @@ import {
 
 
 export default function LoginForm() {
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
-  const [isSelectedMale, setSelectionMale] = useState(false);
-  const [isSelectedFemale, setSelectionFemale] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  /**
-   * These functions are to prevent two checkboxes to be clicked at the same time.
-   * @param {*} currState 
-   */
-  const femaleClickHandler= (currState)=>{
-      if(!currState&&isSelectedMale){
-        setSelectionFemale(true);
-        setSelectionMale(false)
-      }else{
-        setSelectionFemale(!isSelectedFemale);
-      }
-  }
-  const maleClickHandler= (currState)=>{
-    if(!currState&&isSelectedFemale){
-      setSelectionMale(true);
-      setSelectionFemale(false)
-    }else{
-      setSelectionMale(!isSelectedMale);
-    }
-}
   return (
     <View style={styles.container}>
       <Image 
@@ -49,42 +27,30 @@ export default function LoginForm() {
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
-          placeholder="Name"
+          placeholder="Email"
           placeholderTextColor="#003f5c"
-          onChangeText={(name) => setName(name)}
+          onChangeText={(email) => setEmail(email)}
         />
       </View>
  
       <View style={styles.inputView}>
         <TextInput
           style={styles.TextInput}
-          placeholder="Phone Number"
+          placeholder="Password"
           placeholderTextColor="#003f5c"
-          onChangeText={(phone) => setPhone(phone)}
+          secureTextEntry = {true}
+          onChangeText={(password) => setPassword(password)}
         />
       </View>
-      <View>
-        <CheckBox 
-          title="Male" 
-          checked={isSelectedMale}
-          onPress={()=>{maleClickHandler(isSelectedMale)}}
-          containerStyle={styles.checkbox}
-          checkedColor="#8D5238"
-          />
-        <CheckBox 
-          title="Female"
-          checked={isSelectedFemale} 
-          onPress={()=>{femaleClickHandler(isSelectedFemale)}}
-          containerStyle={styles.checkbox}
-          checkedColor="#8D5238"
-          />
-      </View>
-       
       <TouchableOpacity style={styles.loginBtn} onPress={()=>{
-                    const gender = isSelectedMale ? 'male' : 'female';
-                    console.log(phone,name,gender);
+                    console.log(email, password);
         }}>
-        <Text style={styles.loginText}>Make an appointment</Text>
+        <Text style={styles.loginText}>Login</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.loginBtn} onPress={()=>{
+                    console.log(email, password);
+        }}>
+        <Text style={styles.loginText}>Don't have an account?</Text>
       </TouchableOpacity>
     </View>
   );
