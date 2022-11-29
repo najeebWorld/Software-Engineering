@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { CheckBox } from 'react-native-elements'
-import {styles} from '../styles'
+import { styles } from '../styles'
 import {
   StyleSheet,
   Text,
@@ -13,7 +13,7 @@ import {
   TouchableOpacity,
   Image
 } from "react-native";
-
+import { signup } from "../backend";
 
 export default function SignupForm() {
   const [name, setName] = useState("");
@@ -21,7 +21,7 @@ export default function SignupForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [verifypass, setVerify] = useState("");
-  const [error,setError] = useState(false);
+  const [error, setError] = useState(false);
   const [isSelectedMale, setSelectionMale] = useState(false);
   const [isSelectedFemale, setSelectionFemale] = useState(false);
 
@@ -29,25 +29,25 @@ export default function SignupForm() {
    * These functions are to prevent two checkboxes to be clicked at the same time.
    * @param {*} currState 
    */
-  const femaleClickHandler= (currState)=>{
-      if(!currState&&isSelectedMale){
-        setSelectionFemale(true);
-        setSelectionMale(false)
-      }else{
-        setSelectionFemale(!isSelectedFemale);
-      }
+  const femaleClickHandler = (currState) => {
+    if (!currState && isSelectedMale) {
+      setSelectionFemale(true);
+      setSelectionMale(false)
+    } else {
+      setSelectionFemale(!isSelectedFemale);
+    }
   }
-  const maleClickHandler= (currState)=>{
-    if(!currState&&isSelectedFemale){
+  const maleClickHandler = (currState) => {
+    if (!currState && isSelectedFemale) {
       setSelectionMale(true);
       setSelectionFemale(false)
-    }else{
+    } else {
       setSelectionMale(!isSelectedMale);
     }
-}
+  }
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Image 
+      <Image
         source={require('../assets/logo.png')}
         style={styles.logoContainerSignUp}
       />
@@ -97,33 +97,40 @@ export default function SignupForm() {
         />
       </View>
       <View>
-        <CheckBox 
-          title="Male" 
+        <CheckBox
+          title="Male"
           checked={isSelectedMale}
-          onPress={()=>{maleClickHandler(isSelectedMale)}}
+          onPress={() => { maleClickHandler(isSelectedMale) }}
           containerStyle={styles.checkbox}
           checkedColor="#8D5238"
-          />
-        <CheckBox 
+        />
+        <CheckBox
           title="Female"
-          checked={isSelectedFemale} 
-          onPress={()=>{femaleClickHandler(isSelectedFemale)}}
+          checked={isSelectedFemale}
+          onPress={() => { femaleClickHandler(isSelectedFemale) }}
           containerStyle={styles.checkbox}
           checkedColor="#8D5238"
-          />
+        />
       </View>
-       
-      <TouchableOpacity style={styles.loginBtn} onPress={()=>{
-                    const gender = isSelectedMale ? 'male' : 'female';
-                    if(password === verifypass){
-                        console.log(phone,name,gender,email,password);
-                    }else{
-                        setError(true);
-                    }
-        }}>
+
+      <TouchableOpacity style={styles.loginBtn} onPress={async () => {
+        const gender = isSelectedMale ? 'male' : 'female';
+        if (password !== verifypass) {
+          setError(true);
+          return
+        }
+
+        try {
+          await signup(name, phone, email, password , gender)
+          // go to next screen
+        } catch (e) {
+           // show error msg
+           console.log('backend' , e)
+        }
+      }}>
         <Text style={styles.loginText}>Sign up</Text>
       </TouchableOpacity>
     </ScrollView>
   );
 }
- 
+
