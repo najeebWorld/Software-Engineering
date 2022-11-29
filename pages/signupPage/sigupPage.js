@@ -46,7 +46,8 @@ export default function SignupForm({navigation}) {
     }
 }
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView style={{backgroundColor: "#E5C492"}}>
+    <View style={styles.containerScrollable}>
       <Image 
         source={require('../assets/logo.png')}
         style={styles.logoContainerSignUp}
@@ -98,14 +99,14 @@ export default function SignupForm({navigation}) {
       </View>
       <View>
         <CheckBox 
-          title="Male" 
+          title="Customer" 
           checked={isSelectedMale}
           onPress={()=>{maleClickHandler(isSelectedMale)}}
           containerStyle={styles.checkbox}
           checkedColor="#8D5238"
           />
         <CheckBox 
-          title="Female"
+          title="Barber"
           checked={isSelectedFemale} 
           onPress={()=>{femaleClickHandler(isSelectedFemale)}}
           containerStyle={styles.checkbox}
@@ -124,6 +125,7 @@ export default function SignupForm({navigation}) {
         }}>
         <Text style={styles.loginText}>Sign up</Text>
       </TouchableOpacity>
+    </View>
     </ScrollView>
   );
 }
