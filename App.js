@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginForm from './pages/loginPage/LoginForm';
 import SignupForm from './pages/signupPage/sigupPage';
 import CalendarPage from './pages/calendarPage/calendarPage';
+import SuccessfullLogin from "./pages/success/SuccessfullLogin";
 
 const Stack = createNativeStackNavigator();
 
@@ -11,7 +12,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator 
-          initialRouteName='Login'
+          initialRouteName='calenderPage'
           screenOptions={{
             headerShown: false
           }}
@@ -27,6 +28,10 @@ export default function App() {
         <Stack.Screen
         name='AppointmentMaker'
         component={CalendarPage}
+        />
+        <Stack.Screen
+        name='Success'
+        component={SuccessfullLogin}
         />
       </Stack.Navigator>
     </NavigationContainer>

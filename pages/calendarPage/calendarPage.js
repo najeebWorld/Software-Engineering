@@ -1,6 +1,7 @@
 import React, { useState, Fragment } from "react";
 import { Dropdown } from 'react-native-element-dropdown';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
+import auth from '@react-native-firebase/auth';
 import {
   StyleSheet,
   Text,
@@ -36,11 +37,40 @@ export default function CalendarPage({navigation}) {
 
   const _today = moment(new Date()).format("YYYY-MM-DD")
   const _lastDay = moment(new Date()).add(14, 'day').format("YYYY-MM-DD");
-  const [_hour, setHour] = useState("Choose Time");
+  const [_hour, setHour] = useState("Choose time");
   const [_selectedDate, setSelectedDate] = useState(_today);
-  const [_chosenBarber, setChosenBarber] = useState("Choose Barber")
-
+  const [_chosenBarber, setChosenBarber] = useState("Choose barber")
   
+
+  const removeBlueStyle = () =>{
+    const day = _today.split('-')[2];
+    const year = _today.split('-')[0];
+    let dates = {}
+    for(let i = 1 ;i < 13 ; i++){
+      const currDate = `${year}-${i}-${day}` === _selectedDate ? "" : `${year}-${i}-${day}`
+      const currDateNext = `2023-${i}-${day}`;
+      if(currDate === "")
+        continue;
+      if(currDate>_lastDay){
+        dates[[currDate]] = {
+          selectedColor: "white",
+          selectedTextColor: "lightgrey"
+        }
+        dates[[currDateNext]] = {
+          selectedColor: "white",
+          selectedTextColor: "lightgrey"
+        }
+      }else{
+        dates[[currDate]] = {
+          selectedColor: "white",
+          selectedTextColor: 'black'
+        }
+      }
+    }
+    return dates
+  }
+
+  const dates = removeBlueStyle();
   const changeOnDropDownBarber = (item) => {
     setChosenBarber(item.label);
     console.log(item.label);
@@ -68,10 +98,32 @@ export default function CalendarPage({navigation}) {
   return (
     <View style={styles.container}>
       <Image 
-        source={require('../assets/logo.png')}
-        style={styles.logoContainer}
+        source={require('../assets/choosedate.png')}
+        style={styles.chooseDateContainer}
       />
-  <View>
+    
+    
+    <View style={styles.CalContainer}>
+      <Fragment>
+      <Calendar
+      hideExtraDays={true}
+      initialDate={_today}
+      minDate={_today}
+      maxDate={_lastDay}
+      style = {{borderRadius: 10}}
+      onDayPress={day => setSelectedDate(day.dateString)}
+      markedDates={{
+              [_selectedDate]: {
+                selected: true,
+                selectedColor: '#E5C492',
+                selectedTextColor: 'black'
+              },
+              ...dates
+            }}
+      />
+      </Fragment>
+    </View>
+    <View>
     <Dropdown
         style={styles.dropdown}
         data={_barberData}
@@ -85,31 +137,10 @@ export default function CalendarPage({navigation}) {
         placeholder={_chosenBarber}
       />
     </View>
-
-    
-    <View style={styles.CalContainer}>
-      <Fragment>
-      <Calendar
-      hideExtraDays={true}
-      minDate={_today}
-      maxDate={_lastDay}
-      onDayPress={day => setSelectedDate(day.dateString)}
-      markedDates={{
-              [_selectedDate]: {
-                selected: true,
-                selectedColor: '#E5C492',
-                selectedTextColor: 'black'
-              }
-            }}
-      />
-      </Fragment>
-    </View>
-    
     <View>
     <Dropdown
         style={styles.dropdown}
         data={_hoursData}
-        //iconStyle={styles.iconStyle}
         itemTextStyle={styles.downDropText}
         maxHeight={200}
         labelField="label"
@@ -121,7 +152,6 @@ export default function CalendarPage({navigation}) {
         
       />
     </View>
-
     <TouchableOpacity style={styles.btn} 
         onPress={OnBtnPress}>
         <Text style={styles.text}>Make an appointment</Text>
@@ -143,30 +173,30 @@ const styles = StyleSheet.create({
   },
   
   dropdown: {
-    width: 150,
+    width: 250,
     margin: 10,
     height: 40,
-    backgroundColor: 'white',
-    borderRadius: 15,
+    marginBottom: 0,
     padding: 5,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-    elevation: 5,
+    borderRadius: 10,
+    backgroundColor: "white",
+    alignItems: "center",
+    borderWidth: 3.0,
+    borderColor: "#8D5238"
   },
 
   placeholderStyle: {
     fontSize: 15,
-    
+    textAlign: "center",
+    color: "black",
+    bold: "true",
   },
 
   selectedTextStyle: {
     fontSize: 15,
     color: "black",
+    bold: "true",
+    backgroundColor: "black"
   },
 
   SecContainer: {
@@ -188,7 +218,7 @@ const styles = StyleSheet.create({
     height: 50,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 40,
+    marginTop: 20,
     backgroundColor: "#000000",
   },
 
@@ -197,7 +227,9 @@ const styles = StyleSheet.create({
   },
  
   CalContainer: {
-
+    borderWidth: 3.0,
+    borderColor: "#8D5238",
+    borderRadius:10
       // borderWidth: 1,
       // borderColor: 'black',
       // height: 320,
@@ -208,10 +240,21 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
     flexDirection: "row",
     marginBottom: 20,
+    marginTop: 50
   },
 
+  chooseDateContainer: {
+    alignItems: "flex-start",
+    flexDirection: "row",
+    marginBottom: 10,
+    marginTop: 50,
+    marginRight:120
+  },
+
+
   downDropText: {
-    //color: "black",
+    color: "black",
     fontSize: 15,
+    textAlign: "center"
   },
 });

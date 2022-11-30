@@ -45,7 +45,7 @@ export default function LoginForm({ navigation }) {
       </View>
       <TouchableOpacity style={styles.loginBtn} onPress={() => {
         console.log(email, password);
-        navigation.navigate('AppointmentMaker')
+        navigation.navigate('Make')
       }}>
         <Text style={styles.loginText}>Login</Text>
       </TouchableOpacity>
