@@ -1,21 +1,35 @@
-import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
-import { CheckBox } from "react-native-elements"
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Button,
-  TouchableOpacity,
-} from "react-native";
-import SignupForm from "./pages/signupPage/sigupPage";
-import LoginForm from "./pages/loginPage/LoginForm";
-import CalendarPage from "./pages/calendarPage/calendarPage";
- 
+import React from "react";
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import LoginForm from './pages/loginPage/LoginForm';
+import SignupForm from './pages/signupPage/sigupPage';
+import CalendarPage from './pages/calendarPage/calendarPage';
+
+const Stack = createNativeStackNavigator();
+
 export default function App() {
   return (
-    <LoginForm />
+    <NavigationContainer>
+      <Stack.Navigator 
+          initialRouteName='Login'
+          screenOptions={{
+            headerShown: false
+          }}
+          >
+        <Stack.Screen
+          name='Login'
+          component={LoginForm}
+        />
+        <Stack.Screen
+        name='Signup' 
+        component={SignupForm}
+        />
+        <Stack.Screen
+        name='AppointmentMaker'
+        component={CalendarPage}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   )
 }
  

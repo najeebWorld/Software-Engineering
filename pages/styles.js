@@ -6,7 +6,14 @@ export const styles = StyleSheet.create({
       alignItems: "center",
       justifyContent: "center",
     },
-   
+    containerScrollable: {
+      flex: 1,
+      backgroundColor: "#E5C492",
+      alignItems: "center",
+      justifyContent: "center",
+      marginTop: 50
+    },
+    
     inputView: {
       backgroundColor: "#E5C492",
       borderRadius: 30,
