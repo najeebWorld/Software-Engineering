@@ -14,12 +14,12 @@ export const styles = StyleSheet.create({
       marginTop: 50
     },
     
-    inputView: {
-      backgroundColor: "#E5C492",
+    inputView: { 
       borderRadius: 30,
       width: "70%",
       height: 45,
       marginBottom: 20,
+      backgroundColor: "#E5C492",
       alignItems: "center",
       borderWidth: 3.0,
       borderColor: "#8D5238"
@@ -50,7 +50,12 @@ export const styles = StyleSheet.create({
     logoContainerSignUp: {
         alignItems: "center",
         flexDirection: "row",
-        marginBottom: 20,
+        marginBottom: 30
+      },
+      logoContainerSuccess: {
+        alignItems: "center",
+        flexDirection: "row",
+        marginBottom: 55,
       },
     loginBtn: {
       width: "80%",
@@ -76,4 +81,12 @@ export const styles = StyleSheet.create({
     label: {
       margin: 8,
     },
+
+    welcomeContainer: {
+      marginTop: 40,
+      alignItems: "center",
+      alignContent: "center",
+      alignSelf: "center",
+      marginBottom: -50
+    }
   });

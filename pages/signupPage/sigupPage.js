@@ -49,7 +49,7 @@ export default function SignupForm({navigation}) {
     <ScrollView style={{backgroundColor: "#E5C492"}}>
     <View style={styles.containerScrollable}>
       <Image 
-        source={require('../assets/logo.png')}
+        source={require('../assets/logowithname.png')}
         style={styles.logoContainerSignUp}
       />
       <StatusBar style="auto" />
@@ -118,7 +118,7 @@ export default function SignupForm({navigation}) {
                     const gender = isSelectedMale ? 'male' : 'female';
                     if(password === verifypass){
                         console.log(phone,name,gender,email,password);
-                        navigation.navigate('Login')
+                        navigation.navigate('AppointmentMaker')
                     }else{
                         setError(true);
                     }
