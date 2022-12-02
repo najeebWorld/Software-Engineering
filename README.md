@@ -1,7 +1,9 @@
 # TISPORET
- An app to help barbers organize there appointments.
+
+An app to help barbers organize there appointments.
 
 ## How to run:
+
 make sure u are running node 16 or above.
 
 run `npm i` to install dependencies.

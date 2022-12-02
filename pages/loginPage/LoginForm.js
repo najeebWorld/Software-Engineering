@@ -1,20 +1,13 @@
-import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
-import { CheckBox } from 'react-native-elements'
-import { styles } from '../styles'
-import { useNavigation } from '@react-navigation/native';
-import {
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Image
-} from "react-native";
+import {StatusBar} from 'expo-status-bar';
+import React, {useState} from 'react';
+import {CheckBox} from 'react-native-elements';
+import {styles} from '../styles';
+import {useNavigation} from '@react-navigation/native';
+import {Text, View, TextInput, TouchableOpacity, Image} from 'react-native';
 
-
-export default function LoginForm({ navigation }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+export default function LoginForm({navigation}) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   return (
     <View style={styles.container}>
@@ -28,7 +21,7 @@ export default function LoginForm({ navigation }) {
           style={styles.TextInput}
           placeholder="Email"
           placeholderTextColor="#003f5c"
-          onChangeText={(email) => setEmail(email)}
+          onChangeText={email => setEmail(email)}
         />
       </View>
 
@@ -38,21 +31,24 @@ export default function LoginForm({ navigation }) {
           placeholder="Password"
           placeholderTextColor="#003f5c"
           secureTextEntry={true}
-          onChangeText={(password) => setPassword(password)}
+          onChangeText={password => setPassword(password)}
         />
       </View>
-      <TouchableOpacity style={styles.loginBtn} onPress={() => {
-        console.log(email, password);
-        navigation.navigate('AppointmentMaker')
-      }}>
+      <TouchableOpacity
+        style={styles.loginBtn}
+        onPress={() => {
+          console.log(email, password);
+          navigation.navigate('AppointmentMaker');
+        }}>
         <Text style={styles.loginText}>Login</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.loginBtn} onPress={() => {
-        navigation.navigate('Signup');
-      }}>
+      <TouchableOpacity
+        style={styles.loginBtn}
+        onPress={() => {
+          navigation.navigate('Signup');
+        }}>
         <Text style={styles.loginText}>Don't have an account?</Text>
       </TouchableOpacity>
     </View>
   );
 }
-
