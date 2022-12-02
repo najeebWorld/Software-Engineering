@@ -1,5 +1,5 @@
 language: ruby
-script: "bundle exec rake"
+script: 'bundle exec rake'
 rvm:
   - 1.9.3
   - 2.0.0
@@ -13,7 +13,7 @@ rvm:
   - jruby-head
   - jruby-18mode
   - jruby-19mode
-matrix: 
+matrix:
   fast_finish: true
   allow_failures:
     - rvm: ruby-head
