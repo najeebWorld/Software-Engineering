@@ -5,6 +5,7 @@ import LoginForm from './pages/loginPage/LoginForm';
 import SignupForm from './pages/signupPage/sigupPage';
 import CalendarPage from './pages/calendarPage/calendarPage';
 import SuccessfullLogin from "./pages/success/SuccessfullLogin";
+import WorkingDays from "./pages/workingDays/WorkingDays"
 
 const Stack = createNativeStackNavigator();
 
@@ -12,7 +13,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator 
-          initialRouteName='calenderPage'
+          initialRouteName='Login'
           screenOptions={{
             headerShown: false
           }}
@@ -32,6 +33,10 @@ export default function App() {
         <Stack.Screen
         name='Success'
         component={SuccessfullLogin}
+        />
+        <Stack.Screen
+        name="WorkingDays"
+        component={WorkingDays} 
         />
       </Stack.Navigator>
     </NavigationContainer>

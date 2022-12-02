@@ -4,11 +4,9 @@ import { CheckBox } from 'react-native-elements'
 import { styles } from '../styles'
 import { useNavigation } from '@react-navigation/native';
 import {
-  StyleSheet,
   Text,
   View,
   TextInput,
-  Button,
   TouchableOpacity,
   Image
 } from "react-native";
@@ -21,7 +19,7 @@ export default function LoginForm({ navigation }) {
   return (
     <View style={styles.container}>
       <Image
-        source={require('../assets/logo.png')}
+        source={require('../assets/logowithname.png')}
         style={styles.logoContainer}
       />
       <StatusBar style="auto" />
@@ -45,7 +43,7 @@ export default function LoginForm({ navigation }) {
       </View>
       <TouchableOpacity style={styles.loginBtn} onPress={() => {
         console.log(email, password);
-        navigation.navigate('Make')
+        navigation.navigate('AppointmentMaker')
       }}>
         <Text style={styles.loginText}>Login</Text>
       </TouchableOpacity>
