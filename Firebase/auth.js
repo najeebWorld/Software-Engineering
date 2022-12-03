@@ -1,12 +1,13 @@
 import auth from '@react-native-firebase/auth';
 import { newClient } from './FirebaseOperations';
-
+import user from './User';
 
 export const authenticate = async (userEmail, userPassword) => {
-    const uid = await auth().signInWithEmailAndPassword(userEmail, userPassword).catch(error => {
+    const uid = (await auth().signInWithEmailAndPassword(userEmail, userPassword).catch(error => {
         alert("Wrong username / Password (user doesn't exists), Try again.")
-    }) ;
-    return uid;
+    })).user.uid ;
+    user.userID(uid);
+    await auth().signOut();
 };
 
 export const customerSignUp = async (uName, uEmail, uPassword, uPhone) => {

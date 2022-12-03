@@ -37,3 +37,8 @@ export const newOrder = async (_chosenBarber, _selectedDate, _hour) => {
     console.error('Error adding document: ', e);
   }
 };
+
+export const getUser = async (uid) => {
+    const userData =  (await firestore().collection('Users').doc(uid).get().catch((err)=>{alert(err)}))
+    return userData._data;
+}
