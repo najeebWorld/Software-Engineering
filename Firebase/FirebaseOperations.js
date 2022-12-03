@@ -1,5 +1,24 @@
 import firestore from '@react-native-firebase/firestore';
 
+
+
+export const newClient = async ( uId,uName, uEmail, uPassword, uPhone) => {
+  try{
+    await firestore()
+      .collection('Users').doc(uId).set({
+        userId: uId,
+        userName: uName,
+        userEmail: uEmail,
+        userPhone: uPhone
+      }).then(()=>{
+        console.log("Client ", uId, " added successfully.")
+      })
+  }catch{
+    alert("Could not add this user, Try again.")
+  }
+}
+
+
 export const newOrder = async (_chosenBarber, _selectedDate, _hour) => {
   try {
     await firestore()

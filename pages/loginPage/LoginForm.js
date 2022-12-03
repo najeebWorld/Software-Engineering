@@ -4,6 +4,7 @@ import {CheckBox} from 'react-native-elements';
 import {styles} from '../styles';
 import {useNavigation} from '@react-navigation/native';
 import {Text, View, TextInput, TouchableOpacity, Image} from 'react-native';
+import { authenticate } from '../../Firebase/auth';
 
 export default function LoginForm({navigation}) {
   const [email, setEmail] = useState('');
@@ -37,7 +38,7 @@ export default function LoginForm({navigation}) {
       <TouchableOpacity
         style={styles.loginBtn}
         onPress={() => {
-          console.log(email, password);
+          authenticate(email, password);
           navigation.navigate('MyAppointments');
         }}>
         <Text style={styles.loginText}>Login</Text>
