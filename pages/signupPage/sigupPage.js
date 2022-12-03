@@ -13,6 +13,8 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
+import { signUp } from '../../Firebase/auth';
+import { newClient } from '../../Firebase/FirebaseOperations';
 
 export default function SignupForm({navigation}) {
   const [name, setName] = useState('');
@@ -119,10 +121,11 @@ export default function SignupForm({navigation}) {
 
         <TouchableOpacity
           style={styles.loginBtn}
-          onPress={() => {
+          onPress={async () =>  {
             const gender = isSelectedMale ? 'male' : 'female';
             if (password === verifypass) {
-              console.log(phone, name, gender, email, password);
+              // console.log(phone, name, gender, email, password);
+              await signUp(name, email, password, phone)
               navigation.navigate('AppointmentMaker');
             } else {
               setError(true);
