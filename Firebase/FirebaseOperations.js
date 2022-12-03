@@ -15,7 +15,7 @@ export const newClient = async (uId, uName, uEmail, uPassword, uPhone) => {
         console.log("Client ", uId, " added successfully.")
       })
   }catch(error){
-    alert("Adding Client failed, Error message: ",error)
+    alert(`Adding Client failed, Error message: ${error}`)
   }
 }
 

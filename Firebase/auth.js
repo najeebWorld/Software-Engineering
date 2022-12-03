@@ -9,8 +9,17 @@ export const authenticate = async (userEmail, userPassword) => {
     return uid;
 };
 
-export const signUp = async (uName, uEmail, uPassword, uPhone) => {
+export const customerSignUp = async (uName, uEmail, uPassword, uPhone) => {
     await auth().createUserWithEmailAndPassword(uEmail, uPassword).catch(error => {
         throw Error("Sign up failed, error:" ,error)
-    }).then(async (user) => {await newClient(user.uid, uName, uEmail, uPassword, uPhone)});
+    }).then(async (authData) => {
+        await newClient(authData.user.uid, uName, uEmail, uPassword, uPhone)});
 };
+
+export const barberSignUp = async (uName, uEmail, uPassword, uPhone) => {
+    await auth().createUserWithEmailAndPassword(uEmail, uPassword).catch(error => {
+        throw Error("Sign up failed, error:" ,error)
+    }).then(async (authData) => {
+        await newClient(authData.user.uid, uName, uEmail, uPassword, uPhone)});
+};
+

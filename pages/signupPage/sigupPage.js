@@ -13,7 +13,7 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import { signUp } from '../../Firebase/auth';
+import { barberSignUp, customerSignUp } from '../../Firebase/auth';
 import { newClient } from '../../Firebase/FirebaseOperations';
 
 export default function SignupForm({navigation}) {
@@ -23,27 +23,27 @@ export default function SignupForm({navigation}) {
   const [password, setPassword] = useState('');
   const [verifypass, setVerify] = useState('');
   const [error, setError] = useState(false);
-  const [isSelectedMale, setSelectionMale] = useState(false);
-  const [isSelectedFemale, setSelectionFemale] = useState(false);
+  const [isSelectedCustomer, setSelectionCustomer] = useState(false);
+  const [isSelectedBarber, setSelectionBarber] = useState(false);
 
   /**
    * These functions are to prevent two checkboxes to be clicked at the same time.
    * @param {*} currState
    */
-  const femaleClickHandler = currState => {
-    if (!currState && isSelectedMale) {
-      setSelectionFemale(true);
-      setSelectionMale(false);
+  const barberClickHandler = currState => {
+    if (!currState && isSelectedCustomer) {
+      setSelectionBarber(true);
+      setSelectionCustomer(false);
     } else {
-      setSelectionFemale(!isSelectedFemale);
+      setSelectionBarber(!isSelectedBarber);
     }
   };
-  const maleClickHandler = currState => {
-    if (!currState && isSelectedFemale) {
-      setSelectionMale(true);
-      setSelectionFemale(false);
+  const customerClickHandler = currState => {
+    if (!currState && isSelectedBarber) {
+      setSelectionCustomer(true);
+      setSelectionBarber(false);
     } else {
-      setSelectionMale(!isSelectedMale);
+      setSelectionCustomer(!isSelectedCustomer);
     }
   };
   return (
@@ -94,25 +94,24 @@ export default function SignupForm({navigation}) {
             style={styles.TextInput}
             placeholder="Phone Number"
             placeholderTextColor="#003f5c"
-            secureTextEntry={true}
             onChangeText={phone => setPhone(phone)}
           />
         </View>
         <View>
           <CheckBox
             title="Customer"
-            checked={isSelectedMale}
+            checked={isSelectedCustomer}
             onPress={() => {
-              maleClickHandler(isSelectedMale);
+              customerClickHandler(isSelectedCustomer);
             }}
             containerStyle={styles.checkbox}
             checkedColor="#8D5238"
           />
           <CheckBox
             title="Barber"
-            checked={isSelectedFemale}
+            checked={isSelectedBarber}
             onPress={() => {
-              femaleClickHandler(isSelectedFemale);
+              barberClickHandler(isSelectedBarber);
             }}
             containerStyle={styles.checkbox}
             checkedColor="#8D5238"
@@ -122,11 +121,13 @@ export default function SignupForm({navigation}) {
         <TouchableOpacity
           style={styles.loginBtn}
           onPress={async () =>  {
-            const gender = isSelectedMale ? 'male' : 'female';
             if (password === verifypass) {
-              // console.log(phone, name, gender, email, password);
-              await signUp(name, email, password, phone)
-              navigation.navigate('AppointmentMaker');
+              if(isSelectedCustomer){
+                await customerSignUp(name, email, password, phone)
+              }else{
+                await barberSignUp();
+              }
+              navigation.navigate('Login');
             } else {
               setError(true);
             }
