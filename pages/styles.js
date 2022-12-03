@@ -2,6 +2,7 @@ import {StyleSheet} from 'react-native';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
     backgroundColor: '#E5C492',
     alignItems: 'center',
     justifyContent: 'center',
@@ -164,7 +165,7 @@ export const styles = StyleSheet.create({
   },
   btn: {
     width: '80%',
-    borderRadius: 25,
+    borderRadius: 10,
     height: 50,
     alignItems: 'center',
     justifyContent: 'center',
@@ -185,5 +186,31 @@ export const styles = StyleSheet.create({
     color: 'black',
     fontSize: 15,
     textAlign: 'center',
+  },
+  appointmentContainer: {
+    position: 'absolute',
+    width: 296,
+    height: 314,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    borderWidth: 3.0,
+    borderColor: '#8D5238',
+  },
+  appointmentContainerContent: {
+    alignContent: 'center',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  appoinment: {
+    flex: 1,
+    //position: "absolute",
+    flexDirection: 'row',
+    width: 240,
+    height: 87,
+    backgroundColor: '#E5C492',
+    borderRadius: 10,
+    borderWidth: 3.0,
+    borderColor: '#8D5238',
+    marginTop: 15,
   },
 });

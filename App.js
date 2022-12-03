@@ -6,6 +6,7 @@ import SignupForm from './pages/signupPage/sigupPage';
 import CalendarPage from './pages/calendarPage/calendarPage';
 import SuccessfullLogin from './pages/success/SuccessfullLogin';
 import WorkingDays from './pages/workingDays/WorkingDays';
+import MyAppointments from './pages/MyAppointments/MyAppointments';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,7 @@ export default function App() {
         <Stack.Screen name="AppointmentMaker" component={CalendarPage} />
         <Stack.Screen name="Success" component={SuccessfullLogin} />
         <Stack.Screen name="WorkingDays" component={WorkingDays} />
+        <Stack.Screen name="MyAppointments" component={MyAppointments} />
       </Stack.Navigator>
     </NavigationContainer>
   );

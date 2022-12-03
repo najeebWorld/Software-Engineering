@@ -4,6 +4,7 @@ import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import auth from '@react-native-firebase/auth';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import moment from 'moment';
+import {newOrder} from '../../Firebase/FirebaseOperations';
 
 export default function CalendarPage({navigation}) {
   const _barberData = [
@@ -39,16 +40,19 @@ export default function CalendarPage({navigation}) {
     const year = _today.split('-')[0];
     let dates = {};
     for (let i = 1; i < 13; i++) {
+      const month = parseInt(i / 10) === 0 ? `0${i}` : i;
       const currDate =
-        `${year}-${i}-${day}` === _selectedDate ? '' : `${year}-${i}-${day}`;
-      const currDateNext = `2023-${i}-${day}`;
+        `${year}-${i}-${day}` === _selectedDate
+          ? ''
+          : `${year}-${month}-${day}`;
+      const currDateNext = `2023-${month}-${day}`;
+      dates[[currDateNext]] = {
+        selectedColor: 'white',
+        selectedTextColor: 'lightgrey',
+      };
       if (currDate === '') continue;
       if (currDate > _lastDay) {
         dates[[currDate]] = {
-          selectedColor: 'white',
-          selectedTextColor: 'lightgrey',
-        };
-        dates[[currDateNext]] = {
           selectedColor: 'white',
           selectedTextColor: 'lightgrey',
         };
@@ -79,8 +83,9 @@ export default function CalendarPage({navigation}) {
     console.log('selected day: ', _selectedDate);
   };
 
-  const OnBtnPress = () => {
+  const OnBtnPress = async () => {
     if (_chosenBarber && _selectedDate && _hour) {
+      await newOrder(_chosenBarber, _selectedDate, _hour);
       console.log(
         'Your chosen appointment is: ',
         _chosenBarber,
@@ -146,7 +151,11 @@ export default function CalendarPage({navigation}) {
           placeholder={_hour}
         />
       </View>
-      <TouchableOpacity style={styles.btn} onPress={OnBtnPress}>
+      <TouchableOpacity
+        style={styles.btn}
+        onPress={async () => {
+          await newOrder(_barberData, _selectedDate, _hour);
+        }}>
         <Text style={styles.text}>Make an appointment</Text>
       </TouchableOpacity>
     </View>

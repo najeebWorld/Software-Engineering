@@ -38,7 +38,7 @@ export default function LoginForm({navigation}) {
         style={styles.loginBtn}
         onPress={() => {
           console.log(email, password);
-          navigation.navigate('AppointmentMaker');
+          navigation.navigate('MyAppointments');
         }}>
         <Text style={styles.loginText}>Login</Text>
       </TouchableOpacity>
