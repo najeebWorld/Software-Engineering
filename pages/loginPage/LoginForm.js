@@ -5,6 +5,8 @@ import {styles} from '../styles';
 import {useNavigation} from '@react-navigation/native';
 import {Text, View, TextInput, TouchableOpacity, Image} from 'react-native';
 import { authenticate } from '../../Firebase/auth';
+import { getUser } from '../../Firebase/FirebaseOperations';
+import user from '../../Firebase/User'
 
 export default function LoginForm({navigation}) {
   const [email, setEmail] = useState('');
@@ -37,8 +39,11 @@ export default function LoginForm({navigation}) {
       </View>
       <TouchableOpacity
         style={styles.loginBtn}
-        onPress={() => {
-          authenticate(email, password);
+        onPress={ async () => {
+          await authenticate(email, password);
+          console.log("User id",user.userID());
+          const useremail = (await getUser(user.userID())).userEmail;
+          console.log(useremail);
           navigation.navigate('MyAppointments');
         }}>
         <Text style={styles.loginText}>Login</Text>
