@@ -12,7 +12,7 @@ export const newOrder = async (_chosenBarber, _selectedDate, _hour) => {
       .then(() => {
         console.log('Success!');
       });
-    console.log(x);
+    //console.log(x);
   } catch (e) {
     console.error('Error adding document: ', e);
   }
