@@ -14,7 +14,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Login"
+        initialRouteName="CalendarPageBarber"
         screenOptions={{
           headerShown: false,
         }}>

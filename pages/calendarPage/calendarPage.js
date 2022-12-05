@@ -85,7 +85,7 @@ export default function CalendarPage({navigation}) {
   const OnBtnPress = async () => {
     if (_chosenBarber != 'Choose barber' && _selectedDate != '' && _hour != 'Choose time') {
       await newOrder(_chosenBarber, _selectedDate, _hour);
-      Alert.alert('Your chosen appointment is scheduled');
+      alert('Your chosen appointment is scheduled');
       console.log(
         'Your chosen appointment is: ',
         _chosenBarber,
@@ -93,7 +93,7 @@ export default function CalendarPage({navigation}) {
         _hour,
       );
     } else {
-      Alert.alert("Check the requirements")
+      alert("Check the requirements")
       console.log('try again...');
     }
   };

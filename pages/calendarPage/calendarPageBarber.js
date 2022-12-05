@@ -128,9 +128,7 @@ const disabled = getDaysInMonth(moment().month(), moment().year(),  DISABLED_DAY
         maxDate={_lastDay}
         hideExtraDays={true}
         initialDate={_today}
-        items={{
-        ...appointments,
-        }}
+        items={appointments}
         pastScrollRange={0}
         futureScrollRange={1}
         time_proportional={true}
@@ -138,15 +136,9 @@ const disabled = getDaysInMonth(moment().month(), moment().year(),  DISABLED_DAY
           <TouchableOpacity style={styles.item_Agenda}>
             <Text style={styles.itemText_Agenda}>{item.details} </Text>
           </TouchableOpacity>
-        
         )}
-        
-        
-        // renderEmptyDate={() => {
-        //     <View> <Text> empty </Text> </View>;
-        //   }}
-
-        renderEmptyData={() => {
+        style={{borderRadius: 10}}
+        renderEmptyData={ () => {
             return <Text></Text>;
           }}
 
@@ -159,36 +151,10 @@ const disabled = getDaysInMonth(moment().month(), moment().year(),  DISABLED_DAY
       />
       </Fragment>
     </SafeAreaView>
-
-    {/* <View>
-    <Dropdown
-        style={styles.dropdown}
-        data={_barberData}
-        itemTextStyle={styles.downDropText}
-        maxHeight={200}
-        labelField="label"
-        valueField="value"
-        placeholderStyle={styles.placeholderStyle}
-        selectedTextStyle={styles.selectedTextStyle}
-        onChange={changeOnDropDown}
-        placeholder={_chosenQueue}
-      />
-    </View> */}
-    {/* <View style={styles.container}>
-      <StatusBar style="auto" />
-      <AppoinmentContainer appointments={appointments} />
-      <TouchableOpacity
-        style={{...styles.btn, marginTop: 200}}
-        onPress={() => {
-          navigation.navigate('AppointmentMaker');
-        }}>
-        <Text style={styles.loginText}>Make new appointment</Text>
-      </TouchableOpacity>
-    </View> */}
     
     <TouchableOpacity style={styles.btn} 
         onPress={OnBtnPress}>
-        <Text style={styles.text}>Change Acticity Time</Text>
+        <Text style={styles.text}>Change Activity Time</Text>
       </TouchableOpacity>
 
     </View>
@@ -264,7 +230,7 @@ const styles = StyleSheet.create({
     marginTop: 50,
     borderWidth: 3.0,
     borderColor: "#8D5238",
-    borderRadius:10
+    borderRadius: 10
 
   },
 
