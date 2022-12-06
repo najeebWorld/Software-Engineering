@@ -128,7 +128,7 @@ export default function SignupForm({navigation}) {
               }else{
                 await barberSignUp(name, email, password, phone);
               }
-              navigation.navigate('Login');
+              navigation.navigate('Success');
             } else {
               setError(true);
             }
