@@ -63,8 +63,8 @@ export const newUser = async (uId, uName, uEmail, uPassword, uPhone) => {
 export const updateBarberWorkingDays = async (WorkingDays) =>{
   try{
     const uid = user.userID();
-    await firestore().collection.doc(uid).update({
-      availableWorkHours: [WorkingDays],
+    await firestore().collection('Barbers').doc(uid).update({
+      availableWorkHours: WorkingDays,
     }).then(()=>{console.log('Barber N.',uid,' appointments updated!');})
   }catch(error){
     alert(`updating barber workingDays failed, Error message:${error}`)
@@ -111,6 +111,11 @@ export const getUser = async (uid) => {
     return userData._data;
 }
 
+export const getBarber = async (uid) => {
+  const userData =  (await firestore().collection('Barbers').doc(uid).get().catch((err)=>{throw Error(err)}))
+  return userData._data;
+}
+
 
 export const findAllExpieredOrders = async ()=>{
   const expOrders = await firestore().collection('Orders').where("Order_Date", "<=", firestore.Timestamp);
@@ -118,4 +123,15 @@ export const findAllExpieredOrders = async ()=>{
     console.log('--- --- --- ---')
     console.log(order.toString())
   }
+}
+
+export const isFirstEntry = async (uid) =>{
+  const user = await getBarber(uid);
+  return (user.firstEntry)
+}
+
+export const updateFirstEntry = async (uid) =>{
+  await firestore().collection('Barbers').doc(uid).update({
+    firstEntry: false,
+  }).then(()=>{console.log('Barber N.',uid,' First entry updated!');})
 }
