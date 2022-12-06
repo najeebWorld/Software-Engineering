@@ -12,6 +12,7 @@ const AppoinmentContainer = props => {
             user={appointment.user ? appoinment.user : appointment.barber}
             type={appointment.type}
             time={appointment.time}
+            key={Math.random()}
           />
         ))}
       </ScrollView>
