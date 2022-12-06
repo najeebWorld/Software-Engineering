@@ -5,7 +5,7 @@ import {Text, View, TextInput, TouchableOpacity, Image} from 'react-native';
 import { authenticate } from '../../Firebase/auth';
 import { getUser } from '../../Firebase/FirebaseOperations';
 import user from '../../Firebase/User'
-
+import { isFirstEntry, updateFirstEntry } from '../../Firebase/FirebaseOperations';
 export default function LoginForm({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -42,7 +42,13 @@ export default function LoginForm({navigation}) {
           if(user.setCustomer()){
             navigation.navigate('MyAppointments');  
           }else{
-            navigation.navigate('WorkingDays')
+            if(await isFirstEntry(user.userID())){
+              await updateFirstEntry(user.userID());
+              navigation.navigate('WorkingDays');
+            }else{
+              navigation.navigate('CalendarPageBarber')
+            }
+              
           }
         }}>
         <Text style={styles.loginText}>Login</Text>
