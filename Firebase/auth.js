@@ -20,13 +20,12 @@ export const authenticate = async (userEmail, userPassword) => {
     })).user.uid ;
     user.userID(uid);
     try{
-        const user = await getUser(uid);
-        console.log("User", user);
+        await getUser(uid);
         user.setCustomer(true);
+        console.log(setCustomer())
     }catch{
         user.setCustomer(false);
     }
-    await auth().signOut();
 };
 
 export const customerSignUp = async (uName, uEmail, uPassword, uPhone) => {
