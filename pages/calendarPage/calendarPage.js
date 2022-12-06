@@ -2,7 +2,7 @@ import React, {useState, Fragment} from 'react';
 import {Dropdown} from 'react-native-element-dropdown';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import auth from '@react-native-firebase/auth';
-import {StyleSheet, Text, View, TouchableOpacity, Image, Alert} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import moment from 'moment';
 import {newOrder} from '../../Firebase/FirebaseOperations';
 
@@ -32,7 +32,7 @@ export default function CalendarPage({navigation}) {
   const _today = moment(new Date()).format('YYYY-MM-DD');
   const _lastDay = moment(new Date()).add(14, 'day').format('YYYY-MM-DD');
   const [_hour, setHour] = useState('Choose time');
-  const [_selectedDate, setSelectedDate] = useState('');
+  const [_selectedDate, setSelectedDate] = useState(_today);
   const [_chosenBarber, setChosenBarber] = useState('Choose barber');
 
   const removeBlueStyle = () => {
@@ -79,13 +79,13 @@ export default function CalendarPage({navigation}) {
 
   const dayPress = day => {
     setSelectedDate(day.dateString);
+
     console.log('selected day: ', _selectedDate);
   };
 
   const OnBtnPress = async () => {
-    if (_chosenBarber != 'Choose barber' && _selectedDate != '' && _hour != 'Choose time') {
+    if (_chosenBarber && _selectedDate && _hour) {
       await newOrder(_chosenBarber, _selectedDate, _hour);
-      Alert.alert('Your chosen appointment is scheduled');
       console.log(
         'Your chosen appointment is: ',
         _chosenBarber,
@@ -93,32 +93,9 @@ export default function CalendarPage({navigation}) {
         _hour,
       );
     } else {
-      Alert.alert("Check the requirements")
       console.log('try again...');
     }
   };
-
-  const DISABLED_DAYS = ['Saturday']
-
-  const getDaysInMonth =  (month, year, days) => {
-    let pivot = moment().month(month).year(year).startOf('month')
-    const end = moment().month(month).year(year).endOf('month')
-  
-    let dates = {}
-    const disabled = { disabled: true }
-    while(pivot.isBefore(end)) {
-      days.forEach((day) => {
-        dates[pivot.day(day).format("YYYY-MM-DD")] = disabled
-      })
-      pivot.add(7, 'days')
-    }
-  
-    return dates
-  }
-  
-  const disabled = getDaysInMonth(moment().month(), moment().year(),  DISABLED_DAYS);
-    
-  
   return (
     <View style={styles.container}>
       <Image
@@ -134,7 +111,7 @@ export default function CalendarPage({navigation}) {
             minDate={_today}
             maxDate={_lastDay}
             style={{borderRadius: 10}}
-            onDayPress={dayPress}
+            onDayPress={day => setSelectedDate(day.dateString)}
             markedDates={{
               [_selectedDate]: {
                 selected: true,
@@ -142,7 +119,6 @@ export default function CalendarPage({navigation}) {
                 selectedTextColor: 'black',
               },
               ...dates,
-              ...disabled,
             }}
           />
         </Fragment>
@@ -177,7 +153,9 @@ export default function CalendarPage({navigation}) {
       </View>
       <TouchableOpacity
         style={styles.btn}
-        onPress={OnBtnPress}>
+        onPress={async () => {
+          await newOrder(_barberData, _selectedDate, _hour);
+        }}>
         <Text style={styles.text}>Make an appointment</Text>
       </TouchableOpacity>
     </View>

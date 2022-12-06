@@ -1,10 +1,11 @@
 import {StatusBar} from 'expo-status-bar';
 import React, {useState} from 'react';
-import {CheckBox} from 'react-native-elements';
 import {styles} from '../styles';
-import {useNavigation} from '@react-navigation/native';
 import {Text, View, TextInput, TouchableOpacity, Image} from 'react-native';
-
+import { authenticate } from '../../Firebase/auth';
+import { getUser } from '../../Firebase/FirebaseOperations';
+import user from '../../Firebase/User'
+import { isFirstEntry, updateFirstEntry } from '../../Firebase/FirebaseOperations';
 export default function LoginForm({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -36,9 +37,19 @@ export default function LoginForm({navigation}) {
       </View>
       <TouchableOpacity
         style={styles.loginBtn}
-        onPress={() => {
-          console.log(email, password);
-          navigation.navigate('MyAppointments');
+        onPress={async () => {
+          await authenticate(email, password);
+          if(user.setCustomer()){
+            navigation.navigate('MyAppointments');  
+          }else{
+            if(await isFirstEntry(user.userID())){
+              await updateFirstEntry(user.userID());
+              navigation.navigate('WorkingDays');
+            }else{
+              navigation.navigate('CalendarPageBarber')
+            }
+              
+          }
         }}>
         <Text style={styles.loginText}>Login</Text>
       </TouchableOpacity>

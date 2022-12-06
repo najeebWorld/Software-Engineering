@@ -3,6 +3,7 @@ import {Dropdown} from 'react-native-element-dropdown';
 import DaySelector from '../components/daySelector';
 import {Text, View, TouchableOpacity, Image} from 'react-native';
 import {styles} from '../styles';
+import { updateBarberWorkingDays } from '../../Firebase/FirebaseOperations';
 
 export default function WorkingDays({navigation}) {
   const _hoursData = [
@@ -156,7 +157,7 @@ export default function WorkingDays({navigation}) {
     setDuration(item.label);
   };
 
-  const OnBtnPress = () => {
+  const OnBtnPress = async () => {
     const workingDays = [];
     for (i of ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']) {
       if (_weekDays[i]) {
@@ -169,7 +170,8 @@ export default function WorkingDays({navigation}) {
       _endTime,
       _duration,
     );
-    console.log(appointments);
+    await updateBarberWorkingDays(appointments);
+    navigation.navigate('CalendarPageBarber');
   };
   return (
     <View style={styles.container}>
@@ -232,7 +234,7 @@ export default function WorkingDays({navigation}) {
           placeholder={_duration}
         />
       </View>
-      <TouchableOpacity style={styles.btn} onPress={OnBtnPress}>
+      <TouchableOpacity style={styles.btn} onPress={async()=>{await OnBtnPress();}}>
         <Text style={styles.text}>Done</Text>
       </TouchableOpacity>
     </View>
