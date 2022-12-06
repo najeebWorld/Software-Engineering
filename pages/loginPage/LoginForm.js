@@ -41,10 +41,11 @@ export default function LoginForm({navigation}) {
         style={styles.loginBtn}
         onPress={ async () => {
           await authenticate(email, password);
-          console.log("User id",user.userID());
-          const useremail = (await getUser(user.userID())).userEmail;
-          console.log(useremail);
-          navigation.navigate('MyAppointments');
+          if(user.setCustomer()){
+            navigation.navigate('MyAppointments');  
+          }else{
+            navigation.navigate('WorkingDays')
+          }
         }}>
         <Text style={styles.loginText}>Login</Text>
       </TouchableOpacity>

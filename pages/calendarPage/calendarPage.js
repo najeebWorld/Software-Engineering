@@ -4,7 +4,7 @@ import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import auth from '@react-native-firebase/auth';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import moment from 'moment';
-import {newOrder} from '../../Firebase/FirebaseOperations';
+import {newOrder, findAllExpieredOrders} from '../../Firebase/FirebaseOperations';
 
 export default function CalendarPage({navigation}) {
   const _barberData = [
@@ -69,7 +69,6 @@ export default function CalendarPage({navigation}) {
   const dates = removeBlueStyle();
   const changeOnDropDownBarber = item => {
     setChosenBarber(item.label);
-    console.log(item.label);
   };
 
   const changeOnDropDownHour = item => {
@@ -79,7 +78,6 @@ export default function CalendarPage({navigation}) {
 
   const dayPress = day => {
     setSelectedDate(day.dateString);
-
     console.log('selected day: ', _selectedDate);
   };
 
@@ -154,7 +152,7 @@ export default function CalendarPage({navigation}) {
       <TouchableOpacity
         style={styles.btn}
         onPress={async () => {
-          await newOrder(_barberData, _selectedDate, _hour);
+          await OnBtnPress();
         }}>
         <Text style={styles.text}>Make an appointment</Text>
       </TouchableOpacity>

@@ -125,7 +125,7 @@ export default function SignupForm({navigation}) {
               if(isSelectedCustomer){
                 await customerSignUp(name, email, password, phone)
               }else{
-                await barberSignUp();
+                await barberSignUp(name, email, password, phone);
               }
               navigation.navigate('Login');
             } else {

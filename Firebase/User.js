@@ -4,12 +4,19 @@
 class User {
     constructor(){
         this.uid = null;
+        this.isCustomer = null;
     }
     userID = (uid) =>{
         if(!uid){
             return this.uid;
         }
         this.uid = uid;
+    }
+    setCustomer = (flag) =>{
+        if(!flag){
+            return this.isCustomer;
+        }
+        this.isCustomer=flag;
     }
 }
 
