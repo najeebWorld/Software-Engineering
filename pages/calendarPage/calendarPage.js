@@ -4,7 +4,8 @@ import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import auth from '@react-native-firebase/auth';
 import {StyleSheet, Text, View, TouchableOpacity, Image, Alert} from 'react-native';
 import moment from 'moment';
-import {newOrder} from '../../Firebase/FirebaseOperations';
+import {newOrder, getCustomerOrders} from '../../Firebase/FirebaseOperations';
+import user from '../../Firebase/User'
 
 export default function CalendarPage({navigation}) {
   const _barberData = [
@@ -96,6 +97,7 @@ export default function CalendarPage({navigation}) {
       alert("Check the requirements")
       console.log('try again...');
     }
+    user.userAppointments(await getCustomerOrders(user.userID()));
   };
 
   const DISABLED_DAYS = ['Saturday']

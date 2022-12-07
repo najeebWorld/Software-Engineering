@@ -115,6 +115,7 @@ export default function WorkingDays({navigation}) {
     const interval = parseInt(duration.split(' ')[0]);
     return fillHours(date, start, end, interval);
   };
+
   /**
    * This function fills an array full of hours according to an interval lets say
    * start = 12:00 end = 13:00 and interval = 20
