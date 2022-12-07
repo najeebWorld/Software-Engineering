@@ -1,10 +1,10 @@
-import React, {useState, Fragment} from 'react';
+import React, {useState, Fragment, useEffect} from 'react';
 import {Dropdown} from 'react-native-element-dropdown';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import auth from '@react-native-firebase/auth';
 import {StyleSheet, Text, View, TouchableOpacity, Image, Alert} from 'react-native';
 import moment from 'moment';
-import {newOrder, getCustomerOrders} from '../../Firebase/FirebaseOperations';
+import {newOrder, getCustomerOrders, getAvailableAppointments} from '../../Firebase/FirebaseOperations';
 import user from '../../Firebase/User'
 
 export default function CalendarPage({navigation}) {
@@ -35,7 +35,14 @@ export default function CalendarPage({navigation}) {
   const [_hour, setHour] = useState('Choose time');
   const [_selectedDate, setSelectedDate] = useState('');
   const [_chosenBarber, setChosenBarber] = useState('Choose barber');
-
+  const [_workDays, setWorkDays] = useState([]);
+  useEffect(()=>{
+    const getWorkDays = async () =>{
+      const workDays = await getAvailableAppointments('2022-12-14','JD2cvj8kfSd9XqpMDKdeCwTMT8g1');
+      setWorkDays(workDays); 
+    }
+    getWorkDays().catch(err => alert(err));
+  },[_hour])
   const removeBlueStyle = () => {
     const day = _today.split('-')[2];
     const year = _today.split('-')[0];
@@ -173,7 +180,7 @@ export default function CalendarPage({navigation}) {
           valueField="value"
           placeholderStyle={styles.placeholderStyle}
           selectedTextStyle={styles.selectedTextStyle}
-          onChange={changeOnDropDownHour}
+          onChange={()=>{ setHour('123') }}
           placeholder={_hour}
         />
       </View>

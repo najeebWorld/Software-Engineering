@@ -104,7 +104,6 @@ export const newOrder = async (_chosenBarber, _selectedDate, _hour) => {
   }
 };
 
-
 /**
  * function for retreiveing user from the DB, by the user ID.
  * @param {*} uid 
@@ -160,4 +159,34 @@ export const getCustomerOrders = async (uid) =>{
                  })})
                   .catch(err => {alert(`error while retriving from database: ${err}`)});
   return orders;
+}
+
+export const getAvailableAppointments = async (date, barberId) => {
+  const unAvailableOrders = [];
+  await firestore().collection('Orders').get()
+  .then( querySnapshot => {
+    querySnapshot.forEach(documentSnapshot => {
+      const onDate = documentSnapshot.data().date === date;
+      const isBarbers = documentSnapshot.data().Barber_id === barberId;
+      if(onDate && isBarbers){
+        unAvailableOrders.push(documentSnapshot.data().time);
+      }
+    } )
+  }).catch(err => alert(err))
+  const availableHours = [];
+  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const day =  days[new Date(date).getDay()];
+  const barber = await getBarber(barberId).catch(err=>{alert(err)});
+  const workingHours = barber.availableWorkHours[day];
+  if(workingHours){
+    for(let i = 0;i<workingHours.length; i++){
+      if(!unAvailableOrders.includes(workingHours[i])){
+        availableHours.push(workingHours[i]);
+      }
+    }
+    console.log('id',barberId,'available', availableHours);
+    return availableHours;
+  }else{
+    return [];
+  }
 }
