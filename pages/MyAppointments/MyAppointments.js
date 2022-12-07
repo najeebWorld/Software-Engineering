@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   TextInput,
@@ -10,34 +10,19 @@ import {
 import {styles} from '../styles';
 import AppoinmentContainer from '../components/AppoinmentContainer';
 import {StatusBar} from 'expo-status-bar';
+import { getCustomerOrders } from '../../Firebase/FirebaseOperations';
+import user from '../../Firebase/User'
+import { get } from 'https';
 
 const MyAppointments = ({navigation}) => {
-  const appointments = {
-    first: {
-      barber: 'Barber: Avi',
-      type: "Men's haircut",
-      time: '3/12/22, 15:30',
-    },
-    second: {
-      barber: 'Barber: Tamar',
-      type: "Women's haircut with fan",
-      time: '7/12/22, 12:30',
-    },
-    third: {
-      barber: 'Barber: Lior',
-      type: "Men's haircut with beard trim",
-      time: '01/01/23, 22:30',
-    },
-    fourth: {
-      barber: 'Dan',
-      type: "Men's haircut",
-      time: '06/01/23, 21:30',
-    },
-    fifth: {
-      barber: 'Barber: Ran',
-      time: '01/01/24, 22:30',
-    },
-  };
+  const [appointments,setAppointments] = useState({});
+  useEffect(() => {
+    const getOrders = async () => {
+      const app = await getCustomerOrders(user.userID());
+      setAppointments(app);
+    }
+    getOrders().catch((err)=>alert(err))
+  });
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -51,7 +36,7 @@ const MyAppointments = ({navigation}) => {
       />
       <AppoinmentContainer appointments={appointments} />
       <TouchableOpacity
-        style={{...styles.btn, marginTop: 200}}
+        style={{...styles.loginBtn, marginTop: 300}}
         onPress={() => {
           navigation.navigate('AppointmentMaker');
         }}>
