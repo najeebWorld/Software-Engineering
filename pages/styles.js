@@ -7,6 +7,12 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  containerForOrderDetails: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: '#E5C492',
+    justifyContent: 'center',
+  },
   containerScrollable: {
     flex: 1,
     backgroundColor: '#E5C492',
@@ -55,6 +61,13 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     marginBottom: 55,
+  },
+  logoContainerOederDetail:{
+    // position: 'absolute',
+    width: 235,
+    height: 47,
+    marginLeft: 7,
+    marginTop: -600,
   },
   loginBtn: {
     width: '80%',
@@ -213,4 +226,5 @@ export const styles = StyleSheet.create({
     borderColor: '#8D5238',
     marginTop: 15,
   },
+  
 });
