@@ -15,7 +15,6 @@ import user from '../../Firebase/User'
 import { get } from 'https';
 
 const MyAppointments = ({navigation}) => {
-  const [refresh, onRefresh] = useState(false);
   const [appointments,setAppointments] = useState({});
   useEffect(() => {
     const getOrders = async () => {

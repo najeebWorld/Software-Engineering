@@ -133,7 +133,7 @@ export default function SignupForm({navigation}) {
               setError(true);
             }
           }catch(err){
-            alert(`Error in signup: ${err}`)
+            alert(err);
           }
           }}>
           <Text style={styles.loginText}>Sign up</Text>
