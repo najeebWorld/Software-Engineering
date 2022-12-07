@@ -13,7 +13,7 @@ const Appointment = props => {
           Details:
         </Text>
         <Text style={{fontWeight: 'bold', color: 'black', fontSize: 13}}>
-          {props.time}
+          {`${props.date}, ${props.time}`}
         </Text>
         <Text style={{fontWeight: 'bold', color: 'black', fontSize: 13}}>
           {props.type}

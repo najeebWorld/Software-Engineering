@@ -4,9 +4,11 @@
  * Auth documentation in: https://rnfirebase.io/auth/usage
  * Functions documentation: https://rnfirebase.io/firestore/usage
  */
+import { getOuterBindingIdentifiers } from '@babel/types';
 import firestore from '@react-native-firebase/firestore';
 import { signUp } from './auth';
 import user from './User'
+import moment from 'moment';
 
 
 /**
@@ -89,8 +91,10 @@ export const newOrder = async (_chosenBarber, _selectedDate, _hour) => {
       .collection('Orders')
       .add({
         Barber_id: _chosenBarber,
-        day: _selectedDate,
-        hour: _hour,
+        Customer_id: user.userID(),
+        date: _selectedDate,
+        time: _hour,
+        extra_info: ""
       })
       .then(() => {
         console.log('Success!');
@@ -135,4 +139,26 @@ export const updateFirstEntry = async (uid) =>{
   await firestore().collection('Barbers').doc(uid).update({
     firstEntry: false,
   }).then(()=>{console.log('Barber N.',uid,' First entry updated!');})
+}
+
+/**
+ * Returns all customer orders that are valid
+ * @param {} uid 
+ * @returns 
+ */
+export const getCustomerOrders = async (uid) =>{
+  let orders = {};
+  await firestore()
+        .collection('Orders')
+        .get().
+        then( querySnapshot => {
+                querySnapshot.forEach( documentSnapshot => {
+                  const isActive = documentSnapshot.data().date >= moment(new Date()).format('YYYY-MM-DD');
+                  const isUsersOrder = documentSnapshot.data().Customer_id === uid;
+                  if(isActive && isUsersOrder){
+                      orders[documentSnapshot.id]=documentSnapshot.data()
+                  }
+                 })})
+                  .catch(err => {alert(`error while retriving from database: ${err}`)});
+  return orders;
 }

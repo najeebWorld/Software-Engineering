@@ -4,7 +4,8 @@ import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import auth from '@react-native-firebase/auth';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import moment from 'moment';
-import {newOrder} from '../../Firebase/FirebaseOperations';
+import {newOrder, getCustomerOrders} from '../../Firebase/FirebaseOperations';
+import user from '../../Firebase/User'
 
 export default function CalendarPage({navigation}) {
   const _barberData = [
@@ -95,6 +96,7 @@ export default function CalendarPage({navigation}) {
     } else {
       console.log('try again...');
     }
+    user.userAppointments(await getCustomerOrders(user.userID()));
   };
   return (
     <View style={styles.container}>
