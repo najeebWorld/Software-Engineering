@@ -15,6 +15,7 @@ import { getCustomerOrders } from './FirebaseOperations';
  * @param {*} userPassword 
  */
 export const authenticate = async (userEmail, userPassword) => {
+    await auth().signOut();
     const uid = (await auth().signInWithEmailAndPassword(userEmail, userPassword).catch(error => {
         alert(`Wrong username / Password (user doesn't exists), Try again. ${error}`)
     })).user.uid ;
