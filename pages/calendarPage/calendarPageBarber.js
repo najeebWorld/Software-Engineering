@@ -16,6 +16,7 @@ import moment from "moment";
 import { getOrder, getBarberOrders } from "../../Firebase/FirebaseOperations";
 import user from '../../Firebase/User'
 import ListItemSwipeable from "react-native-elements/dist/list/ListItemSwipeable";
+import { useFocusEffect } from "@react-navigation/native";
 
 
 export default function CalendarPage({navigation}) {
@@ -25,7 +26,7 @@ export default function CalendarPage({navigation}) {
   const _today = moment(new Date()).format("YYYY-MM-DD")
   const _lastDay = moment(new Date()).add(14, 'day').format("YYYY-MM-DD");
   const [_selectedDate, setSelectedDate] = useState(_today);
-  const [_chosenQueue, setChosenBarber] = useState("Scheduled Queue...")
+  const [_chosenQueue, setChosenBarber] = useState("false")
   const [_days, setDays] = useState([]);
   
 
@@ -86,7 +87,7 @@ const getDaysInMonth =  (month, year, days) => {
 const disabled = getDaysInMonth(moment().month(), moment().year(),  DISABLED_DAYS);
 
 const [appointments, setAppointments] = useState({});
-useEffect(() => {
+useFocusEffect(React.useCallback(() => {
   let days = [];
   const getBarberOrders_ = async () => {
     const app = await getBarberOrders(user.userID());
@@ -105,8 +106,7 @@ useEffect(() => {
     setAppointments(parseAppointment); 
   }
   getBarberOrders_().catch((err)=>alert(err));
-  getBarberOrders_().catch((err)=>alert(err));
-},[_chosenQueue]);
+},[_chosenQueue]));
   
 function generateApointments(date, appointments) {
   if (appointments.date === date) {
@@ -130,13 +130,14 @@ function generateApointments(date, appointments) {
         initialDate={_today}
         items={appointments}
         pastScrollRange={0}
-        futureScrollRange={1}
+        futureScrollRange={0}
         time_proportional={true}
-        renderItem={(item) => (
+        renderItem={(item) => {
+          return(
           <TouchableOpacity style={styles.item_Agenda}>
-            <Text style={styles.itemText_Agenda}>{item.info}, {item.time} </Text>
+            <Text style={styles.itemText_Agenda}>Scheduled appointment at: {item.time} </Text>
           </TouchableOpacity>
-        )}
+          )}}
         style={{borderRadius: 10}}
         renderEmptyData={ () => {
             return <Text></Text>;
@@ -148,6 +149,7 @@ function generateApointments(date, appointments) {
             agendaTodayColor: '#E5C492',
             agendaKnobColor: '#E5C492',
           }}
+          onDayPress={()=>{setChosenBarber(!_chosenQueue)}}
       />
       </Fragment>
     </SafeAreaView>
