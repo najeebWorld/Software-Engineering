@@ -1,23 +1,23 @@
-import React, {useState, Fragment} from 'react';
+import React, {useState, Fragment, useEffect} from 'react';
 import {Dropdown} from 'react-native-element-dropdown';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import auth from '@react-native-firebase/auth';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import moment from 'moment';
-import {newOrder, getCustomerOrders} from '../../Firebase/FirebaseOperations';
+import {newOrder, getCustomerOrders, getBarberList} from '../../Firebase/FirebaseOperations';
 import user from '../../Firebase/User'
 
 export default function CalendarPage({navigation}) {
-  const _barberData = [
-    {label: 'Eli', value: '1'},
-    {label: 'Avi', value: '2'},
-    {label: 'Rubi', value: '3'},
-    {label: 'Anton', value: '4'},
-    {label: 'Yaffa', value: '5'},
-    {label: 'Bar', value: '6'},
-    {label: 'Miki', value: '7'},
-    {label: 'Shimon', value: '8'},
-  ];
+  const [_barberData, SetBarberData] = useState([]);
+  useEffect(() => {
+    const getBarbers = async () => {
+      const Barbers = await getBarberList();
+      SetBarberData(Barbers);
+    }
+    console.log(_barberData);
+    getBarbers().catch((err)=>alert(err));
+  },[]);
+
 
   const _hoursData = [
     {label: '09:30', value: '1'},
@@ -35,6 +35,7 @@ export default function CalendarPage({navigation}) {
   const [_hour, setHour] = useState('Choose time');
   const [_selectedDate, setSelectedDate] = useState(_today);
   const [_chosenBarber, setChosenBarber] = useState('Choose barber');
+  const [_barber_id, setBarberID] = useState('');
 
   const removeBlueStyle = () => {
     const day = _today.split('-')[2];
@@ -70,7 +71,9 @@ export default function CalendarPage({navigation}) {
   const dates = removeBlueStyle();
   const changeOnDropDownBarber = item => {
     setChosenBarber(item.label);
+    setBarberID(item.value);
     console.log(item.label);
+    console.log(item.value);
   };
 
   const changeOnDropDownHour = item => {
@@ -86,10 +89,10 @@ export default function CalendarPage({navigation}) {
 
   const OnBtnPress = async () => {
     if (_chosenBarber && _selectedDate && _hour) {
-      await newOrder(_chosenBarber, _selectedDate, _hour);
+      await newOrder(_barber_id, _selectedDate, _hour);
       console.log(
         'Your chosen appointment is: ',
-        _chosenBarber,
+        _barber_id,
         _selectedDate,
         _hour,
       );
@@ -155,9 +158,7 @@ export default function CalendarPage({navigation}) {
       </View>
       <TouchableOpacity
         style={styles.btn}
-        onPress={async () => {
-          await newOrder(_barberData, _selectedDate, _hour);
-        }}>
+        onPress={async ()=>{ await OnBtnPress()}}>
         <Text style={styles.text}>Make an appointment</Text>
       </TouchableOpacity>
     </View>

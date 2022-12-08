@@ -86,7 +86,7 @@ export const updateBarberWorkingDays = async (WorkingDays) =>{
  */
 export const newOrder = async (_chosenBarber, _selectedDate, _hour) => {
   try {
-    console.log('Order Details: ',_chosenBarber,', ',_selectedDate,_hour)
+    console.log('Order Details: ',_chosenBarber,', ', user.userID());
     await firestore()
       .collection('Orders')
       .add({
@@ -99,7 +99,6 @@ export const newOrder = async (_chosenBarber, _selectedDate, _hour) => {
       .then(() => {
         console.log('Success!');
       });
-    console.log(x);
   } catch (e) {
     console.error(`Error adding document: ${e}`);
   }
@@ -119,6 +118,21 @@ export const getUser = async (uid) => {
 export const getBarber = async (uid) => {
   const userData =  (await firestore().collection('Barbers').doc(uid).get().catch((err)=>{throw Error(err)}))
   return userData._data;
+}
+
+export const getBarberList = async () => {
+  let barbers = [];
+  await firestore()
+        .collection('Barbers')
+        .get().
+        then( querySnapshot => {
+                querySnapshot.forEach( documentSnapshot => {
+                  const uid = documentSnapshot.data().userId;
+                  const name = documentSnapshot.data().userName;
+                  barbers.push({label: name, value: uid});
+                 })})
+                  .catch(err => {alert(`error while getting barbers list ${err}`)});
+  return barbers;
 }
 
 
@@ -157,6 +171,23 @@ export const getCustomerOrders = async (uid) =>{
                   const isUsersOrder = documentSnapshot.data().Customer_id === uid;
                   if(isActive && isUsersOrder){
                       orders[documentSnapshot.id]=documentSnapshot.data()
+                  }
+                 })})
+                  .catch(err => {alert(`error while retriving from database: ${err}`)});
+  return orders;
+}
+
+export const getBarberOrders = async (uid) =>{
+  let orders = {};
+  await firestore()
+        .collection('Orders')
+        .get().
+        then( querySnapshot => {
+                querySnapshot.forEach( documentSnapshot => {
+                  const isActive = documentSnapshot.data().date >= moment(new Date()).format('YYYY-MM-DD');
+                  const isUsersOrder = documentSnapshot.data().Barber_id === uid;
+                  if(isActive && isUsersOrder){
+                      orders[documentSnapshot.id]=documentSnapshot.data();
                   }
                  })})
                   .catch(err => {alert(`error while retriving from database: ${err}`)});

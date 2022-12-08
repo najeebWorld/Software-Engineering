@@ -16,13 +16,14 @@ import { get } from 'https';
 
 const MyAppointments = ({navigation}) => {
   const [appointments,setAppointments] = useState({});
-  useEffect(() => {
+  useEffect( () => {
     const getOrders = async () => {
       const app = await getCustomerOrders(user.userID());
       setAppointments(app);
     }
     getOrders().catch((err)=>alert(err))
   });
+  
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
