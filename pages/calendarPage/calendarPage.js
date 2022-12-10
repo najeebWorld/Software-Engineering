@@ -13,7 +13,7 @@ export default function CalendarPage({navigation}) {
   const _today = moment(new Date()).format('YYYY-MM-DD');
   const _lastDay = moment(new Date()).add(14, 'day').format('YYYY-MM-DD');
   const [_hour, setHour] = useState('Choose time');
-  const [_selectedDate, setSelectedDate] = useState(_today);
+  const [_selectedDate, setSelectedDate] = useState('');
   const [_chosenBarber, setChosenBarber] = useState('Choose barber');
   const [_barberData, SetBarberData] = useState([]);
   const [_barber_id, setBarberID] = useState('');
@@ -153,7 +153,8 @@ export default function CalendarPage({navigation}) {
                 selectedColor: '#E5C492',
                 selectedTextColor: 'black',
               },
-              ...dates
+              ...dates,
+              ...disabled
             }}
           />
         </Fragment>

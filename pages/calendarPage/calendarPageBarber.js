@@ -130,7 +130,7 @@ function generateApointments(date, appointments) {
         initialDate={_today}
         items={appointments}
         pastScrollRange={0}
-        futureScrollRange={0}
+        futureScrollRange={1}
         time_proportional={true}
         renderItem={(item) => {
           return(
