@@ -13,16 +13,18 @@ import {StatusBar} from 'expo-status-bar';
 import { getCustomerOrders } from '../../Firebase/FirebaseOperations';
 import user from '../../Firebase/User'
 import { get } from 'https';
+import { useFocusEffect } from '@react-navigation/native';
 
 const MyAppointments = ({navigation}) => {
   const [appointments,setAppointments] = useState({});
-  useEffect(() => {
+  const [reRender, onReRender] = useState(false);
+  useFocusEffect(React.useCallback(()=>{
     const getOrders = async () => {
       const app = await getCustomerOrders(user.userID());
       setAppointments(app);
     }
     getOrders().catch((err)=>alert(err))
-  });
+  },[reRender]));
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -30,11 +32,11 @@ const MyAppointments = ({navigation}) => {
         source={require('../assets/myappointments.png')}
         style={{
           ...styles.logoContainerSuccess,
-          marginBottom: 150,
+          marginBottom: 60,
           marginRight: 100,
         }}
       />
-      <AppoinmentContainer appointments={appointments} />
+      <AppoinmentContainer appointments={appointments} render={onReRender} renderVal={reRender}/>
       <TouchableOpacity
         style={{...styles.loginBtn, marginTop: 300}}
         onPress={() => {

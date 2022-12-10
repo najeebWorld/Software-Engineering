@@ -8,16 +8,22 @@ const AppoinmentContainer = props => {
   return (
     <View style={styles.appointmentContainer}>
       <ScrollView contentContainerStyle={styles.appointmentContainerContent}>
-        {Object.values(props.appointments).map(appointment => {
-          return(
-          <Appointment
-            user={appointment["Barber_id"]}
-            type={appointment["extra_info"]}
-            date={appointment["date"]}
-            time={appointment["time"]}
-            key={Math.random()}
-          />)
-      })}
+        {
+          Object.keys(props.appointments).map(key=>{
+            return(
+              <Appointment
+                user={props.appointments[key]["Barber_id"]}
+                type={props.appointments[key]["extra_info"]}
+                date={props.appointments[key]["date"]}
+                time={props.appointments[key]["time"]}
+                docID={key}
+                key={Math.random()}
+                render={props.render}
+                renderVal={props.renderVal}
+              />
+            )
+          })
+        }
       </ScrollView>
     </View>
   );

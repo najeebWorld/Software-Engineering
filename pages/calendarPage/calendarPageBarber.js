@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { Dropdown } from 'react-native-element-dropdown';
 import {StatusBar} from 'expo-status-bar';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
@@ -13,25 +13,21 @@ import {
   Alert,
 } from "react-native";
 import moment from "moment";
-import { getOrder } from "../../Firebase/FirebaseOperations";
+import { getOrder, getBarberOrders } from "../../Firebase/FirebaseOperations";
+import user from '../../Firebase/User'
+import ListItemSwipeable from "react-native-elements/dist/list/ListItemSwipeable";
+import { useFocusEffect } from "@react-navigation/native";
+
 
 export default function CalendarPage({navigation}) {
   
-  const _barberData = [
-    { label: 'Yossi 09:30', value: '1' },
-    { label: 'Yaron 10:00', value: '2' },
-    { label: 'Sapir 10:30', value: '3' },
-    { label: 'Bar 11:00', value: '4' },
-    { label: 'Tal 11:30', value: '5' },
-    { label: 'Tamar 12:00', value: '6' },
-    { label: 'Yoni 12:30', value: '7' },
-    { label: 'Ravid 13:00', value: '8' },
-  ];
+
 
   const _today = moment(new Date()).format("YYYY-MM-DD")
   const _lastDay = moment(new Date()).add(14, 'day').format("YYYY-MM-DD");
   const [_selectedDate, setSelectedDate] = useState(_today);
-  const [_chosenQueue, setChosenBarber] = useState("Scheduled Queue...")
+  const [_chosenQueue, setChosenBarber] = useState("false")
+  const [_days, setDays] = useState([]);
   
 
   const removeBlueStyle = () =>{
@@ -64,18 +60,10 @@ export default function CalendarPage({navigation}) {
   
 
   const dates = removeBlueStyle();
-  const changeOnDropDown = (item) => {
-    setChosenBarber(item.label);
-    console.log(item.label);
-  }
-
-
-  
 
 
   const OnBtnPress = () => {
-    navigation.navigate('WorkingDays');
-    
+    navigation.navigate('WorkingDays');   
 }
 
 const DISABLED_DAYS = ['Saturday']
@@ -96,32 +84,38 @@ const getDaysInMonth =  (month, year, days) => {
   return dates
 }
 
-var bool = true;
-
 const disabled = getDaysInMonth(moment().month(), moment().year(),  DISABLED_DAYS);
 
-  var appointments = {
-    '2022-12-07': [{details: "Men's haircut, 09:30"} 
-    ,{details: "Men's haircut, 10:30"}
-    ,{details: "Men's haircut, 11:00"}
-    ,{details: "Men's haircut, 12:30"}
-    ,{details: "Men's haircut, 13:00"}
-    ,{details: "Men's haircut, 14:00"}
-    ,{details: "Men's haircut, 15:30"}
-    ,{details: "Men's haircut, 16:30"}
-    ],
-    '2022-12-08': [{details: "Men's haircut, 12:30"}],
-    
+const [appointments, setAppointments] = useState({});
+useFocusEffect(React.useCallback(() => {
+  let days = [];
+  const getBarberOrders_ = async () => {
+    const app = await getBarberOrders(user.userID());
+    Object.values(app).forEach(appint => {
+       if(!days.includes(appint.date)) {
+        days.push(appint.date)
+       }
+    });
+    setDays(days);
+    let parseAppointment = {}
+    _days.forEach(date => {            
+          const currApp = generateApointments(date, app);
+          parseAppointment = {...parseAppointment,...currApp};
+    })
+    console.log("parseAppointment:", parseAppointment);
+    setAppointments(parseAppointment); 
   }
-
-    const onDayPress = async () => {
-        if(bool) { 
-            appointments = await getOrder();
-            console.log(appointments);
-            bool = false;
-        }
-    }
+  getBarberOrders_().catch((err)=>alert(err));
+},[_chosenQueue]));
   
+function generateApointments(date, appointments) {
+  if (appointments.date === date) {
+    appointments[appointment.date].push(appointment);
+  }
+  return {[date]: Object.values(appointments)
+    .filter(app => app.date === date)
+    .map(appointment => ({"info": appointment.extra_info, "time": appointment.time}))};
+}
 
   return (
     <View style={styles.container}>   
@@ -138,11 +132,12 @@ const disabled = getDaysInMonth(moment().month(), moment().year(),  DISABLED_DAY
         pastScrollRange={0}
         futureScrollRange={1}
         time_proportional={true}
-        renderItem={(item, isFirst) => (
+        renderItem={(item) => {
+          return(
           <TouchableOpacity style={styles.item_Agenda}>
-            <Text style={styles.itemText_Agenda}>{item.details} </Text>
+            <Text style={styles.itemText_Agenda}>Scheduled appointment at: {item.time} </Text>
           </TouchableOpacity>
-        )}
+          )}}
         style={{borderRadius: 10}}
         renderEmptyData={ () => {
             return <Text></Text>;
@@ -154,6 +149,7 @@ const disabled = getDaysInMonth(moment().month(), moment().year(),  DISABLED_DAY
             agendaTodayColor: '#E5C492',
             agendaKnobColor: '#E5C492',
           }}
+          onDayPress={()=>{setChosenBarber(!_chosenQueue)}}
       />
       </Fragment>
     </SafeAreaView>

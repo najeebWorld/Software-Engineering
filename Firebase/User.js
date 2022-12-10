@@ -19,11 +19,11 @@ class User {
         }
         this.appoinments = appointemnts;
     }
-    setCustomer = (flag) =>{
-        if(!flag){
-            return this.isCustomer;
+    setCustomer = (isCustomer) =>{
+        if(!isCustomer){
+            return this.isCustomer==="Customer";
         }
-        this.isCustomer=flag;
+        this.isCustomer=isCustomer;
     }
 }
 
