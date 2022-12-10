@@ -11,6 +11,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#E5C492',
+    alignItems: 'center',
     justifyContent: 'center',
   },
   containerScrollable: {
@@ -63,11 +64,11 @@ export const styles = StyleSheet.create({
     marginBottom: 55,
   },
   logoContainerOederDetail:{
-    // position: 'absolute',
-    width: 235,
-    height: 47,
-    marginLeft: 7,
-    marginTop: -600,
+    // resizeMode:"contain",
+    // width: "50%",
+    // height: "50%",
+    // marginTop:-350,
+
   },
   loginBtn: {
     width: '80%',
@@ -226,5 +227,30 @@ export const styles = StyleSheet.create({
     borderColor: '#8D5238',
     marginTop: 15,
   },
-  
+  userOrderDetails:{
+    resizeMode:"contain",
+  },
+  imagecontainer:{
+    alignItems: "center"
+  },
+  baseText: {
+    // flex: 1,
+    fontWeight: 'bold',
+    fontSize: 25,
+    color: 'black',
+    marginTop:100,
+  },
+  OrderDetailsUserName:{
+    color:"black",
+    fontFamily:"lucida grande",
+    fontSize:30,
+    marginTop:30,
+  },
+
+  // orderDetailsIMG:{
+  //   flex:1,
+  //   flexDirection: 'column',
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  // }
 });
