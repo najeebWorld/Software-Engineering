@@ -6,10 +6,19 @@ import { authenticate } from '../../Firebase/auth';
 import { getUser } from '../../Firebase/FirebaseOperations';
 import user from '../../Firebase/User'
 import { isFirstEntry, updateFirstEntry } from '../../Firebase/FirebaseOperations';
+import { useFocusEffect } from '@react-navigation/native';
+import auth from '@react-native-firebase/auth'
 export default function LoginForm({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  useFocusEffect(React.useCallback(()=>{
+    const signOut = async () =>{
+      await auth().signOut();
+    }
+    if(user.userID()){
+      signOut().catch(err=>console.log(err))
+    }
+  },[]));
   return (
     <View style={styles.container}>
       <Image

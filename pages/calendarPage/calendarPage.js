@@ -27,14 +27,14 @@ export default function CalendarPage({navigation}) {
         let counter = 1;
         workHoursArr.forEach(hour=>workHours.push({label: hour, value:counter++}))
         setWorkHours(workHours); 
-        if(workHours.length===0){
-          setHour('Choose Date');
+        if(workHours.length===0&&_barber_id){
+          setHour('Choose Time');
           alert('No available appointments on selected date')
         }
       }
     }
     getWorkDays().catch(err => alert(err));
-  },[_barber_id])
+  },[_barber_id, _selectedDate])
 
   useFocusEffect(React.useCallback(() => {
     const getBarbers = async () => {
