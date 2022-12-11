@@ -1,40 +1,48 @@
-import React, {useState, Fragment} from 'react';
+import React, {useState, Fragment, useEffect} from 'react';
 import {Dropdown} from 'react-native-element-dropdown';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import auth from '@react-native-firebase/auth';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import moment from 'moment';
-import {newOrder, getCustomerOrders} from '../../Firebase/FirebaseOperations';
+import {newOrder, getCustomerOrders, getAvailableAppointments, getBarberList} from '../../Firebase/FirebaseOperations';
 import user from '../../Firebase/User'
+import { useFocusEffect } from '@react-navigation/native';
 
 export default function CalendarPage({navigation}) {
-  const _barberData = [
-    {label: 'Eli', value: '1'},
-    {label: 'Avi', value: '2'},
-    {label: 'Rubi', value: '3'},
-    {label: 'Anton', value: '4'},
-    {label: 'Yaffa', value: '5'},
-    {label: 'Bar', value: '6'},
-    {label: 'Miki', value: '7'},
-    {label: 'Shimon', value: '8'},
-  ];
-
-  const _hoursData = [
-    {label: '09:30', value: '1'},
-    {label: '10:00', value: '2'},
-    {label: '10:30', value: '3'},
-    {label: '11:00', value: '4'},
-    {label: '11:30', value: '5'},
-    {label: '12:00', value: '6'},
-    {label: '12:30', value: '7'},
-    {label: '13:00', value: '8'},
-  ];
 
   const _today = moment(new Date()).format('YYYY-MM-DD');
   const _lastDay = moment(new Date()).add(14, 'day').format('YYYY-MM-DD');
   const [_hour, setHour] = useState('Choose time');
   const [_selectedDate, setSelectedDate] = useState(_today);
   const [_chosenBarber, setChosenBarber] = useState('Choose barber');
+  const [_barberData, SetBarberData] = useState([]);
+  const [_barber_id, setBarberID] = useState('');
+  const [_workHours, setWorkHours] = useState([]);
+  const [_findBarbers, setFindBarbers] = useState(false);
+  useEffect(()=>{
+    const getWorkDays = async () =>{
+      if(_barber_id){
+        const workHoursArr = await getAvailableAppointments(_selectedDate,_barber_id).catch(err=>alert(err));
+        const workHours = [];
+        let counter = 1;
+        workHoursArr.forEach(hour=>workHours.push({label: hour, value:counter++}))
+        setWorkHours(workHours); 
+        if(workHours.length===0&&_barber_id){
+          setHour('Choose Time');
+          alert('No available appointments on selected date')
+        }
+      }
+    }
+    getWorkDays().catch(err => alert(err));
+  },[_barber_id, _selectedDate])
+
+  useFocusEffect(React.useCallback(() => {
+    const getBarbers = async () => {
+      const Barbers = await getBarberList();
+      SetBarberData(Barbers);
+    }
+    getBarbers().catch((err)=>alert(err));
+  },[]));
 
   const removeBlueStyle = () => {
     const day = _today.split('-')[2];
@@ -69,9 +77,31 @@ export default function CalendarPage({navigation}) {
 
   const dates = removeBlueStyle();
   const changeOnDropDownBarber = item => {
+    console.log('label',item.label);
     setChosenBarber(item.label);
+    setBarberID(item.value);
     console.log(item.label);
   };
+
+  const DISABLED_DAYS = ['Saturday']
+
+const getDaysInMonth =  (month, year, days) => {
+  let pivot = moment().month(month).year(year).startOf('month')
+  const end = moment().month(month).year(year).endOf('month')
+
+  let dates = {}
+  const disabled = { disabled: true }
+  while(pivot.isBefore(end)) {
+    days.forEach((day) => {
+      dates[pivot.day(day).format("YYYY-MM-DD")] = disabled
+    })
+    pivot.add(7, 'days')
+  }
+
+  return dates
+}
+
+const disabled = getDaysInMonth(moment().month(), moment().year(),  DISABLED_DAYS);
 
   const changeOnDropDownHour = item => {
     setHour(item.label);
@@ -85,11 +115,12 @@ export default function CalendarPage({navigation}) {
   };
 
   const OnBtnPress = async () => {
-    if (_chosenBarber && _selectedDate && _hour) {
-      await newOrder(_chosenBarber, _selectedDate, _hour);
+    if (_chosenBarber != 'Choose barber' && _selectedDate != '' && _hour != 'Choose time') {
+      await newOrder(_barber_id, _selectedDate, _hour);
+      alert('Your chosen appointment is scheduled');
       console.log(
         'Your chosen appointment is: ',
-        _chosenBarber,
+        _barber_id,
         _selectedDate,
         _hour,
       );
@@ -121,6 +152,7 @@ export default function CalendarPage({navigation}) {
                 selectedTextColor: 'black',
               },
               ...dates,
+              ...disabled
             }}
           />
         </Fragment>
@@ -142,7 +174,7 @@ export default function CalendarPage({navigation}) {
       <View>
         <Dropdown
           style={styles.dropdown}
-          data={_hoursData}
+          data={_workHours}
           itemTextStyle={styles.downDropText}
           maxHeight={200}
           labelField="label"
@@ -155,9 +187,7 @@ export default function CalendarPage({navigation}) {
       </View>
       <TouchableOpacity
         style={styles.btn}
-        onPress={async () => {
-          await newOrder(_barberData, _selectedDate, _hour);
-        }}>
+        onPress={async ()=>{await OnBtnPress()}}>
         <Text style={styles.text}>Make an appointment</Text>
       </TouchableOpacity>
     </View>
@@ -187,6 +217,8 @@ const styles = StyleSheet.create({
   placeholderStyle: {
     fontSize: 15,
     textAlign: 'center',
+    alignContent: 'center',
+    alignItems: 'center',
     color: 'black',
     bold: 'true',
   },
@@ -195,7 +227,9 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: 'black',
     bold: 'true',
-    backgroundColor: 'black',
+    backgroundColor: 'white',
+    flex: 2,
+    marginLeft:95
   },
 
   SecContainer: {
