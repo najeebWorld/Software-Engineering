@@ -28,7 +28,7 @@ export const newUser = async (uId, uName, uEmail, uPassword, uPhone) => {
         userName: uName,
         userEmail: uEmail,
         userPhone: uPhone
-      }).then(()=>{
+      }).then(() => {
         console.log("Client ", uId, " added successfully.")
       })
   }catch(error){
@@ -68,9 +68,32 @@ export const updateBarberWorkingDays = async (WorkingDays) =>{
     await firestore().collection('Barbers').doc(uid).update({
       availableWorkHours: WorkingDays,
     }).then(()=>{console.log('Barber N.',uid,' appointments updated!');})
-  }catch(error){
+  }catch(error) {
     alert(`updating barber workingDays failed, Error message:${error}`)
   }
+}
+
+export const getBarberWorkingDays = async (uid) =>{
+  var ans = []
+  try {
+    await firestore().collection('Barbers').get()
+    .then(snapshot => {
+      snapshot.forEach(docSnapshot => {
+        if(docSnapshot.data().userId === uid) {
+          ans = Object.keys(docSnapshot.data().availableWorkHours);
+        }
+      })
+    })
+  }catch(error) {
+    alert(`get barber workingDays failed, Error message:${error}`)
+  }
+
+  let list = ['Sun', 'Mon', 'Thu', 'Wed', 'Tue', 'Fri', 'Sat']
+  let difference = list.filter(x => !ans.includes(x));
+
+  return difference;
+
+
 }
 
 /**
@@ -94,7 +117,8 @@ export const newOrder = async (_chosenBarber, _selectedDate, _hour) => {
         Customer_id: user.userID(),
         date: _selectedDate,
         time: _hour,
-        extra_info: ""
+        extra_info: "",
+        cus_name: await getUser(user.userID()),
       })
       .then(() => {
         console.log('Success!');
@@ -111,12 +135,23 @@ export const newOrder = async (_chosenBarber, _selectedDate, _hour) => {
  * @returns 
  */
 export const getUser = async (uid) => {
-    const userData =  (await firestore().collection('Users').doc(uid).get().catch((err)=>{throw Error(err)}))
-    return userData._data;
+    var fullname = "";
+    (await firestore().collection('Users')
+    .get()
+    .then(snapshot => {
+      snapshot.forEach(docSnapshot => {
+        if (docSnapshot.data().userId === uid) {
+          fullname = docSnapshot.data().userName;
+        }
+      })
+    })
+    .catch((err)=>{throw Error(err)}))
+    console.log(fullname);
+    return fullname;
 }
 
 export const getBarber = async (uid) => {
-  const userData =  (await firestore().collection('Barbers').doc(uid).get().catch((err)=>{throw Error(err)}))
+  const userData = (await firestore().collection('Barbers').doc(uid).get().catch((err)=>{throw Error(err)}))
   return userData._data;
 }
 

@@ -3,6 +3,7 @@ import { Dropdown } from 'react-native-element-dropdown';
 import {StatusBar} from 'expo-status-bar';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import AppoinmentContainer from '../components/AppoinmentContainer';
+import * as _React from 'react';
 import {
   StyleSheet,
   Text,
@@ -13,10 +14,17 @@ import {
   Alert,
 } from "react-native";
 import moment from "moment";
-import { getOrder, getBarberOrders } from "../../Firebase/FirebaseOperations";
+
+import { getOrder, getBarberOrders, getUser, getBarberWorkingDays } from "../../Firebase/FirebaseOperations";
 import user from '../../Firebase/User'
 import ListItemSwipeable from "react-native-elements/dist/list/ListItemSwipeable";
 import { useFocusEffect } from "@react-navigation/native";
+import { Avatar } from "react-native-paper";
+import { Card } from "react-native-paper";
+
+/*
+TODO: 1.sort the hours on the calendar
+*/
 
 
 export default function CalendarPage({navigation}) {
@@ -30,7 +38,7 @@ export default function CalendarPage({navigation}) {
   const [_days, setDays] = useState([]);
   
 
-  const removeBlueStyle = () =>{
+  const removeBlueStyle = () => {
     const day = _today.split('-')[2];
     const year = _today.split('-')[0];
     let dates = {}
@@ -48,7 +56,7 @@ export default function CalendarPage({navigation}) {
           selectedColor: "white",
           selectedTextColor: "lightgrey"
         }
-      }else{
+      } else {
         dates[[currDate]] = {
           selectedColor: "white",
           selectedTextColor: 'black'
@@ -66,7 +74,7 @@ export default function CalendarPage({navigation}) {
     navigation.navigate('WorkingDays');   
 }
 
-const DISABLED_DAYS = ['Saturday']
+let DISABLED_DAYS = ['Saturday']
 
 const getDaysInMonth =  (month, year, days) => {
   let pivot = moment().month(month).year(year).startOf('month')
@@ -91,6 +99,7 @@ useFocusEffect(React.useCallback(() => {
   let days = [];
   const getBarberOrders_ = async () => {
     const app = await getBarberOrders(user.userID());
+
     Object.values(app).forEach(appint => {
        if(!days.includes(appint.date)) {
         days.push(appint.date)
@@ -114,13 +123,12 @@ function generateApointments(date, appointments) {
   }
   return {[date]: Object.values(appointments)
     .filter(app => app.date === date)
-    .map(appointment => ({"info": appointment.extra_info, "time": appointment.time}))};
+    .map(appointment => ({"info": appointment.extra_info, "time": appointment.time, "cus_id": appointment.Customer_id, "name": appointment.cus_name}))};
+
 }
 
   return (
-    <View style={styles.container}>   
-
-
+    <View style={styles.container}>
     <SafeAreaView style={styles.container_Agenda}>
       <Fragment>
       <Agenda
@@ -132,10 +140,15 @@ function generateApointments(date, appointments) {
         pastScrollRange={0}
         futureScrollRange={1}
         time_proportional={true}
-        renderItem={(item) => {
+
+        renderItem={ (item) =>  {
+          if (item.name) {
+            var l = item.name.toString().toUpperCase().charAt(0);
+          }
           return(
           <TouchableOpacity style={styles.item_Agenda}>
-            <Text style={styles.itemText_Agenda}>Scheduled appointment at: {item.time} </Text>
+            <Text style={styles.itemText_Agenda}>Scheduled appointment at: {item.time}, {item.name}</Text>
+            <Avatar.Text label={l} style={styles.avatar} size={32}/> 
           </TouchableOpacity>
           )}}
         style={{borderRadius: 10}}
@@ -204,8 +217,6 @@ const styles = StyleSheet.create({
   SecContainer: {
     flex: 1,
     paddingTop: 10,
-    //backgroundColor: "white",
-    //width: 200
    },
    
   header: {
@@ -235,6 +246,7 @@ const styles = StyleSheet.create({
     borderRadius: 10
 
   },
+
 
   logoContainer: {
     alignItems: "flex-start",
@@ -279,6 +291,9 @@ const styles = StyleSheet.create({
   itemText_Agenda: {
     color: '#888',
     fontSize: 16,
+  },
+  avatar: {
+    color: '#E5C492',
   }
 
 });
