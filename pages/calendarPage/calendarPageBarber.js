@@ -14,6 +14,7 @@ import {
   Alert,
 } from "react-native";
 import moment from "moment";
+
 import { getOrder, getBarberOrders, getUser, getBarberWorkingDays } from "../../Firebase/FirebaseOperations";
 import user from '../../Firebase/User'
 import ListItemSwipeable from "react-native-elements/dist/list/ListItemSwipeable";
@@ -24,6 +25,7 @@ import { Card } from "react-native-paper";
 /*
 TODO: 1.sort the hours on the calendar
 */
+
 
 export default function CalendarPage({navigation}) {
   
@@ -97,7 +99,7 @@ useFocusEffect(React.useCallback(() => {
   let days = [];
   const getBarberOrders_ = async () => {
     const app = await getBarberOrders(user.userID());
-    console.log(app);
+
     Object.values(app).forEach(appint => {
        if(!days.includes(appint.date)) {
         days.push(appint.date)
@@ -122,6 +124,7 @@ function generateApointments(date, appointments) {
   return {[date]: Object.values(appointments)
     .filter(app => app.date === date)
     .map(appointment => ({"info": appointment.extra_info, "time": appointment.time, "cus_id": appointment.Customer_id, "name": appointment.cus_name}))};
+
 }
 
   return (
@@ -137,6 +140,7 @@ function generateApointments(date, appointments) {
         pastScrollRange={0}
         futureScrollRange={1}
         time_proportional={true}
+
         renderItem={ (item) =>  {
           if (item.name) {
             var l = item.name.toString().toUpperCase().charAt(0);
