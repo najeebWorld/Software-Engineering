@@ -2,22 +2,19 @@ import {StatusBar} from 'expo-status-bar';
 import React, {useState} from 'react';
 import {styles} from '../styles';
 import {Text, View, TextInput, TouchableOpacity, Image} from 'react-native';
-import { authenticate } from '../../Firebase/auth';
-import { getUser } from '../../Firebase/FirebaseOperations';
+import { authenticate, signOut } from '../../Firebase/Authentication';
 import user from '../../Firebase/User'
-import { isFirstEntry, updateFirstEntry } from '../../Firebase/FirebaseOperations';
+import { isFirstEntry, updateFirstEntry } from '../../Firebase/BarberOperations';
 import { useFocusEffect } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth'
 export default function LoginForm({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   useFocusEffect(React.useCallback(()=>{
-    const signOut = async () =>{
-      await auth().signOut();
+    const checkSignOut = async () =>{
+      await signOut();
     }
-    if(user.userID()){
-      signOut().catch(err=>console.log(err))
-    }
+    checkSignOut().catch(err=>console.log(err));
   },[]));
   return (
     <View style={styles.container}>

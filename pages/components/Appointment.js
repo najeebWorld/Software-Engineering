@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, Image, Touchable, TouchableOpacity} from 'react-native';
 import Svg, {Path} from 'react-native-svg';
-import { getBarber, deleteOrder } from '../../Firebase/FirebaseOperations';
+import { deleteOrder } from '../../Firebase/OrderOperations';
+import { getBarber } from '../../Firebase/BarberOperations';
 import {styles} from '../styles';
 const Appointment = props => {
   const [barberName,setbarberName] = useState('');

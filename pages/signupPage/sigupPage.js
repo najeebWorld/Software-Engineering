@@ -13,8 +13,7 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import { barberSignUp, customerSignUp } from '../../Firebase/auth';
-import { newClient } from '../../Firebase/FirebaseOperations';
+import { barberSignUp, customerSignUp } from '../../Firebase/Authentication';
 
 export default function SignupForm({navigation}) {
   const [name, setName] = useState('');

@@ -1,11 +1,11 @@
 import React, {useState, Fragment, useEffect} from 'react';
 import {Dropdown} from 'react-native-element-dropdown';
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
-import auth from '@react-native-firebase/auth';
+import {Calendar} from 'react-native-calendars';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import moment from 'moment';
 
-import {newOrder, getCustomerOrders, getAvailableAppointments, getBarberList, getBarberWorkingDays} from '../../Firebase/FirebaseOperations';
+import {getBarberList, getBarberWorkingDays} from '../../Firebase/BarberOperations';
+import {newOrder, getCustomerOrders, getAvailableAppointments} from '../../Firebase/OrderOperations'
 import user from '../../Firebase/User'
 import { useFocusEffect } from '@react-navigation/native';
 

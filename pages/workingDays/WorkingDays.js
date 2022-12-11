@@ -3,7 +3,7 @@ import {Dropdown} from 'react-native-element-dropdown';
 import DaySelector from '../components/daySelector';
 import {Text, View, TouchableOpacity, Image} from 'react-native';
 import {styles} from '../styles';
-import { updateBarberWorkingDays } from '../../Firebase/FirebaseOperations';
+import { updateBarberWorkingDays } from '../../Firebase/BarberOperations';
 
 export default function WorkingDays({navigation}) {
   const _hoursData = [

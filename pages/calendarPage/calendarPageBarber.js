@@ -1,8 +1,5 @@
-import React, { useState, useEffect, Fragment } from "react";
-import { Dropdown } from 'react-native-element-dropdown';
-import {StatusBar} from 'expo-status-bar';
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
-import AppoinmentContainer from '../components/AppoinmentContainer';
+import React, { useState, Fragment } from "react";
+import {Agenda} from 'react-native-calendars';
 import * as _React from 'react';
 import {
   StyleSheet,
@@ -10,17 +7,12 @@ import {
   View,
   TouchableOpacity,
   SafeAreaView,
-  Image,
-  Alert,
 } from "react-native";
 import moment from "moment";
-
-import { getOrder, getBarberOrders, getUser, getBarberWorkingDays } from "../../Firebase/FirebaseOperations";
+import { getBarberOrders } from "../../Firebase/OrderOperations";
 import user from '../../Firebase/User'
-import ListItemSwipeable from "react-native-elements/dist/list/ListItemSwipeable";
 import { useFocusEffect } from "@react-navigation/native";
 import { Avatar } from "react-native-paper";
-import { Card } from "react-native-paper";
 
 /*
 TODO: 1.sort the hours on the calendar
@@ -116,14 +108,35 @@ useFocusEffect(React.useCallback(() => {
   }
   getBarberOrders_().catch((err)=>alert(err));
 },[_chosenQueue]));
-  
+
+useFocusEffect(React.useCallback(() => {
+  let days = [];
+  const getBarberOrders_ = async () => {
+    const app = await getBarberOrders(user.userID());
+
+    Object.values(app).forEach(appint => {
+       if(!days.includes(appint.date)) {
+        days.push(appint.date)
+       }
+    });
+    setDays(days);
+    let parseAppointment = {}
+    _days.forEach(date => {            
+          const currApp = generateApointments(date, app);
+          parseAppointment = {...parseAppointment,...currApp};
+    })
+    console.log("parseAppointment:", parseAppointment);
+    setAppointments(parseAppointment); 
+  }
+  getBarberOrders_().catch((err)=>alert(err));
+},[]));
 function generateApointments(date, appointments) {
   if (appointments.date === date) {
     appointments[appointment.date].push(appointment);
   }
-  return {[date]: Object.values(appointments)
-    .filter(app => app.date === date)
-    .map(appointment => ({"info": appointment.extra_info, "time": appointment.time, "cus_id": appointment.Customer_id, "name": appointment.cus_name}))};
+  return {[date]: Object.keys(appointments)
+    .filter(app => appointments[app].date === date)
+    .map(appointment => ({"info": appointments[appointment].extra_info, "time": appointments[appointment].time, "cus_id": appointments[appointment].Customer_id, "name": appointments[appointment].cus_name, 'orderKey': appointment, "date": appointments[appointment].date}))};
 
 }
 
@@ -142,11 +155,12 @@ function generateApointments(date, appointments) {
         time_proportional={true}
 
         renderItem={ (item) =>  {
+          console.log('name',item.name);
           if (item.name) {
             var l = item.name.toString().toUpperCase().charAt(0);
           }
           return(
-          <TouchableOpacity style={styles.item_Agenda}>
+          <TouchableOpacity style={styles.item_Agenda} onPress={()=>{navigation.navigate('OrderDetails',{item})}}>
             <Text style={styles.itemText_Agenda}>Scheduled appointment at: {item.time}, {item.name}</Text>
             <Avatar.Text label={l} style={styles.avatar} size={32}/> 
           </TouchableOpacity>
