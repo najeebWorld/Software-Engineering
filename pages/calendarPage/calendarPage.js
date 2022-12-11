@@ -4,7 +4,7 @@ import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import auth from '@react-native-firebase/auth';
 import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import moment from 'moment';
-import {newOrder, getCustomerOrders, getAvailableAppointments, getBarberList} from '../../Firebase/FirebaseOperations';
+import {newOrder, getCustomerOrders, getAvailableAppointments, getBarberList, getBarberWorkingDays} from '../../Firebase/FirebaseOperations';
 import user from '../../Firebase/User'
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -76,14 +76,15 @@ export default function CalendarPage({navigation}) {
   };
 
   const dates = removeBlueStyle();
-  const changeOnDropDownBarber = item => {
-    console.log('label',item.label);
+  const changeOnDropDownBarber = async item =>  {
+    // console.log('label',item.label);
     setChosenBarber(item.label);
     setBarberID(item.value);
-    console.log(item.label);
+    setDISABLED_DAYS(await getBarberWorkingDays(item.value));
+    // console.log(item.label);
   };
 
-  const DISABLED_DAYS = ['Saturday']
+  const [DISABLED_DAYS, setDISABLED_DAYS] = useState([]);
 
 const getDaysInMonth =  (month, year, days) => {
   let pivot = moment().month(month).year(year).startOf('month')
@@ -115,7 +116,7 @@ const disabled = getDaysInMonth(moment().month(), moment().year(),  DISABLED_DAY
   };
 
   const OnBtnPress = async () => {
-    if (_chosenBarber != 'Choose barber' && _selectedDate != '' && _hour != 'Choose time') {
+    if (_chosenBarber != 'Choose barber' && _selectedDate != '' && _hour != 'Choose Time') {
       await newOrder(_barber_id, _selectedDate, _hour);
       alert('Your chosen appointment is scheduled');
       console.log(

@@ -28,7 +28,7 @@ export const newUser = async (uId, uName, uEmail, uPassword, uPhone) => {
         userName: uName,
         userEmail: uEmail,
         userPhone: uPhone
-      }).then(()=>{
+      }).then(() => {
         console.log("Client ", uId, " added successfully.")
       })
   }catch(error){
@@ -68,9 +68,32 @@ export const updateBarberWorkingDays = async (WorkingDays) =>{
     await firestore().collection('Barbers').doc(uid).update({
       availableWorkHours: WorkingDays,
     }).then(()=>{console.log('Barber N.',uid,' appointments updated!');})
-  }catch(error){
+  }catch(error) {
     alert(`updating barber workingDays failed, Error message:${error}`)
   }
+}
+
+export const getBarberWorkingDays = async (uid) =>{
+  var ans = []
+  try {
+    await firestore().collection('Barbers').get()
+    .then(snapshot => {
+      snapshot.forEach(docSnapshot => {
+        if(docSnapshot.data().userId === uid) {
+          ans = Object.keys(docSnapshot.data().availableWorkHours);
+        }
+      })
+    })
+  }catch(error) {
+    alert(`get barber workingDays failed, Error message:${error}`)
+  }
+
+  let list = ['Sun', 'Mon', 'Thu', 'Wed', 'Tue', 'Fri', 'Sat']
+  let difference = list.filter(x => !ans.includes(x));
+
+  return difference;
+
+
 }
 
 /**

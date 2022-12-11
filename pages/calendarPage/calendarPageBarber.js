@@ -15,12 +15,16 @@ import {
   Alert,
 } from "react-native";
 import moment from "moment";
-import { getOrder, getBarberOrders, getUser } from "../../Firebase/FirebaseOperations";
+import { getOrder, getBarberOrders, getUser, getBarberWorkingDays } from "../../Firebase/FirebaseOperations";
 import user from '../../Firebase/User'
 import ListItemSwipeable from "react-native-elements/dist/list/ListItemSwipeable";
 import { useFocusEffect } from "@react-navigation/native";
 import { Avatar } from "react-native-paper";
 
+/*
+TODO: 1.sort the hours on the calendar
+2. add a function to disabled days.
+*/
 
 export default function CalendarPage({navigation}) {
   
@@ -33,7 +37,7 @@ export default function CalendarPage({navigation}) {
   const [_days, setDays] = useState([]);
   
 
-  const removeBlueStyle = () =>{
+  const removeBlueStyle = () => {
     const day = _today.split('-')[2];
     const year = _today.split('-')[0];
     let dates = {}
@@ -51,7 +55,7 @@ export default function CalendarPage({navigation}) {
           selectedColor: "white",
           selectedTextColor: "lightgrey"
         }
-      }else{
+      } else {
         dates[[currDate]] = {
           selectedColor: "white",
           selectedTextColor: 'black'
@@ -69,7 +73,7 @@ export default function CalendarPage({navigation}) {
     navigation.navigate('WorkingDays');   
 }
 
-const DISABLED_DAYS = ['Saturday']
+let DISABLED_DAYS = ['Saturday']
 
 const getDaysInMonth =  (month, year, days) => {
   let pivot = moment().month(month).year(year).startOf('month')
