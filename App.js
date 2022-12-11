@@ -8,13 +8,14 @@ import SuccessfullLogin from './pages/success/SuccessfullLogin';
 import WorkingDays from './pages/workingDays/WorkingDays';
 import MyAppointments from './pages/MyAppointments/MyAppointments';
 import CalendarPageBarber from './pages/calendarPage/calendarPageBarber'
+import OrderDetails from './pages/orderDetails/orderDetails';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Login"
+        initialRouteName="OrderDetails"
         screenOptions={{
           headerShown: false,
         }}>
@@ -24,6 +25,7 @@ export default function App() {
         <Stack.Screen name="Success" component={SuccessfullLogin} />
         <Stack.Screen name="WorkingDays" component={WorkingDays} />
         <Stack.Screen name="MyAppointments" component={MyAppointments} />
+        <Stack.Screen name="OrderDetails" component={OrderDetails} />
         <Stack.Screen name="CalendarPageBarber" component={CalendarPageBarber} />
       </Stack.Navigator>
     </NavigationContainer>

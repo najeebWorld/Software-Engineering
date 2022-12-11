@@ -75,7 +75,6 @@ export default function CalendarPage({navigation}) {
 
   const OnBtnPress = () => {
     navigation.navigate('WorkingDays');
-    
 }
 
 const DISABLED_DAYS = ['Saturday']

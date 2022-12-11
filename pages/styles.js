@@ -64,11 +64,9 @@ export const styles = StyleSheet.create({
     marginBottom: 55,
   },
   logoContainerOederDetail:{
-    // resizeMode:"contain",
-    // width: "50%",
-    // height: "50%",
-    // marginTop:-350,
-
+  },
+  logoContainerOederDetailOther:{
+    bottom: 10
   },
   loginBtn: {
     width: '80%',
@@ -78,6 +76,11 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 40,
     backgroundColor: '#000000',
+  },
+  orderDetailsButtons:{
+    margin:20,
+    width:300,
+    resizeMode:'center',
   },
 
   loginText: {
@@ -234,7 +237,6 @@ export const styles = StyleSheet.create({
     alignItems: "center"
   },
   baseText: {
-    // flex: 1,
     fontWeight: 'bold',
     fontSize: 25,
     color: 'black',
@@ -245,12 +247,13 @@ export const styles = StyleSheet.create({
     fontFamily:"lucida grande",
     fontSize:30,
     marginTop:30,
+    fontWeight: 'bold',
   },
 
-  // orderDetailsIMG:{
-  //   flex:1,
-  //   flexDirection: 'column',
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  // }
+  OrderDetailsOtherDetails:{
+    color:"black",
+    fontSize:20,
+    marginTop:10,
+  },
+
 });
