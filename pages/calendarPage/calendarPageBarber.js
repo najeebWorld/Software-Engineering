@@ -4,7 +4,6 @@ import {StatusBar} from 'expo-status-bar';
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import AppoinmentContainer from '../components/AppoinmentContainer';
 import * as _React from 'react';
-// import { Avatar } from 'react-native-paper';
 import {
   StyleSheet,
   Text,
@@ -20,6 +19,7 @@ import user from '../../Firebase/User'
 import ListItemSwipeable from "react-native-elements/dist/list/ListItemSwipeable";
 import { useFocusEffect } from "@react-navigation/native";
 import { Avatar } from "react-native-paper";
+import { Card } from "react-native-paper";
 
 /*
 TODO: 1.sort the hours on the calendar
@@ -125,9 +125,7 @@ function generateApointments(date, appointments) {
 }
 
   return (
-    <View style={styles.container}>   
-
-
+    <View style={styles.container}>
     <SafeAreaView style={styles.container_Agenda}>
       <Fragment>
       <Agenda
@@ -146,7 +144,7 @@ function generateApointments(date, appointments) {
           return(
           <TouchableOpacity style={styles.item_Agenda}>
             <Text style={styles.itemText_Agenda}>Scheduled appointment at: {item.time}, {item.name}</Text>
-            <Avatar.Text label={l} style={styles.avatar} size={32}/>
+            <Avatar.Text label={l} style={styles.avatar} size={32}/> 
           </TouchableOpacity>
           )}}
         style={{borderRadius: 10}}
@@ -215,8 +213,6 @@ const styles = StyleSheet.create({
   SecContainer: {
     flex: 1,
     paddingTop: 10,
-    //backgroundColor: "white",
-    //width: 200
    },
    
   header: {

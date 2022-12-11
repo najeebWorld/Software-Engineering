@@ -144,6 +144,7 @@ const disabled = getDaysInMonth(moment().month(), moment().year(),  DISABLED_DAY
             initialDate={_today}
             minDate={_today}
             maxDate={_lastDay}
+            disableAllTouchEventsForDisabledDays={true}
             style={{borderRadius: 10}}
             onDayPress={day => setSelectedDate(day.dateString)}
             markedDates={{
