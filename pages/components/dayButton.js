@@ -1,12 +1,12 @@
-import React, {useState} from 'react';
-import {styles} from '../styles';
-import {Text, TouchableOpacity} from 'react-native';
+import React, { useState } from "react";
+import { styles } from "../styles";
+import { Text, TouchableOpacity } from "react-native";
 
-const DayButton = props => {
+const DayButton = (props) => {
   const [isClicked, setIsClicked] = useState(false);
   const onClickHandler = () => {
     setIsClicked(!isClicked);
-    props.setWeekDays(prevState => {
+    props.setWeekDays((prevState) => {
       const day = props.day;
       return {
         ...prevState,
@@ -17,7 +17,8 @@ const DayButton = props => {
   return (
     <TouchableOpacity
       style={isClicked ? styles.dayButtonClicked : styles.dayButton}
-      onPress={onClickHandler}>
+      onPress={onClickHandler}
+    >
       <Text style={isClicked ? styles.dayTextClicked : styles.dayText}>
         {props.day}
       </Text>
