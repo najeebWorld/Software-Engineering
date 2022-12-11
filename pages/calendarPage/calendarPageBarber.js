@@ -23,7 +23,6 @@ import { Avatar } from "react-native-paper";
 
 /*
 TODO: 1.sort the hours on the calendar
-2. add a function to disabled days.
 */
 
 export default function CalendarPage({navigation}) {
