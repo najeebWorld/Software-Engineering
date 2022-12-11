@@ -5,6 +5,7 @@
         "time": "time",
         "extra_info": "info",
         "barber_id": "barber_id",
-        "client_id": "client_id"
+        "client_id": "client_id",
+        "cus_name": "customer_name"
     }
 }
