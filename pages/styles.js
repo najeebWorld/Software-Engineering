@@ -213,4 +213,47 @@ export const styles = StyleSheet.create({
     borderColor: '#8D5238',
     marginTop: 15,
   },
+  containerForOrderDetails: {
+    flex: 1,
+    flexDirection: 'column',
+    backgroundColor: '#E5C492',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  logoContainerOederDetail:{
+  },
+  logoContainerOederDetailOther:{
+    bottom: 10
+  },
+  orderDetailsButtons:{
+    margin:20,
+    width:300,
+    resizeMode:'center',
+    borderRadius:25,
+  },
+  userOrderDetails:{
+    resizeMode:"contain",
+  },
+  imagecontainer:{
+    alignItems: "center"
+  },
+  baseText: {
+    fontWeight: 'bold',
+    fontSize: 25,
+    color: 'black',
+    marginTop:100,
+  },
+  OrderDetailsUserName:{
+    color:"black",
+    fontFamily:"lucida grande",
+    fontSize:30,
+    marginTop:30,
+    fontWeight: 'bold',
+  },
+
+  OrderDetailsOtherDetails:{
+    color:"black",
+    fontSize:20,
+    marginTop:10,
+  },
 });
