@@ -122,8 +122,11 @@ const disabled = getDaysInMonth(moment().month(), moment().year(),  DISABLED_DAY
 
     if (_chosenBarber != 'Choose barber' && _selectedDate != '' && _hour != 'Choose Time') {
 
-      await newOrder(_barber_id, _selectedDate, _hour);
-      alert('Your chosen appointment is scheduled');
+      const success = await newOrder(_barber_id, _selectedDate, _hour);
+      console.log('Success=',success);
+      if(success){
+        alert('Your chosen appointment is scheduled');
+      }
       console.log(
         'Your chosen appointment is: ',
         _barber_id,
