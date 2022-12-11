@@ -1,14 +1,9 @@
 import {StatusBar} from 'expo-status-bar';
 import React, {useState} from 'react';
-import {CheckBox} from 'react-native-elements';
 import {styles} from '../styles';
-import {useNavigation} from '@react-navigation/native';
 import {
-  StyleSheet,
   Text,
   View,
-  TextInput,
-  Button,
   TouchableOpacity,
   Image,
 } from 'react-native';

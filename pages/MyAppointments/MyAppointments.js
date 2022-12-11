@@ -10,7 +10,7 @@ import {
 import {styles} from '../styles';
 import AppoinmentContainer from '../components/AppoinmentContainer';
 import {StatusBar} from 'expo-status-bar';
-import { getCustomerOrders } from '../../Firebase/FirebaseOperations';
+import { getCustomerOrders } from '../../Firebase/OrderOperations';
 import user from '../../Firebase/User'
 import { get } from 'https';
 import { useFocusEffect } from '@react-navigation/native';

@@ -1,31 +1,58 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Image, Text, Button, Linking, TouchableOpacity} from 'react-native'
 import {styles}from '../styles'
+import { deleteOrder } from '../../Firebase/OrderOperations';
+import { getUser } from '../../Firebase/CustomerOperations';
+import user from '../../Firebase/User'
+import { useFocusEffect } from '@react-navigation/native';
 
 
 
-export default function OrderDetails ({navigation})  {
+export default function OrderDetails ({navigation, route})  {
+  const item = route.params.item;
+  const [deleteGuard, setDeleteGuard] = useState(false);
+  const [deleteOrderState, setDeleteOrder] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState('');
+  useEffect(()=>{
+    const onDeleteOrder = async () =>{
+      if(deleteGuard){
+        await deleteOrder(user.userID(),item.date,item.time,item.orderKey)
+        setDeleteGuard(false);
+      }
+    }
+    onDeleteOrder().catch(err=>alert(err));
+  },[deleteOrderState]);
+
+  useFocusEffect(React.useCallback(()=>{
+    const getPhone = async () => {
+      const customer = await getUser(item.cus_id);
+      setPhoneNumber(customer.userPhone);
+    }
+    getPhone().catch(err=>alert(err));
+  },[]));
+
   const orderData = {
-    clientName: 'userName',
-    clientPhone: '050-000-0000',
-    orderDate: '12/10/2022, 16:00-16:45',
-    orderExtraInfo: 'fade',
+    clientName: item.name,
+    clientPhone: phoneNumber,
+    orderDate: `${item.date}, ${item.time}`,
+    orderExtraInfo: item.info,
   }
   
   const CancelAppointment= ()=> {
-    alert('This appointment will be canceled.')
+    setDeleteGuard(true);
+    setDeleteOrder(!deleteOrderState);
+    alert("Appointment Canceled Successfully");
   };
   
   const navigateBack= ()=> {
-    navigation.navigate('MyAppointments');
-    alert('Return to all appointments.')
+    navigation.navigate('CalendarPageBarber');
+
   };
 
   const callClient = (phoneNumber)=>{
     Linking.openURL(`tel:${phoneNumber}`)
   };
   
-
   return (
     <View style={styles.containerForOrderDetails}>
       {/**
@@ -84,8 +111,9 @@ export default function OrderDetails ({navigation})  {
         <View style={styles.orderDetailsButtons}> 
           <Button
             onPress={CancelAppointment}
-            title="Cancel Appointments"
+            title="Cancel Appointment"
             color='#ff0000'
+            style={{borderRadius: 25}}
           />
         </View>
         <View style={styles.orderDetailsButtons}>
