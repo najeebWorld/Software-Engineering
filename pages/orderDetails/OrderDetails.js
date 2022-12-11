@@ -49,6 +49,7 @@ export default function OrderDetails({ navigation, route }) {
     setDeleteGuard(true);
     setDeleteOrder(!deleteOrderState);
     alert("Appointment Canceled Successfully");
+    navigateBack();
   };
 
   const navigateBack = () => {

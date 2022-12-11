@@ -89,7 +89,6 @@ export default function CalendarPage({ navigation }) {
       let days = [];
       const getBarberOrders_ = async () => {
         const app = await getBarberOrders(user.userID());
-
         Object.values(app).forEach((appint) => {
           if (!days.includes(appint.date)) {
             days.push(appint.date);
@@ -97,7 +96,7 @@ export default function CalendarPage({ navigation }) {
         });
         setDays(days);
         let parseAppointment = {};
-        _days.forEach((date) => {
+        days.forEach((date) => {
           const currApp = generateApointments(date, app);
           parseAppointment = { ...parseAppointment, ...currApp };
         });
@@ -108,29 +107,6 @@ export default function CalendarPage({ navigation }) {
     }, [_chosenQueue])
   );
 
-  useFocusEffect(
-    React.useCallback(() => {
-      let days = [];
-      const getBarberOrders_ = async () => {
-        const app = await getBarberOrders(user.userID());
-
-        Object.values(app).forEach((appint) => {
-          if (!days.includes(appint.date)) {
-            days.push(appint.date);
-          }
-        });
-        setDays(days);
-        let parseAppointment = {};
-        _days.forEach((date) => {
-          const currApp = generateApointments(date, app);
-          parseAppointment = { ...parseAppointment, ...currApp };
-        });
-        console.log("parseAppointment:", parseAppointment);
-        setAppointments(parseAppointment);
-      };
-      getBarberOrders_().catch((err) => alert(err));
-    }, [])
-  );
   function generateApointments(date, appointments) {
     if (appointments.date === date) {
       appointments[appointment.date].push(appointment);
