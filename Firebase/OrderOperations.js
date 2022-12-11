@@ -11,7 +11,11 @@ import { getUser } from './CustomerOperations'
  * @param {*} _hour 
  */
  export const newOrder = async (_chosenBarber, _selectedDate, _hour) => {
+    let success = false;
     try {
+      if(await checkIfOrderExists(_chosenBarber,_selectedDate,_hour)){
+        alert('You have already made this appointments');
+      }else{
       console.log('Order Details: ',_chosenBarber,', ',_selectedDate,_hour)
       await firestore()
         .collection('Orders')
@@ -25,10 +29,12 @@ import { getUser } from './CustomerOperations'
         })
         .then(() => {
           console.log('Success!');
+          success = true;
         });
-    } catch (e) {
+   }} catch (e) {
       console.error(`Error adding document: ${e}`);
     }
+    return success;
   };
   
   export const getBarberOrders = async (uid) =>{
@@ -110,4 +116,17 @@ import { getUser } from './CustomerOperations'
               console.log('Order deleted!')
             }).catch(err=>alert(err))
     }
+  }
+
+  export const checkIfOrderExists = async (barberId,date,time) => {
+    let exists = false;
+    await firestore().collection('Orders').get().then(querySnapshot=>{
+        querySnapshot.forEach(documentSnapshot=>{
+            if(documentSnapshot.data().Barber_id === barberId && documentSnapshot.data().date === date && documentSnapshot.data().time === time){
+                console.log('in Here');
+                exists = true;
+            }
+        })
+    }).catch(err=>{alert(err)})
+    return exists
   }
