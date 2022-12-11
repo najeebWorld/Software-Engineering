@@ -100,9 +100,9 @@ useFocusEffect(React.useCallback(() => {
   const getBarberOrders_ = async () => {
     const app = await getBarberOrders(user.userID());
 
-    Object.values(app).forEach(appint => {
-       if(!days.includes(appint.date)) {
-        days.push(appint.date)
+    Object.keys(app).forEach(appint => {
+       if(!days.includes(app[appint].date)) {
+        days.push(app[appint].date)
        }
     });
     setDays(days);
@@ -121,9 +121,9 @@ function generateApointments(date, appointments) {
   if (appointments.date === date) {
     appointments[appointment.date].push(appointment);
   }
-  return {[date]: Object.values(appointments)
-    .filter(app => app.date === date)
-    .map(appointment => ({"info": appointment.extra_info, "time": appointment.time, "cus_id": appointment.Customer_id, "name": appointment.cus_name}))};
+  return {[date]: Object.keys(appointments)
+    .filter(app => appointments[app].date === date)
+    .map(appointment => ({"info": appointments[appointment].extra_info, "time": appointments[appointment].time, "cus_id": appointments[appointment].Customer_id, "name": appointments[appointment].cus_name, 'orderKey': appointment, "date": appointments[appointment].date}))};
 
 }
 
@@ -145,8 +145,9 @@ function generateApointments(date, appointments) {
           if (item.name) {
             var l = item.name.toString().toUpperCase().charAt(0);
           }
+          console.log("!!!!!!",item);
           return(
-          <TouchableOpacity style={styles.item_Agenda}>
+          <TouchableOpacity style={styles.item_Agenda} onPress={()=>{navigation.navigate('OrderDetails', {item})}}>
             <Text style={styles.itemText_Agenda}>Scheduled appointment at: {item.time}, {item.name}</Text>
             <Avatar.Text label={l} style={styles.avatar} size={32}/> 
           </TouchableOpacity>
