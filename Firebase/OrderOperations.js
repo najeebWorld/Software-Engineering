@@ -21,7 +21,7 @@ import { getUser } from './CustomerOperations'
           date: _selectedDate,
           time: _hour,
           extra_info: "",
-          cus_name: await getUser(user.userID()),
+          cus_name: (await getUser(user.userID())).userName,
         })
         .then(() => {
           console.log('Success!');

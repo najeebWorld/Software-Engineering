@@ -155,6 +155,7 @@ function generateApointments(date, appointments) {
         time_proportional={true}
 
         renderItem={ (item) =>  {
+          console.log('name',item.name);
           if (item.name) {
             var l = item.name.toString().toUpperCase().charAt(0);
           }
