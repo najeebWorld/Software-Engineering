@@ -1,8 +1,8 @@
 {
-    "uid":{
-        "name": "u_name",
-        "email": "u_email",
-        "phone": "u_phone",
-        "uid": "uid"
-    }
+  "uid": {
+    "name": "u_name",
+    "email": "u_email",
+    "phone": "u_phone",
+    "uid": "uid"
+  }
 }

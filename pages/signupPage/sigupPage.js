@@ -1,7 +1,7 @@
-import {StatusBar} from 'expo-status-bar';
-import React, {useState} from 'react';
-import {CheckBox} from 'react-native-elements';
-import {styles} from '../styles';
+import { StatusBar } from "expo-status-bar";
+import React, { useState } from "react";
+import { CheckBox } from "react-native-elements";
+import { styles } from "../styles";
 import {
   StyleSheet,
   Text,
@@ -12,15 +12,15 @@ import {
   Button,
   TouchableOpacity,
   Image,
-} from 'react-native';
-import { barberSignUp, customerSignUp } from '../../Firebase/Authentication';
+} from "react-native";
+import { barberSignUp, customerSignUp } from "../../Firebase/Authentication";
 
-export default function SignupForm({navigation}) {
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [verifypass, setVerify] = useState('');
+export default function SignupForm({ navigation }) {
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [verifypass, setVerify] = useState("");
   const [error, setError] = useState(false);
   const [isSelectedCustomer, setSelectionCustomer] = useState(false);
   const [isSelectedBarber, setSelectionBarber] = useState(false);
@@ -29,7 +29,7 @@ export default function SignupForm({navigation}) {
    * These functions are to prevent two checkboxes to be clicked at the same time.
    * @param {*} currState
    */
-   const barberClickHandler = currState => {
+  const barberClickHandler = (currState) => {
     if (!currState && isSelectedCustomer) {
       setSelectionBarber(true);
       setSelectionCustomer(false);
@@ -37,7 +37,7 @@ export default function SignupForm({navigation}) {
       setSelectionBarber(!isSelectedBarber);
     }
   };
-  const customerClickHandler = currState => {
+  const customerClickHandler = (currState) => {
     if (!currState && isSelectedBarber) {
       setSelectionCustomer(true);
       setSelectionBarber(false);
@@ -46,10 +46,10 @@ export default function SignupForm({navigation}) {
     }
   };
   return (
-    <ScrollView style={{backgroundColor: '#E5C492'}}>
+    <ScrollView style={{ backgroundColor: "#E5C492" }}>
       <View style={styles.containerScrollable}>
         <Image
-          source={require('../assets/logowithname.png')}
+          source={require("../assets/logowithname.png")}
           style={styles.logoContainerSignUp}
         />
         <StatusBar style="auto" />
@@ -58,7 +58,7 @@ export default function SignupForm({navigation}) {
             style={styles.TextInput}
             placeholder="Full name"
             placeholderTextColor="#003f5c"
-            onChangeText={name => setName(name)}
+            onChangeText={(name) => setName(name)}
           />
         </View>
         <View style={styles.inputView}>
@@ -66,26 +66,26 @@ export default function SignupForm({navigation}) {
             style={styles.TextInput}
             placeholder="Email"
             placeholderTextColor="#003f5c"
-            onChangeText={email => setEmail(email)}
+            onChangeText={(email) => setEmail(email)}
           />
         </View>
         <View style={error ? styles.inputViewError : styles.inputView}>
           <TextInput
             style={styles.TextInput}
-            placeholder={error ? 'Passwords do not match' : 'Password'}
+            placeholder={error ? "Passwords do not match" : "Password"}
             placeholderTextColor="#003f5c"
             secureTextEntry={true}
-            onChangeText={password => setPassword(password)}
+            onChangeText={(password) => setPassword(password)}
           />
         </View>
 
         <View style={error ? styles.inputViewError : styles.inputView}>
           <TextInput
             style={styles.TextInput}
-            placeholder={error ? 'Passwords do not match' : 'Confirm Password'}
+            placeholder={error ? "Passwords do not match" : "Confirm Password"}
             placeholderTextColor="#003f5c"
             secureTextEntry={true}
-            onChangeText={password => setVerify(password)}
+            onChangeText={(password) => setVerify(password)}
           />
         </View>
         <View style={styles.inputView}>
@@ -93,7 +93,7 @@ export default function SignupForm({navigation}) {
             style={styles.TextInput}
             placeholder="Phone Number"
             placeholderTextColor="#003f5c"
-            onChangeText={phone => setPhone(phone)}
+            onChangeText={(phone) => setPhone(phone)}
           />
         </View>
         <View>
@@ -120,21 +120,22 @@ export default function SignupForm({navigation}) {
         <TouchableOpacity
           style={styles.loginBtn}
           onPress={async () => {
-            try{
-            if (password === verifypass) {
-              if(isSelectedCustomer){
-                await customerSignUp(name, email, password, phone)
-              }else{
-                await barberSignUp(name, email, password, phone);
+            try {
+              if (password === verifypass) {
+                if (isSelectedCustomer) {
+                  await customerSignUp(name, email, password, phone);
+                } else {
+                  await barberSignUp(name, email, password, phone);
+                }
+                navigation.navigate("Success");
+              } else {
+                setError(true);
               }
-              navigation.navigate('Success');
-            } else {
-              setError(true);
+            } catch (err) {
+              alert(err);
             }
-          }catch(err){
-            alert(err);
-          }
-          }}>
+          }}
+        >
           <Text style={styles.loginText}>Sign up</Text>
         </TouchableOpacity>
       </View>

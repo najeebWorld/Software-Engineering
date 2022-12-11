@@ -1,18 +1,18 @@
 {
-    "uid":{
-        "firstEntry":"boolean",
-        "email":"b_email",
-        "name":"b_name",
-        "phone":"b_phone",
-        "barber_id": "bid",
-        "workingDays": {
-            "Sun": ["10:00","10:30"],
-            "Mon": ["10:00","10:30"],
-            "Tue": ["10:00","10:30"],
-            "Wed": ["10:00","10:30"],
-            "Thu": ["10:00","10:30"],
-            "Fri": ["10:00","10:30"],
-            "Sat": ["10:00","10:30"]
-        }
+  "uid": {
+    "firstEntry": "boolean",
+    "email": "b_email",
+    "name": "b_name",
+    "phone": "b_phone",
+    "barber_id": "bid",
+    "workingDays": {
+      "Sun": ["10:00", "10:30"],
+      "Mon": ["10:00", "10:30"],
+      "Tue": ["10:00", "10:30"],
+      "Wed": ["10:00", "10:30"],
+      "Thu": ["10:00", "10:30"],
+      "Fri": ["10:00", "10:30"],
+      "Sat": ["10:00", "10:30"]
     }
+  }
 }

@@ -1,26 +1,21 @@
-import {StatusBar} from 'expo-status-bar';
-import React, {useState} from 'react';
-import {styles} from '../styles';
-import {
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import React, { useState } from "react";
+import { styles } from "../styles";
+import { Text, View, TouchableOpacity, Image } from "react-native";
 
-export default function SuccessfullLogin({navigation}) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+export default function SuccessfullLogin({ navigation }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   return (
     <View style={styles.container}>
       <View style={styles.welcomeContainer}>
         <Image
-          source={require('../assets/welcome.png')}
+          source={require("../assets/welcome.png")}
           style={styles.logoContainerSuccess}
         />
         <Image
-          source={require('../assets/logo.png')}
+          source={require("../assets/logo.png")}
           style={styles.logoContainerSuccess}
         />
       </View>
@@ -30,8 +25,9 @@ export default function SuccessfullLogin({navigation}) {
         style={styles.loginBtn}
         onPress={() => {
           console.log(email, password);
-          navigation.navigate('Login');
-        }}>
+          navigation.navigate("Login");
+        }}
+      >
         <Text style={styles.loginText}>Login</Text>
       </TouchableOpacity>
     </View>
