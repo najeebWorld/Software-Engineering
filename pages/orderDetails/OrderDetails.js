@@ -15,18 +15,7 @@ import { useFocusEffect } from "@react-navigation/native";
 
 export default function OrderDetails({ navigation, route }) {
   const item = route.params.item;
-  const [deleteGuard, setDeleteGuard] = useState(false);
-  const [deleteOrderState, setDeleteOrder] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState("");
-  useEffect(() => {
-    const onDeleteOrder = async () => {
-      if (deleteGuard) {
-        await deleteOrder(user.userID(), item.date, item.time, item.orderKey);
-        setDeleteGuard(false);
-      }
-    };
-    onDeleteOrder().catch((err) => alert(err));
-  }, [deleteOrderState]);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -45,9 +34,8 @@ export default function OrderDetails({ navigation, route }) {
     orderExtraInfo: item.info,
   };
 
-  const CancelAppointment = () => {
-    setDeleteGuard(true);
-    setDeleteOrder(!deleteOrderState);
+  const CancelAppointment = async () => {
+    await deleteOrder(user.userID(), item.date, item.time, item.orderKey);
     alert("Appointment Canceled Successfully");
     navigateBack();
   };

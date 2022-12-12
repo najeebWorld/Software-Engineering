@@ -23,7 +23,6 @@ export default function CalendarPage({ navigation }) {
   const _lastDay = moment(new Date()).add(14, "day").format("YYYY-MM-DD");
   const [_selectedDate, setSelectedDate] = useState(_today);
   const [_chosenQueue, setChosenBarber] = useState("false");
-  const [_days, setDays] = useState([]);
 
   const removeBlueStyle = () => {
     const day = _today.split("-")[2];
@@ -94,7 +93,6 @@ export default function CalendarPage({ navigation }) {
             days.push(appint.date);
           }
         });
-        setDays(days);
         let parseAppointment = {};
         days.forEach((date) => {
           const currApp = generateApointments(date, app);
