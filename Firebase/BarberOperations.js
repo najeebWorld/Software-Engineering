@@ -16,24 +16,21 @@ import user from "./User";
  * @param {*} uPassword - user password (as the user inputs in the signup page).
  * @param {*} uPhone -user phone number (as the user inputs in the signup page).
  */
-export const newBarber = async (uId, uName, uEmail, uPassword, uPhone) => {
-  try {
-    await firestore()
-      .collection("Barbers")
-      .doc(uId)
-      .set({
-        userId: uId,
-        userName: uName,
-        userEmail: uEmail,
-        userPhone: uPhone,
-        firstEntry: true,
-      })
-      .then(() => {
-        console.log("Client ", uId, " added successfully.");
-      });
-  } catch (error) {
-    alert(`Adding Client failed, Error message: ${error}`);
-  }
+ export const newBarber = async (uId, uName, uEmail, uPassword, uPhone) => {
+  await fetch("http://10.0.2.2:8080/api/barber",{
+    method:'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      userId: uId,
+      userName: uName,
+      userEmail: uEmail,
+      userPhone: uPhone,
+      firstEntry: true,
+    }),
+  });
 };
 
 export const updateBarberWorkingDays = async (WorkingDays) => {
