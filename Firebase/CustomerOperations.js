@@ -11,7 +11,6 @@ import firestore from "@react-native-firebase/firestore";
  */
 export const newUser = async (uId, uName, uEmail, uPassword, uPhone) => {
   try{
-    console.log('before fetch')
     await fetch("http://10.0.2.2:8080/api/user", {
       method: 'POST',
       headers: {
@@ -25,7 +24,6 @@ export const newUser = async (uId, uName, uEmail, uPassword, uPhone) => {
         userPhone: uPhone,
       }),  
     });
-    console.log('after fetch');
   }catch(error){
     alert(error.message);
   }
