@@ -10,22 +10,26 @@ import firestore from "@react-native-firebase/firestore";
  * @param {*} uPhone -user phone number (as the user inputs in the signup page).
  */
 export const newUser = async (uId, uName, uEmail, uPassword, uPhone) => {
-  try {
-    await firestore()
-      .collection("Users")
-      .doc(uId)
-      .set({
+  try{
+    console.log('before fetch')
+    await fetch("http://10.0.2.2:8080/api/user", {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
         userId: uId,
         userName: uName,
         userEmail: uEmail,
         userPhone: uPhone,
-      })
-      .then(() => {
-        console.log("Client ", uId, " added successfully.");
-      });
-  } catch (error) {
-    alert(`Adding Client failed, Error message: ${error}`);
+      }),  
+    });
+    console.log('after fetch');
+  }catch(error){
+    alert(error.message);
   }
+    
 };
 
 /**
@@ -34,10 +38,17 @@ export const newUser = async (uId, uName, uEmail, uPassword, uPhone) => {
  * @returns
  */
 export const getUser = async (uid) => {
-  const user = await firestore()
-    .collection("Users")
-    .doc(uid)
-    .get()
-    .catch((err) => alert(err));
-  return user._data;
-};
+  try{
+  const user = await fetch("http://10.0.2.2:8080/api/user/"+ uid+ {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    }})
+    return user.json();
+  }catch(error){
+    alert(error.message)
+  }
+  };
+
+
