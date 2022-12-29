@@ -97,11 +97,10 @@ export default function CalendarPage({ navigation }) {
   
   
   const changeOnDropDownBarber = async (item) => {
-    // console.log("change on drop");
+    
     setChosenBarber(item.label);
     setBarberID(item.value);
     const workingDays = await getBarberWorkingDays(item.value);
-    console.log("dis", workingDays);
     setDisabled(getDaysInMonth(
       moment().month(),
       moment().year(),
@@ -118,16 +117,14 @@ export default function CalendarPage({ navigation }) {
     let dates = {};
     const disabled = { disabled: true };
     while (pivot.isBefore(end)) {
-      console.log('days = ', days);
-      if(days){
+      if(days) {
         days.forEach((day) => {
           dates[pivot.day(day).format("YYYY-MM-DD")] = disabled;
         });
         pivot.add(7, "days");
       }
     }
-    console.log("dates", dates);
-
+    
     return dates;
   };
 

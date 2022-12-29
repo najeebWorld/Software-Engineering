@@ -16,7 +16,6 @@ import { useFocusEffect } from "@react-navigation/native";
 
 export default function BarberProfile({ navigation, route }) {
     const item = route.params.barber;  
-    console.log("i", item);
 
     const [barberData, SetBarberData] = useState([]);
     useFocusEffect(
@@ -28,7 +27,6 @@ export default function BarberProfile({ navigation, route }) {
           getBarbers().catch((err) => alert(err));
         }, [])
       );
-    console.log(barberData);
 
     const callClient = (phoneNumber) => {
         Linking.openURL(`tel:${phoneNumber}`);

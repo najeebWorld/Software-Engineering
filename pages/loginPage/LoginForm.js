@@ -50,18 +50,13 @@ export default function LoginForm({ navigation }) {
         style={styles.loginBtn}
         onPress={async () => {
           await authenticate(email, password);
-          console.log("auth");
           if (user.setCustomer()) {
             navigation.navigate("MyAppointments");
           } else {
-            console.log("barber");
             if (await isFirstEntry(user.userID())) {
-              console.log("enter");
               await updateFirstEntry(user.userID());
-              console.log("update");
               navigation.navigate("WorkingDays");
             } else {
-              console.log("not first");
               navigation.navigate("CalendarPageBarber");
             }
           }

@@ -18,8 +18,6 @@ export default function BreberCollection({ navigation }) {
           getBarbers().catch((err) => alert(err));
         }, [])
       );
-    console.log(barberData);
-
 
 
     return (
