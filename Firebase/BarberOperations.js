@@ -33,6 +33,7 @@ export const newBarber = async (uId, uName, uEmail, uPhone) => {
 };
 
 export const updateBarberWorkingDays = async (newWorkingDays) => {
+  
   console.log("new working", newWorkingDays);
   await postMessage(`barber/${user.userID()}/workdays`, newWorkingDays);
 
@@ -46,34 +47,31 @@ export const getBarberWorkingDays = async (uid) => {
 };
 
 export const getBarber = async (uid) => {
+
   const res = await getMessage(`barber/${uid}`);
   return res;
 };
 
 export const isFirstEntry = async (uid) => {
+
   const user = await getBarber(uid);
   return user.firstEntry;
 
 };
 
 export const updateFirstEntry = async (uid) => {
+
   await postMessage(`barber/${uid}/firstentry`, {});
 };
 
 export const getBarberList = async () => {
-  let barbers = [];
-  await firestore()
-    .collection("Barbers")
-    .get()
-    .then((querySnapshot) => {
-      querySnapshot.forEach((documentSnapshot) => {
-        const uid = documentSnapshot.data().userId;
-        const name = documentSnapshot.data().userName;
-        barbers.push({ label: name, value: uid });
-      });
-    })
-    .catch((err) => {
-      alert(`error while getting barbers list ${err}`);
-    });
-  return barbers;
+  
+  const res = await getMessage(`barbers`);
+  return res;
+};
+
+export const getBarbersData = async () => {
+  
+  const res = await getMessage(`barbersdata`);
+  return res;
 };

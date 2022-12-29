@@ -97,7 +97,7 @@ export default function CalendarPage({ navigation }) {
   
   
   const changeOnDropDownBarber = async (item) => {
-    console.log("change on drop");
+    // console.log("change on drop");
     setChosenBarber(item.label);
     setBarberID(item.value);
     const workingDays = await getBarberWorkingDays(item.value);
@@ -130,37 +130,6 @@ export default function CalendarPage({ navigation }) {
 
     return dates;
   };
-
-  // const changeOnDropDownBarber = async (item) => {
-  //   setChosenBarber(item.label);
-  //   setBarberID(item.value);
-  //   setDISABLED_DAYS(await getBarberWorkingDays(item.value));
-  // };
-
-  // const [DISABLED_DAYS, setDISABLED_DAYS] = useState([]);
-
-  // const getDaysInMonth = (month, year, days) => {
-  //   let pivot = moment().month(month).year(year).startOf("month");
-  //   const end = moment().month(month).year(year).endOf("month");
-
-  //   let dates = {};
-  //   const disabled = { disabled: true };
-  //   while (pivot.isBefore(end)) {
-  //     days.forEach((day) => {
-  //       dates[pivot.day(day).format("YYYY-MM-DD")] = disabled;
-  //     });
-  //     pivot.add(7, "days");
-  //   }
-
-  //   return dates;
-  // };
-
-  // const disabled = getDaysInMonth(
-  //   moment().month(),
-  //   moment().year(),
-  //   DISABLED_DAYS
-  // );
-  
 
   const changeOnDropDownHour = (item) => {
     setHour(item.label);
