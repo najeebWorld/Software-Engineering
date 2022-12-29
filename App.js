@@ -9,6 +9,9 @@ import WorkingDays from "./pages/workingDays/WorkingDays";
 import MyAppointments from "./pages/MyAppointments/MyAppointments";
 import CalendarPageBarber from "./pages/calendarPage/calendarPageBarber";
 import OrderDetails from "./pages/orderDetails/OrderDetails";
+import BarberCollection from './pages/BarberCollection/BarberCollection';
+import BarberProfile from "./pages/BarberProfile/BarberProfile";
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -31,6 +34,8 @@ export default function App() {
           component={CalendarPageBarber}
         />
         <Stack.Screen name="OrderDetails" component={OrderDetails} />
+        <Stack.Screen name="BarberCollection" component={BarberCollection} />
+        <Stack.Screen name="BarberProfile" component={BarberProfile} />
       </Stack.Navigator>
     </NavigationContainer>
   );
