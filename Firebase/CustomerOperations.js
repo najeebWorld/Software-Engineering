@@ -1,5 +1,5 @@
 import firestore from "@react-native-firebase/firestore";
-
+import { getMessage, postMessage } from "./Utils";
 /**
  * Function to add new Client (user) to the User collection on firebase.
  *          this function is called from 'auth/customerSignUp' function.
@@ -9,25 +9,15 @@ import firestore from "@react-native-firebase/firestore";
  * @param {*} uPassword - user password (as the user inputs in the signup page).
  * @param {*} uPhone -user phone number (as the user inputs in the signup page).
  */
-export const newUser = async (uId, uName, uEmail, uPassword, uPhone) => {
-  try{
-    await fetch("http://10.0.2.2:8080/api/user", {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        userId: uId,
-        userName: uName,
-        userEmail: uEmail,
-        userPhone: uPhone,
-      }),  
-    });
-  }catch(error){
-    alert(error.message);
-  }
-    
+export const newUser = async (uId, uName, uEmail, uPhone) => {
+  const body = {
+    userId: uId,
+    userName: uName,
+    userEmail: uEmail,
+    userPhone: uPhone,
+  };
+
+  await postMessage("user", body);
 };
 
 /**
@@ -36,17 +26,6 @@ export const newUser = async (uId, uName, uEmail, uPassword, uPhone) => {
  * @returns
  */
 export const getUser = async (uid) => {
-  try{
-  const user = await fetch("http://10.0.2.2:8080/api/user/"+ uid+ {
-    method: 'GET',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    }})
-    return user.json();
-  }catch(error){
-    alert(error.message)
-  }
-  };
-
-
+  const user = await getMessage(`user/${uid}`);
+  return user;
+};

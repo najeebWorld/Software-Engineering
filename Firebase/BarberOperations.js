@@ -1,10 +1,3 @@
-/**
- * This file conains all the Firebase operations functions,
- * See setup documention in: https://rnfirebase.io/
- * Auth documentation in: https://rnfirebase.io/auth/usage
- * Functions documentation: https://rnfirebase.io/firestore/usage
- */
-import firestore from "@react-native-firebase/firestore";
 import user from "./User";
 import {postMessage, getMessage} from "./Utils"
 
@@ -47,8 +40,8 @@ export const getBarberWorkingDays = async (uid) => {
 };
 
 export const getBarber = async (uid) => {
-
   const res = await getMessage(`barber/${uid}`);
+  console.log(res);
   return res;
 };
 
@@ -60,7 +53,6 @@ export const isFirstEntry = async (uid) => {
 };
 
 export const updateFirstEntry = async (uid) => {
-
   await postMessage(`barber/${uid}/firstentry`, {});
 };
 

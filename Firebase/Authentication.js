@@ -26,16 +26,13 @@ export const authenticate = async (userEmail, userPassword) => {
       })
   ).user.uid;
   user.userID(uid);
-  const customer = await getUser(uid).catch((err) => alert(err));
+  const customer = await getUser(uid).catch(()=>{return null});
   if (customer) {
-    console.log(25);
     user.setCustomer("Customer");
     user.userAppointments(await getCustomerOrders(uid));
   } else {
-    console.log(29);
     user.setCustomer("Barber");
   }
-  console.log(user.setCustomer());
 };
 
 export const customerSignUp = async (uName, uEmail, uPassword, uPhone) => {

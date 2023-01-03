@@ -9,7 +9,7 @@ export const postMessage = (path, body) => {
             body: JSON.stringify(body),
         });
     }catch(err) {
-        alert(err.message);
+        alert(`${err.message},path:  ${path}`);
     }
 }
 
@@ -24,6 +24,6 @@ export const getMessage = async (path) => {
         });
         return data.json();
     }catch(err){
-        alert(err.message);
+        alert(`${err.message},path:  ${path}`);
     }
 }

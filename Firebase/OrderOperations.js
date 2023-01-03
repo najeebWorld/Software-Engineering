@@ -1,6 +1,4 @@
-import firestore from "@react-native-firebase/firestore";
 import user from "./User";
-import moment from "moment";
 import { getBarber } from "./BarberOperations";
 import { getUser } from "./CustomerOperations";
 import { getMessage,postMessage } from "./Utils";
@@ -12,25 +10,19 @@ import { getMessage,postMessage } from "./Utils";
  * @param {*} _hour
  */
 export const newOrder = async (_chosenBarber, _selectedDate, _hour) => {
-  await fetch("http://10.0.2.2:8080/api/order",{
-    method:'POST',
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      userId: user.userID(),
-      barberId: _chosenBarber,
-      orderDate: _selectedDate,
-      orderHour: _hour,
-      costumerName: (await getUser(user.userID())).userName,
-      barberName:(await getBarber(_chosenBarber)).userName
-    }),
-  });
+  const body = {
+    userId: user.userID(),
+    barberId: _chosenBarber,
+    orderDate: _selectedDate,
+    orderHour: _hour,
+    customerName: (await getUser(user.userID())).userName,
+    barberName: (await getBarber(_chosenBarber)).userName,
+  };
+  postMessage('order',body)
 };
 
 export const getBarberOrders = async (uid) => {
-  const res = await getMessage(`/orderByBarber/${uid}`);
+  const res = await getMessage(`orderByBarber/${uid}`);
   return res;
 };
 
@@ -40,44 +32,13 @@ export const getBarberOrders = async (uid) => {
  * @returns
  */
 export const getCustomerOrders = async (uid) => {
-  const res = await getMessage(`/orderCustomer/${uid}`);
+  const res = await getMessage(`orderCustomer/${uid}`);
   return res;
 };
 
 export const getAvailableAppointments = async (date, barberId) => {
-  const res = await getMessage(`/availableAppointments/${barberId}/${date}`);
+  const res = await getMessage(`availableAppointments/${barberId}/${date}`);
   return res;
-  // const unAvailableOrders = [];
-  // await firestore()
-  //   .collection("Orders")
-  //   .get()
-  //   .then((querySnapshot) => {
-  //     querySnapshot.forEach((documentSnapshot) => {
-  //       const onDate = documentSnapshot.data().date === date;
-  //       const isBarbers = documentSnapshot.data().Barber_id === barberId;
-  //       if (onDate && isBarbers) {
-  //         unAvailableOrders.push(documentSnapshot.data().time);
-  //       }
-  //     });
-  //   })
-  //   .catch((err) => alert(err));
-  // const availableHours = [];
-  // const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  // const day = days[new Date(date).getDay()];
-  // const barber = await getBarber(barberId).catch((err) => {
-  //   alert(err);
-  // });
-  // const workingHours = barber.availableWorkHours[day];
-  // if (workingHours) {
-  //   for (let i = 0; i < workingHours.length; i++) {
-  //     if (!unAvailableOrders.includes(workingHours[i])) {
-  //       availableHours.push(workingHours[i]);
-  //     }
-  //   }
-  //   return availableHours;
-  // } else {
-  //   return [];
-  // }
 };
 
 export const deleteOrder = async (barberId, date, time, key) => {
@@ -87,6 +48,6 @@ export const deleteOrder = async (barberId, date, time, key) => {
     time: time,
     key: key 
   };
-  const res = postMessage('/deleteOrder/',body);
+  postMessage('deleteOrder',body);
 };
 
