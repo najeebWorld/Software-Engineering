@@ -26,6 +26,9 @@ export default function CalendarPage({ navigation }) {
   const [_barber_id, setBarberID] = useState("");
   const [_workHours, setWorkHours] = useState([]);
   const [_findBarbers, setFindBarbers] = useState(false);
+  const [DISABLED_DAYS, setDISABLED_DAYS] = useState([]);
+  const [disabled, setDisabled] = useState([]);
+
   useEffect(() => {
     const getWorkDays = async () => {
       if (_barber_id) {
@@ -91,13 +94,21 @@ export default function CalendarPage({ navigation }) {
 
   const dates = removeBlueStyle();
 
+  
+  
   const changeOnDropDownBarber = async (item) => {
+    
     setChosenBarber(item.label);
     setBarberID(item.value);
-    setDISABLED_DAYS(await getBarberWorkingDays(item.value));
+    const workingDays = await getBarberWorkingDays(item.value);
+    setDisabled(getDaysInMonth(
+      moment().month(),
+      moment().year(),
+      workingDays
+    ));
+
   };
 
-  const [DISABLED_DAYS, setDISABLED_DAYS] = useState([]);
 
   const getDaysInMonth = (month, year, days) => {
     let pivot = moment().month(month).year(year).startOf("month");
@@ -106,20 +117,16 @@ export default function CalendarPage({ navigation }) {
     let dates = {};
     const disabled = { disabled: true };
     while (pivot.isBefore(end)) {
-      days.forEach((day) => {
-        dates[pivot.day(day).format("YYYY-MM-DD")] = disabled;
-      });
-      pivot.add(7, "days");
+      if(days) {
+        days.forEach((day) => {
+          dates[pivot.day(day).format("YYYY-MM-DD")] = disabled;
+        });
+        pivot.add(7, "days");
+      }
     }
-
+    
     return dates;
   };
-
-  const disabled = getDaysInMonth(
-    moment().month(),
-    moment().year(),
-    DISABLED_DAYS
-  );
 
   const changeOnDropDownHour = (item) => {
     setHour(item.label);
