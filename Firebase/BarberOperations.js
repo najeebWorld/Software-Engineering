@@ -18,6 +18,7 @@ import {postMessage, getMessage} from "./Utils"
  * @param {*} uPassword - user password (as the user inputs in the signup page).
  * @param {*} uPhone -user phone number (as the user inputs in the signup page).
  */
+
 export const newBarber = async (uId, uName, uEmail, uPhone) => {
 
   const body = {
@@ -29,7 +30,6 @@ export const newBarber = async (uId, uName, uEmail, uPhone) => {
   }
 
   await postMessage(`barber`, body);
-
 };
 
 export const updateBarberWorkingDays = async (newWorkingDays) => {
