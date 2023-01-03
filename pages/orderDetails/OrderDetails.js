@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { styles } from "../styles";
 import { deleteOrder } from "../../Firebase/OrderOperations";
-import { getUser } from "../../Firebase/CustomerOperations";
+import { getCustomer } from "../../Firebase/CustomerOperations";
 import user from "../../Firebase/User";
 import { useFocusEffect } from "@react-navigation/native";
 
@@ -20,7 +20,7 @@ export default function OrderDetails({ navigation, route }) {
   useFocusEffect(
     React.useCallback(() => {
       const getPhone = async () => {
-        const customer = await getUser(item.cus_id);
+        const customer = await getCustomer(item.cus_id);
         setPhoneNumber(customer.userPhone);
       };
       getPhone().catch((err) => alert(err));

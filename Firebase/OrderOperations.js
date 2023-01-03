@@ -1,6 +1,6 @@
 import user from "./User";
 import { getBarber } from "./BarberOperations";
-import { getUser } from "./CustomerOperations";
+import { getCustomer } from "./CustomerOperations";
 import { getMessage,postMessage } from "./Utils";
 
 /**
@@ -11,11 +11,11 @@ import { getMessage,postMessage } from "./Utils";
  */
 export const newOrder = async (_chosenBarber, _selectedDate, _hour) => {
   const body = {
-    userId: user.userID(),
+    customerId: user.userID(),
     barberId: _chosenBarber,
     orderDate: _selectedDate,
     orderHour: _hour,
-    customerName: (await getUser(user.userID())).userName,
+    customerName: (await getCustomer(user.userID())).userName,
     barberName: (await getBarber(_chosenBarber)).userName,
   };
   postMessage('order',body)

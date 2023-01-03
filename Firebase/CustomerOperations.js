@@ -9,7 +9,7 @@ import { getMessage, postMessage } from "./Utils";
  * @param {*} uPassword - user password (as the user inputs in the signup page).
  * @param {*} uPhone -user phone number (as the user inputs in the signup page).
  */
-export const newUser = async (uId, uName, uEmail, uPhone) => {
+export const newCustomer = async (uId, uName, uEmail, uPhone) => {
   const body = {
     userId: uId,
     userName: uName,
@@ -25,7 +25,7 @@ export const newUser = async (uId, uName, uEmail, uPhone) => {
  * @param {*} uid
  * @returns
  */
-export const getUser = async (uid) => {
+export const getCustomer = async (uid) => {
   const user = await getMessage(`user/${uid}`);
   return user;
 };

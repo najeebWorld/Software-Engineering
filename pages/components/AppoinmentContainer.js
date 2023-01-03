@@ -11,11 +11,11 @@ const AppoinmentContainer = (props) => {
         {Object.keys(props.appointments).map((key) => {
           return (
             <Appointment
-              user={props.appointments[key]["Barber_id"]}
+              user={props.appointments[key]["barberId"]}
               type={props.appointments[key]["extra_info"]}
-              date={props.appointments[key]["date"]}
-              time={props.appointments[key]["time"]}
-              barberName={props.appointments[key]["barber_name"]}
+              date={props.appointments[key]["orderDate"]}
+              time={props.appointments[key]["orderHour"]}
+              barberName={props.appointments[key]["barberName"]}
               docID={key}
               reRender={props.reRender}
               key={Math.random()}

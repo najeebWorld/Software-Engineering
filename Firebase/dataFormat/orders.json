@@ -1,10 +1,10 @@
 {
   "generated_id": {
-    "date": "date",
-    "time": "time",
-    "extra_info": "info",
-    "barber_id": "barber_id",
-    "client_id": "client_id",
-    "cus_name": "customer_name"
+    "customerId": "id-type-string",
+    "barberId": "id-type-string",
+    "orderDate": "date",
+    "orderHour": "hour",
+    "customerName": "name-type-string",
+    "barberName": "name-type-string"
   }
 }

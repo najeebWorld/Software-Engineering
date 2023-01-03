@@ -5,7 +5,7 @@
  * */
 
 import auth from "@react-native-firebase/auth";
-import { getUser, newUser } from "./CustomerOperations";
+import { getCustomer, newCustomer } from "./CustomerOperations";
 import { newBarber } from "./BarberOperations";
 import user from "./User";
 import { getCustomerOrders } from "./OrderOperations";
@@ -26,7 +26,7 @@ export const authenticate = async (userEmail, userPassword) => {
       })
   ).user.uid;
   user.userID(uid);
-  const customer = await getUser(uid).catch(()=>{return null});
+  const customer = await getCustomer(uid).catch(()=>{return null});
   if (customer) {
     user.setCustomer("Customer");
     user.userAppointments(await getCustomerOrders(uid));
@@ -42,7 +42,7 @@ export const customerSignUp = async (uName, uEmail, uPassword, uPhone) => {
       throw Error(`Sign up failed, error: ${error}`);
     })
     .then(async (authData) => {
-      await newUser(authData.user.uid, uName, uEmail, uPassword, uPhone);
+      await newCustomer(authData.user.uid, uName, uEmail, uPassword, uPhone);
     });
 };
 
@@ -53,7 +53,7 @@ export const barberSignUp = async (uName, uEmail, uPassword, uPhone) => {
       throw Error(`Sign up failed, error: ${error}`);
     })
     .then(async (authData) => {
-      await newBarber(authData.user.uid, uName, uEmail, uPassword, uPhone);
+      await newBarber(authData.user.uid, uName, uEmail, uPhone);
     });
 };
 

@@ -89,8 +89,8 @@ export default function CalendarPage({ navigation }) {
       const getBarberOrders_ = async () => {
         const app = await getBarberOrders(user.userID());
         Object.values(app).forEach((appint) => {
-          if (!days.includes(appint.date)) {
-            days.push(appint.date);
+          if (!days.includes(appint.orderDate)) {
+            days.push(appint.orderDate);
           }
         });
         let parseAppointment = {};
@@ -106,19 +106,16 @@ export default function CalendarPage({ navigation }) {
   );
 
   function generateApointments(date, appointments) {
-    if (appointments.date === date) {
-      appointments[appointment.date].push(appointment);
-    }
     return {
       [date]: Object.keys(appointments)
-        .filter((app) => appointments[app].date === date)
+        .filter((app) => appointments[app].orderDate === date)
         .map((appointment) => ({
           info: appointments[appointment].extra_info,
-          time: appointments[appointment].time,
-          cus_id: appointments[appointment].Customer_id,
-          name: appointments[appointment].cus_name,
+          time: appointments[appointment].orderHour,
+          cus_id: appointments[appointment].customerId,
+          name: appointments[appointment].customerName,
           orderKey: appointment,
-          date: appointments[appointment].date,
+          date: appointments[appointment].orderDate,
         })),
     };
   }

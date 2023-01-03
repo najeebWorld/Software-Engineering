@@ -8,7 +8,6 @@ import {postMessage, getMessage} from "./Utils"
  * @param {*} uId - user ID that firebase authentication retrevies.
  * @param {*} uName - user name (as the user inputs in the signup page).
  * @param {*} uEmail - user email (as the user inputs in the signup page).
- * @param {*} uPassword - user password (as the user inputs in the signup page).
  * @param {*} uPhone -user phone number (as the user inputs in the signup page).
  */
 
