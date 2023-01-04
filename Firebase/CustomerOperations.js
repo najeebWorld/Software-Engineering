@@ -26,6 +26,10 @@ export const newCustomer = async (uId, uName, uEmail, uPhone) => {
  * @returns
  */
 export const getCustomer = async (uid) => {
-  const user = await getMessage(`user/${uid}`);
-  return user;
+  try{
+     const user = await getMessage(`user/${uid}`);
+     return user;
+  }catch{
+    return null;
+  }
 };

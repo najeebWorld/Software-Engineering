@@ -255,4 +255,20 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: 10,
   },
+
+  popupBackground: {
+    backgroundColor: "#000000aa",
+    flex: 1,
+  },
+
+  popupContent: {
+    backgroundColor: "#E5C492",
+    borderWidth: 3.0,
+    borderRadius: 10,
+    borderColor: "#8D5238",
+    margin: 40,
+    height: 300,
+    alignItems: 'center',
+    
+  },
 });

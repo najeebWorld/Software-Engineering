@@ -19,6 +19,7 @@ export const newOrder = async (_chosenBarber, _selectedDate, _hour) => {
     barberName: (await getBarber(_chosenBarber)).userName,
   };
   postMessage('order',body)
+  return true;
 };
 
 export const getBarberOrders = async (uid) => {
@@ -48,6 +49,6 @@ export const deleteOrder = async (barberId, date, time, key) => {
     time: time,
     key: key 
   };
-  postMessage('deleteOrder',body);
+  await postMessage('deleteOrder',body);
 };
 

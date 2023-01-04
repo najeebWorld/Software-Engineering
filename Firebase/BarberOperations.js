@@ -12,7 +12,6 @@ import {postMessage, getMessage} from "./Utils"
  */
 
 export const newBarber = async (uId, uName, uEmail, uPhone) => {
-
   const body = {
         userId: uId,
         userName: uName,
@@ -20,13 +19,10 @@ export const newBarber = async (uId, uName, uEmail, uPhone) => {
         userPhone: uPhone,
         firstEntry: true,
   }
-
   await postMessage(`barber`, body);
 };
 
 export const updateBarberWorkingDays = async (newWorkingDays) => {
-  
-  console.log("new working", newWorkingDays);
   await postMessage(`barber/${user.userID()}/workdays`, newWorkingDays);
 
 };
@@ -40,12 +36,10 @@ export const getBarberWorkingDays = async (uid) => {
 
 export const getBarber = async (uid) => {
   const res = await getMessage(`barber/${uid}`);
-  console.log(res);
   return res;
 };
 
 export const isFirstEntry = async (uid) => {
-
   const user = await getBarber(uid);
   return user.firstEntry;
 

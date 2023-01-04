@@ -2,25 +2,17 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
 import { styles } from "../styles";
 import { Text, View, TextInput, TouchableOpacity, Image } from "react-native";
-import { authenticate, signOut } from "../../Firebase/Authentication";
+import { authenticate } from "../../Firebase/Authentication";
 import user from "../../Firebase/User";
 import {
   isFirstEntry,
   updateFirstEntry,
 } from "../../Firebase/BarberOperations";
 import { useFocusEffect } from "@react-navigation/native";
-import auth from "@react-native-firebase/auth";
 export default function LoginForm({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  useFocusEffect(
-    React.useCallback(() => {
-      const checkSignOut = async () => {
-        await signOut();
-      };
-      checkSignOut().catch((err) => console.log(err));
-    }, [])
-  );
+  
   return (
     <View style={styles.container}>
       <Image
@@ -50,9 +42,11 @@ export default function LoginForm({ navigation }) {
         style={styles.loginBtn}
         onPress={async () => {
           await authenticate(email, password);
+          console.log(45);
           if (user.setCustomer()) {
             navigation.navigate("MyAppointments");
           } else {
+            console.log('user id singleton = ', user.userID());
             if (await isFirstEntry(user.userID())) {
               await updateFirstEntry(user.userID());
               navigation.navigate("WorkingDays");
