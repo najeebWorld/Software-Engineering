@@ -120,20 +120,16 @@ export default function SignupForm({ navigation }) {
         <TouchableOpacity
           style={styles.loginBtn}
           onPress={async () => {
-            try {
               if (password === verifypass) {
                 if (isSelectedCustomer) {
-                  await customerSignUp(name, email, password, phone);
+                  await customerSignUp(name, email, password, phone).catch(err=>{console.log(err.message)});
                 } else {
-                  await barberSignUp(name, email, password, phone);
+                  await barberSignUp(name, email, password, phone).catch(err=>{console.log(err.message)});
                 }
                 navigation.navigate("Success");
               } else {
                 setError(true);
               }
-            } catch (err) {
-              alert(err);
-            }
           }}
         >
           <Text style={styles.loginText}>Sign up</Text>

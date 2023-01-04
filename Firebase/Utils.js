@@ -1,15 +1,20 @@
-export const postMessage = (path, body) => {
+export const postMessage = async (path, body) => {
+    let data = false;
+    let payload = JSON.stringify(body);
     try{
-        fetch(`http://10.0.2.2:8080/api/${path}`,{
+        data = await fetch(`http://10.0.2.2:8080/api/${path}`,{
             method:'POST',
             headers: {
             Accept: 'application/json',
             'Content-Type': 'application/json'
             },
-            body: JSON.stringify(body),
+            body: payload,
         });
+        if(data){
+            return data.json().catch((err)=>{console.log(`error in parsing json ${JSON.stringify(data)}, error: ${err.message}`)});
+        }  
     }catch(err) {
-        alert(`${err.message},path:  ${path}`);
+        alert(`${err.message}, path:  ${path}, data ${data}`);
     }
 }
 

@@ -2,6 +2,7 @@ import React, { useState, Fragment, useEffect } from "react";
 import { Dropdown } from "react-native-element-dropdown";
 import { Calendar } from "react-native-calendars";
 import { StyleSheet, Text, View, TouchableOpacity, Image } from "react-native";
+import Popup from '../components/Popup';
 import moment from "moment";
 
 import {
@@ -28,6 +29,7 @@ export default function CalendarPage({ navigation }) {
   const [_findBarbers, setFindBarbers] = useState(false);
   const [DISABLED_DAYS, setDISABLED_DAYS] = useState([]);
   const [disabled, setDisabled] = useState([]);
+  const [displayPopup, setDisplayPopup] = useState(false);
 
   useEffect(() => {
     const getWorkDays = async () => {
@@ -148,7 +150,7 @@ export default function CalendarPage({ navigation }) {
       const success = await newOrder(_barber_id, _selectedDate, _hour);
       console.log("Success=", success);
       if (success) {
-        alert("Your chosen appointment is scheduled");
+        setDisplayPopup(true);
       }
       console.log(
         "Your chosen appointment is: ",
@@ -160,10 +162,25 @@ export default function CalendarPage({ navigation }) {
       console.log("try again...");
     }
     user.userAppointments(await getCustomerOrders(user.userID()));
-    navigation.navigate("MyAppointments");
+    //navigation.navigate("MyAppointments");
   };
   return (
     <View style={styles.container}>
+      <Popup
+        transparent={true}
+        visible={displayPopup}
+        headerText="Appointment Saved!"
+        bodyText="Would you like us to notify you if an earlier appointment is
+            canceled?"
+        firstButtonText="Sure!"
+        secondButtonText="No thanks."
+        firstButtonOnClick={() => {
+          console.log("hi");
+        }}
+        secondButtonOnClick={() => {
+          console.log("bye");
+        }}
+      />
       <Image
         source={require("../assets/choosedate.png")}
         style={styles.chooseDateContainer}
