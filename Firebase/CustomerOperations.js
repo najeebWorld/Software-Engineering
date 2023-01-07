@@ -33,3 +33,27 @@ export const getCustomer = async (uid) => {
     return null;
   }
 };
+
+export const newReview = async (uId, _chosenBarber, _barberId, _review, rate, bool) => {
+  var body = {};
+
+  if (bool) { 
+    body = {
+      userId: uId,
+      userName: await getCustomer(uId),
+      barberId: _barberId,
+      review: _review,
+      rate: rate,
+    };
+  } else {
+    body = {
+      userId: uId,
+      userName: "",
+      barberId: _barberId,
+      review: _review,
+      rate: rate,
+    };
+  }
+
+  await postMessage(`barber/${_barberId}/reviews`, body);
+};

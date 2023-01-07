@@ -11,22 +11,13 @@ import React, { useState } from 'react';
 import { SafeAreaView, ScrollView, StatusBar } from 'react-native';
 // import { View, Image, TouchableOpacity} from 'react-native';
 import { Card, ListItem, Button, Icon } from 'react-native-elements';
-import { getBarbersData } from '../../Firebase/BarberOperations';
+import { getBarber } from '../../Firebase/BarberOperations';
 import { useFocusEffect } from "@react-navigation/native";
+import { Rating, AirbnbRating } from 'react-native-elements';
+
 
 export default function BarberProfile({ navigation, route }) {
-    const item = route.params.barber;  
-
-    const [barberData, SetBarberData] = useState([]);
-    useFocusEffect(
-        React.useCallback(() => {
-          const getBarbers = async () => {
-            const Barbers = await getBarbersData();
-            SetBarberData(Barbers);
-          };
-          getBarbers().catch((err) => alert(err));
-        }, [])
-      );
+    const item = route.params.barber;
 
     const callClient = (phoneNumber) => {
         Linking.openURL(`tel:${phoneNumber}`);
@@ -72,33 +63,28 @@ export default function BarberProfile({ navigation, route }) {
               </Text>
                 <View>
               <Text style={styles.recom}>
-                Recomendation
+              Recommendation
               </Text>
               </View>
 
-              <SafeAreaView style={styles.container}>
+              <SafeAreaView style={styles.containerScroll}>
           <ScrollView style={styles.scrollView}>
-            {barberData.map((barber) => (
-              <Card key={barber.userId} style={{ borderWidth: 0 }}>
-                <Card.Title>{barber.userName}</Card.Title>
+            {item.reviews.map((review, index) => (
+              <Card key={index} style={{ borderWidth: 0 }}>
+                <Card.Title>{review.userName}</Card.Title>
                 <Card.Divider />
-                <Text>Adress: </Text>
-                <Text>Working Days: {Object.keys(barber.availableWorkHours).map((key, index) => (
-                    <TouchableOpacity key={index} >
-                    <Text style={styles.dayText}> {key} </Text>
-                  </TouchableOpacity>
-            ))}</Text>
-                <Text style={{ marginBottom: 10 }}>Phone Number: {barber.userPhone}</Text>
-                <TouchableOpacity style={styles.btn} onPress={() => {
-                    navigation.navigate("AppointmentMaker");
-                  }}>
-                  <Text style={styles.text}>Make an appointment</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.btn} onPress={() => {
-                    navigation.navigate("BarberProfile", { barber });
-                  }}>
-                  <Text style={styles.text}>Profile</Text>
-                </TouchableOpacity>
+                <View>                
+                <Rating readonly
+                  type='star'
+                  startingValue={review.rate}
+                  ratingCount={5}
+                  imageSize={20}
+                  
+                />
+                </View>
+                <Text> </Text>
+                
+                <Text>Review: {review.review}</Text>
               </Card>
             ))}
           </ScrollView>
@@ -110,6 +96,7 @@ export default function BarberProfile({ navigation, route }) {
     }
     
     const styles = StyleSheet.create({
+      
       container: {
         flex: 0,
         alignItems: 'center',
@@ -117,9 +104,22 @@ export default function BarberProfile({ navigation, route }) {
         backgroundColor: '#E5C492',
         maxHeight: "100%",
       },
+
+      containerScroll: {
+        flex: 1,
+        paddingTop: StatusBar.currentHeight,
+        width: "80%"
+      },
+
+      scrollView: {
+        backgroundColor: "#E5C492",
+        marginHorizontal: 20,
+        height: '100%',
+        color: "grey",
+      },
       header: {
         alignItems: 'center',
-        marginTop: 20,
+        
       },
 
       avatar: {
@@ -127,7 +127,7 @@ export default function BarberProfile({ navigation, route }) {
         height: 130,
         borderRadius: 63,
         // borderWidth: 4,
-        // borderColor: 'black',        
+        // borderColor: 'black',       
       },
       name: {
         fontSize: 22,
