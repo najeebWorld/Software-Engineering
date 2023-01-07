@@ -101,6 +101,7 @@ export default function SuccessfullLogin({ navigation }) {
 
             <View style={styles.inputView}>
             <TextInput
+            multiline={true}
             style={styles.TextInput}
             placeholder="Enter your review here..."
             placeholderTextColor="#003f5c"
