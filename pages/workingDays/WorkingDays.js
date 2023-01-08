@@ -172,7 +172,7 @@ export default function WorkingDays({ navigation }) {
       _duration
     );
     await updateBarberWorkingDays(appointments);
-    navigation.navigate("CalendarPageBarber");
+    navigation.navigate("BarberAddress");
   };
   return (
     <View style={styles.container}>

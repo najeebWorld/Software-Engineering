@@ -24,7 +24,14 @@ export const newBarber = async (uId, uName, uEmail, uPhone) => {
 
 export const updateBarberWorkingDays = async (newWorkingDays) => {
   await postMessage(`barber/${user.userID()}/workdays`, newWorkingDays);
+};
 
+export const updateBarberAddress = async (address,info) => {
+  const body = {
+    BarberAddress: address,
+    BarberInfo: info
+  }
+  await postMessage(`barber/${user.userID()}/address`, body);
 };
 
 export const getBarberWorkingDays = async (uid) => {
