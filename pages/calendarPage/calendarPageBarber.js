@@ -54,9 +54,18 @@ export default function CalendarPage({ navigation }) {
 
   const dates = removeBlueStyle();
 
-  const OnBtnPress = () => {
+  const onOvverallPress = () => {
     navigation.navigate("WorkingDays");
   };
+
+  const onTimePress = () => {
+    navigation.navigate("WorkingDays");
+  };
+
+  const onAddressPress = () => {
+    navigation.navigate("BarberAddress");
+  };
+
 
   let DISABLED_DAYS = ["Saturday"];
 
@@ -98,7 +107,7 @@ export default function CalendarPage({ navigation }) {
           const currApp = generateApointments(date, app);
           parseAppointment = { ...parseAppointment, ...currApp };
         });
-        console.log("parseAppointment:", parseAppointment);
+        // console.log("parseAppointment:", parseAppointment);
         setAppointments(parseAppointment);
       };
       getBarberOrders_().catch((err) => alert(err));
@@ -119,6 +128,8 @@ export default function CalendarPage({ navigation }) {
         })),
     };
   }
+
+
 
   return (
     <View style={styles.container}>
@@ -168,10 +179,19 @@ export default function CalendarPage({ navigation }) {
           />
         </Fragment>
       </SafeAreaView>
+      <View>
 
-      <TouchableOpacity style={styles.btn} onPress={OnBtnPress}>
-        <Text style={styles.text}>Change Activity Time</Text>
-      </TouchableOpacity>
+      </View>
+        <TouchableOpacity style={styles.btn} onPress={onOvverallPress}>
+          <Text style={styles.text}>Change Overall Activity?</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.btn} onPress={onTimePress}>
+          <Text style={styles.text}>Change Activity on Date?</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.btn} onPress={onAddressPress}>
+          <Text style={styles.text}>Change Address & Info?</Text>
+        </TouchableOpacity>
+
     </View>
   );
 }
@@ -221,13 +241,14 @@ const styles = StyleSheet.create({
     color: "black",
   },
 
+
   btn: {
     width: "80%",
     borderRadius: 25,
     height: 50,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 40,
+    marginTop: 20,
     backgroundColor: "#000000",
   },
 
