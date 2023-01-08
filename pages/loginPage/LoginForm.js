@@ -4,6 +4,7 @@ import { styles } from "../styles";
 import { Text, View, TextInput, TouchableOpacity, Image } from "react-native";
 import { authenticate } from "../../Firebase/Authentication";
 import user from "../../Firebase/User";
+import { postMessage } from "../../Firebase/Utils";
 import {
   isFirstEntry,
   updateFirstEntry,
@@ -42,7 +43,6 @@ export default function LoginForm({ navigation }) {
         style={styles.loginBtn}
         onPress={async () => {
           await authenticate(email, password);
-          console.log(45);
           if (user.setCustomer()) {
             navigation.navigate("MyAppointments");
           } else {
