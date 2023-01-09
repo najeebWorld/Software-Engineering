@@ -183,13 +183,13 @@ export default function CalendarPage({ navigation }) {
 
       </View>
         <TouchableOpacity style={styles.btn} onPress={onOvverallPress}>
-          <Text style={styles.text}>Change Overall Activity?</Text>
+          <Text style={styles.text}>Change Overall Activity</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.btn} onPress={onTimePress}>
-          <Text style={styles.text}>Change Activity on Date?</Text>
+          <Text style={styles.text}>Modify Current Activity</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.btn} onPress={onAddressPress}>
-          <Text style={styles.text}>Change Address & Info?</Text>
+          <Text style={styles.text}>Update Address & Info</Text>
         </TouchableOpacity>
 
     </View>
