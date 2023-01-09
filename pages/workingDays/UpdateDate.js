@@ -3,7 +3,8 @@ import { Dropdown } from "react-native-element-dropdown";
 import DaySelector from "../components/daySelector";
 import { Text, View, TouchableOpacity, Image } from "react-native";
 import { styles } from "../styles";
-import { updateBarberWorkingDays } from "../../Firebase/BarberOperations";
+import { getBarber,getBarberWorkingDays, updateBarberWorkingDays } from "../../Firebase/BarberOperations";
+import User from "../../Firebase/User"
 
 export default function UpdateDate({ navigation }) {
   const _hoursData = [
@@ -158,6 +159,13 @@ export default function UpdateDate({ navigation }) {
     setDuration(item.label);
   };
 
+  const combineDays = (oldDays, newDays) => {    
+    for (day in newDays){
+        oldDays[day] = newDays[day];
+    }
+    return oldDays;
+  };
+
   const OnBtnPress = async () => {
     const workingDays = [];
     for (i of ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]) {
@@ -171,9 +179,14 @@ export default function UpdateDate({ navigation }) {
       _endTime,
       _duration
     );
-    await updateBarberWorkingDays(appointments);
-    navigation.navigate("BarberAddress");
+    const barberData = await getBarber(User.userID());
+    console.log(barberData.availableWorkHours)
+    const newDates = combineDays(barberData.availableWorkHours,appointments);
+    await updateBarberWorkingDays(newDates);
+    console.log("Barber ", User.userID(), "Appointments updated!");
+    navigation.navigate("CalendarPageBarber");
   };
+
   return (
     <View style={styles.container}>
       <Image

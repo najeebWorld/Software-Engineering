@@ -59,7 +59,7 @@ export default function CalendarPage({ navigation }) {
   };
 
   const onTimePress = () => {
-    navigation.navigate("WorkingDays");
+    navigation.navigate("UpdateDate");
   };
 
   const onAddressPress = () => {
