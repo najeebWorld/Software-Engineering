@@ -11,11 +11,12 @@ export const postMessage = async (path, body) => {
             body: payload,
         });
         if(data){
-            return data.json().catch((err)=>{console.log(`error in parsing json ${JSON.stringify(data)}, error: ${err.message}`)
+            console.log(data);
+            return data.json().catch((err)=>{console.log(`error in parsing json ${data.statusText}, error: ${err.message}`)
                                                 return null});
         }  
     }catch(err) {
-        alert(`${err.message}, path:  ${path}, data ${data}`);
+        alert(`${err}, path:  ${path}, data ${data}`);
     }
 }
 
@@ -30,6 +31,6 @@ export const getMessage = async (path) => {
         });
         return data.json();
     }catch(err){
-        alert(`${err.message},path:  ${path}`);
+        alert(`${data},path:  ${path}`);
     }
 }

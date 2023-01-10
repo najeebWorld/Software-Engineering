@@ -42,6 +42,9 @@ export const signUp = async (uName, uEmail, uPassword, uPhone) => {
     uPassword: uPassword,
     uPhone: uPhone,
   });
+  if(uid.error){
+    throw new Error("Email is already in use...")
+  }
   return uid;
 };
 
