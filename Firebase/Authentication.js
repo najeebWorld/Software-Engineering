@@ -47,10 +47,10 @@ export const signUp = async (uName, uEmail, uPassword, uPhone) => {
 
 export const customerSignUp = async (uName, uEmail, uPassword, uPhone) => {
   const uid = await signUp(uName, uEmail, uPassword, uPhone);
-  await newCustomer(uid, uName, uEmail, uPassword, uPhone);
+  await newCustomer(uid, uName, uEmail, uPhone);
 };
 
 export const barberSignUp = async (uName, uEmail, uPassword, uPhone) => {
   const uid = await signUp(uName, uEmail, uPassword, uPhone);
-  await newBarber(uid, uName, uEmail, uPassword, uPhone);
+  await newBarber(uid, uName, uEmail, uPhone);
 };

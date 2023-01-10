@@ -18,6 +18,7 @@ export const newBarber = async (uId, uName, uEmail, uPhone) => {
         userEmail: uEmail,
         userPhone: uPhone,
         firstEntry: true,
+        reviews: [],
   }
   await postMessage(`barber`, body);
 };
