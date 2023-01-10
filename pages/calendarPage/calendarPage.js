@@ -168,7 +168,7 @@ export default function CalendarPage({ navigation }) {
   };
   return (
     <View style={styles.container}>
-      <Popup
+      {/* <Popup
         transparent={true}
         visible={displayPopup}
         headerText="Appointment Saved!"
@@ -185,7 +185,7 @@ export default function CalendarPage({ navigation }) {
           setDisplayPopup(false);
           navigation.navigate("MyAppointments");
         }}
-      />
+      /> */}
       <Image
         source={require("../assets/choosedate.png")}
         style={styles.chooseDateContainer}

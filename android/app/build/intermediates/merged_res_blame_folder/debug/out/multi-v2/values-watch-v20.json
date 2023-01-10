@@ -4,7 +4,7 @@
             "outputFile": "com.tisporet.app-mergeDebugResources-33:/values-watch-v20/values-watch-v20.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Hagai\\.gradle\\caches\\transforms-3\\1b01e913cc0c1aec732be95df98441e2\\transformed\\appcompat-1.4.1\\res\\values-watch-v20\\values-watch-v20.xml",
+                    "source": "C:\\Users\\sappi\\.gradle\\caches\\transforms-3\\1b01e913cc0c1aec732be95df98441e2\\transformed\\appcompat-1.4.1\\res\\values-watch-v20\\values-watch-v20.xml",
                     "from": {
                         "startLines": "2,5,8",
                         "startColumns": "4,4,4",
@@ -23,7 +23,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Hagai\\.gradle\\caches\\transforms-3\\538735052694355f56d60494eeccabbd\\transformed\\jetified-play-services-auth-20.3.0\\res\\values-watch-v20\\values.xml",
+                    "source": "C:\\Users\\sappi\\.gradle\\caches\\transforms-3\\538735052694355f56d60494eeccabbd\\transformed\\jetified-play-services-auth-20.3.0\\res\\values-watch-v20\\values.xml",
                     "from": {
                         "startLines": "4,5,6,7,8,9,10,11",
                         "startColumns": "0,0,0,0,0,0,0,0",

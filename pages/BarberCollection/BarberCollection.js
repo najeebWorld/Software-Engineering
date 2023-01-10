@@ -27,7 +27,7 @@ export default function BreberCollection({ navigation }) {
               <Card key={barber.userId} style={{ borderWidth: 0 }}>
                 <Card.Title>{barber.userName}</Card.Title>
                 <Card.Divider />
-                <Text>Adress: </Text>
+                <Text>Adress: {barber.BarberAddress}</Text>
                 <Text>Working Days: {Object.keys(barber.availableWorkHours).map((key, index) => (
                     <TouchableOpacity key={index} >
                     <Text style={styles.dayText}> {key} </Text>
