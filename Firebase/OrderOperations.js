@@ -1,7 +1,7 @@
 import user from "./User";
 import { getBarber } from "./BarberOperations";
 import { getCustomer } from "./CustomerOperations";
-import { getMessage,postMessage } from "./Utils";
+import { getMessage, postMessage } from "./Utils";
 
 /**
  * Creates a new order in the Orders collection.
@@ -18,8 +18,9 @@ export const newOrder = async (_chosenBarber, _selectedDate, _hour) => {
     customerName: (await getCustomer(user.userID())).userName,
     barberName: (await getBarber(_chosenBarber)).userName,
   };
-  postMessage('order',body)
-  return true;
+  console.log(body);
+  const id = await postMessage("order", body);
+  return id;
 };
 
 export const getBarberOrders = async (uid) => {
@@ -47,8 +48,19 @@ export const deleteOrder = async (barberId, date, time, key) => {
     barberId: barberId,
     date: date,
     time: time,
-    key: key 
+    key: key,
   };
-  await postMessage('deleteOrder',body);
+  await postMessage("deleteOrder", body);
 };
+
+export const addOrderToWaitlist = async (orderId) => {
+  await postMessage("waitlist", {
+    orderId: orderId,
+  });
+};
+
+export const findEarlyAppointment = async (id) => {
+  await postMessage(`findearlyorder/${id}`,{});
+}
+
 

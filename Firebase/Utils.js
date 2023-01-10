@@ -11,7 +11,8 @@ export const postMessage = async (path, body) => {
             body: payload,
         });
         if(data){
-            return data.json().catch((err)=>{console.log(`error in parsing json ${JSON.stringify(data)}, error: ${err.message}`)});
+            return data.json().catch((err)=>{console.log(`error in parsing json ${JSON.stringify(data)}, error: ${err.message}`)
+                                                return null});
         }  
     }catch(err) {
         alert(`${err.message}, path:  ${path}, data ${data}`);

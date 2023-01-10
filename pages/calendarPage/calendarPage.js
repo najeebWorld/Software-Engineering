@@ -13,6 +13,7 @@ import {
   newOrder,
   getCustomerOrders,
   getAvailableAppointments,
+  addOrderToWaitlist,
 } from "../../Firebase/OrderOperations";
 import user from "../../Firebase/User";
 import { useFocusEffect } from "@react-navigation/native";
@@ -30,6 +31,7 @@ export default function CalendarPage({ navigation }) {
   const [DISABLED_DAYS, setDISABLED_DAYS] = useState([]);
   const [disabled, setDisabled] = useState([]);
   const [displayPopup, setDisplayPopup] = useState(false);
+  const [orderId, setOrderId] = useState("");
 
   useEffect(() => {
     const getWorkDays = async () => {
@@ -147,13 +149,14 @@ export default function CalendarPage({ navigation }) {
       _selectedDate != "" &&
       _hour != "Choose Time"
     ) {
-      const success = await newOrder(_barber_id, _selectedDate, _hour);
-      console.log("Success=", success);
-      if (success) {
+      const id = await newOrder(_barber_id, _selectedDate, _hour);
+      setOrderId(id);
+      if (id) {
         setDisplayPopup(true);
       }
       console.log(
         "Your chosen appointment is: ",
+        id,
         _barber_id,
         _selectedDate,
         _hour
@@ -162,11 +165,10 @@ export default function CalendarPage({ navigation }) {
       console.log("try again...");
     }
     user.userAppointments(await getCustomerOrders(user.userID()));
-    //navigation.navigate("MyAppointments");
   };
   return (
     <View style={styles.container}>
-      <Popup
+      {/* <Popup
         transparent={true}
         visible={displayPopup}
         headerText="Appointment Saved!"
@@ -174,13 +176,16 @@ export default function CalendarPage({ navigation }) {
             canceled?"
         firstButtonText="Sure!"
         secondButtonText="No thanks."
-        firstButtonOnClick={() => {
-          console.log("hi");
+        firstButtonOnClick={async () => {
+          await addOrderToWaitlist(orderId);
+          setDisplayPopup(false);
+          navigation.navigate("MyAppointments");
         }}
         secondButtonOnClick={() => {
-          console.log("bye");
+          setDisplayPopup(false);
+          navigation.navigate("MyAppointments");
         }}
-      />
+      /> */}
       <Image
         source={require("../assets/choosedate.png")}
         style={styles.chooseDateContainer}
@@ -239,7 +244,7 @@ export default function CalendarPage({ navigation }) {
       <TouchableOpacity
         style={styles.btn}
         onPress={async () => {
-          await OnBtnPress();
+          await OnBtnPress(); 
         }}
       >
         <Text style={styles.text}>Make an appointment</Text>

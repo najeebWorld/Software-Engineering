@@ -26,6 +26,18 @@ export const styles = StyleSheet.create({
     borderColor: "#8D5238",
   },
 
+  inputViewInfo: {
+    borderRadius: 30,
+    width: "70%",
+    height: 45,
+    marginBottom: 20,
+    backgroundColor: "#E5C492",
+    alignItems: "center",
+    borderWidth: 3.0,
+    borderColor: "#8D5238",
+    height: 150,
+  },
+
   inputViewError: {
     backgroundColor: "#E5C492",
     borderRadius: 30,

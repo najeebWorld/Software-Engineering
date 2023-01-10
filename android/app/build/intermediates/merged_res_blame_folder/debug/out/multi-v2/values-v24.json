@@ -4,7 +4,7 @@
             "outputFile": "com.tisporet.app-mergeDebugResources-33:/values-v24/values-v24.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Hagai\\.gradle\\caches\\transforms-3\\1b01e913cc0c1aec732be95df98441e2\\transformed\\appcompat-1.4.1\\res\\values-v24\\values-v24.xml",
+                    "source": "C:\\Users\\sappi\\.gradle\\caches\\transforms-3\\1b01e913cc0c1aec732be95df98441e2\\transformed\\appcompat-1.4.1\\res\\values-v24\\values-v24.xml",
                     "from": {
                         "startLines": "2,3",
                         "startColumns": "4,4",

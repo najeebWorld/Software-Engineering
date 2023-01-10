@@ -50,7 +50,7 @@ export default function BarberProfile({ navigation, route }) {
           <View style={styles.body}>
             <View style={styles.bodyContent}>
             
-              <Text style={styles.info}>Adress: {'\n'}</Text>
+              <Text style={styles.info}>Adress: {item.BarberAddress}</Text>
               <Text style={styles.info}>Working Days: {'\n'} {Object.keys(item.availableWorkHours).map((key, index) => (
                     
                 <Text key={index}>{key}  {Object.values(item.availableWorkHours)[0][0]}-{Object.values(item.availableWorkHours)[0][Object.values(item.availableWorkHours)[0].length-1]} {'\n'}</Text>
@@ -59,7 +59,7 @@ export default function BarberProfile({ navigation, route }) {
             ))}</Text>
               
               <Text style={styles.info}>
-                Info: {'\n'}
+                {item.BarberInfo}
               </Text>
                 <View>
               <Text style={styles.recom}>
@@ -153,6 +153,7 @@ export default function BarberProfile({ navigation, route }) {
         fontSize: 12,
       },
       info: {
+        maxWidth:'70%',
         fontSize: 16,
       },
 

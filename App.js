@@ -12,6 +12,7 @@ import OrderDetails from "./pages/orderDetails/OrderDetails";
 import BarberCollection from './pages/BarberCollection/BarberCollection';
 import BarberProfile from "./pages/BarberProfile/BarberProfile";
 import Reviews from "./pages/Reviews/Reviews";
+import BarberAddress from "./pages/workingDays/barberAddress";
 
 const Stack = createNativeStackNavigator();
 
@@ -38,6 +39,7 @@ export default function App() {
         <Stack.Screen name="BarberCollection" component={BarberCollection} />
         <Stack.Screen name="BarberProfile" component={BarberProfile} />
         <Stack.Screen name="Reviews" component={Reviews} />
+        <Stack.Screen name="BarberAddress" component={BarberAddress} />
       </Stack.Navigator>
     </NavigationContainer>
   );

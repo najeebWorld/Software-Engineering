@@ -4,26 +4,7 @@
             "outputFile": "com.tisporet.app-mergeDebugResources-33:/values-v23/values-v23.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Hagai\\.gradle\\caches\\transforms-3\\35eb5e553f57f81f9d70e39ddb5658d8\\transformed\\cardview-1.0.0\\res\\values-v23\\values-v23.xml",
-                    "from": {
-                        "startLines": "2",
-                        "startColumns": "4",
-                        "startOffsets": "55",
-                        "endLines": "4",
-                        "endColumns": "12",
-                        "endOffsets": "200"
-                    },
-                    "to": {
-                        "startLines": "50",
-                        "startColumns": "4",
-                        "startOffsets": "3232",
-                        "endLines": "52",
-                        "endColumns": "12",
-                        "endOffsets": "3377"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\Hagai\\.gradle\\caches\\transforms-3\\1b01e913cc0c1aec732be95df98441e2\\transformed\\appcompat-1.4.1\\res\\values-v23\\values-v23.xml",
+                    "source": "C:\\Users\\sappi\\.gradle\\caches\\transforms-3\\1b01e913cc0c1aec732be95df98441e2\\transformed\\appcompat-1.4.1\\res\\values-v23\\values-v23.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,20,34,35,36,39,43,44,45,46",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -42,7 +23,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Hagai\\.gradle\\caches\\transforms-3\\ba3b83354ee2cc9d1d07292bc7dad81c\\transformed\\material-1.1.0\\res\\values-v23\\values-v23.xml",
+                    "source": "C:\\Users\\sappi\\.gradle\\caches\\transforms-3\\ba3b83354ee2cc9d1d07292bc7dad81c\\transformed\\material-1.1.0\\res\\values-v23\\values-v23.xml",
                     "from": {
                         "startLines": "2,6",
                         "startColumns": "4,4",
@@ -58,6 +39,25 @@
                         "endLines": "56,60",
                         "endColumns": "10,10",
                         "endOffsets": "3642,3915"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\sappi\\.gradle\\caches\\transforms-3\\35eb5e553f57f81f9d70e39ddb5658d8\\transformed\\cardview-1.0.0\\res\\values-v23\\values-v23.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "4",
+                        "endColumns": "12",
+                        "endOffsets": "200"
+                    },
+                    "to": {
+                        "startLines": "50",
+                        "startColumns": "4",
+                        "startOffsets": "3232",
+                        "endLines": "52",
+                        "endColumns": "12",
+                        "endOffsets": "3377"
                     }
                 }
             ]
