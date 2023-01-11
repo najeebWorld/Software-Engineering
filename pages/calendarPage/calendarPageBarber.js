@@ -107,7 +107,6 @@ export default function CalendarPage({ navigation }) {
           const currApp = generateApointments(date, app);
           parseAppointment = { ...parseAppointment, ...currApp };
         });
-        // console.log("parseAppointment:", parseAppointment);
         setAppointments(parseAppointment);
       };
       getBarberOrders_().catch((err) => alert(err));
