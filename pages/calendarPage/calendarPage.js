@@ -140,7 +140,7 @@ export default function CalendarPage({ navigation }) {
 
   const dayPress = (day) => {
     if(day.dateString == _today){
-      const workHours = [];
+      let workHours = [];
         let counter = 1;
         _workHours.forEach((hour) => {
           if(hour.label >= _now){

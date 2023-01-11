@@ -15,6 +15,7 @@ const MyAppointments = ({ navigation }) => {
   const [appointments, setAppointments] = useState({});
   const [reRender, onReRender] = useState(false);
   const [animate, onAnimate] = useState(false);
+  const [deleteGuard, setDeleteGuard] = useState(false);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -23,19 +24,24 @@ const MyAppointments = ({ navigation }) => {
         const app = await getCustomerOrders(user.userID());
         let validOrders = {};
         for(const key in app){
-          if(app[key].orderHour >= _now){
+          if(app[key].orderHour >= _now || app[key].orderDate > _today){
             validOrders[key] = app[key];
           }
         }
         setAppointments(validOrders);
       };
       getOrders().catch((err) => alert(err));
+      setDeleteGuard(false);
     }, [reRender])
   );
 
   const reRenderPage = () => {
     onReRender(!reRender);
   };
+
+  const turnOnDeleteGuard = () => {
+    setDeleteGuard(true)
+  }
 
   const animateLoad = () =>{
     onAnimate(!animate);
@@ -56,6 +62,8 @@ const MyAppointments = ({ navigation }) => {
         appointments={appointments}
         reRender={reRenderPage}
         animate={animateLoad}
+        guard = {turnOnDeleteGuard}
+        isguard = {deleteGuard}
       />
       <TouchableOpacity
         style={{ ...styles.loginBtn, marginTop: 300 }}

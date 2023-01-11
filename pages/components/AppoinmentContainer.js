@@ -19,6 +19,8 @@ const AppoinmentContainer = (props) => {
               docID={key}
               reRender={props.reRender}
               animate = {props.animate}
+              guard = {props.guard}
+              isguard = {props.isguard}
               key={Math.random()}
             />
           );

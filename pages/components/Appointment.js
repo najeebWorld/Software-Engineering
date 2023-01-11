@@ -22,7 +22,8 @@ const Appointment = (props) => {
       <View style={{ flexDirection: "column", marginLeft: 7 }}>
         <TouchableOpacity
           style={{ marginBottom: 10, marginTop: 25 }}
-          onPress={async () => {
+          onPress={props.isguard ? ()=>{} : async () => {
+            props.guard();
             props.animate();
             await findEarlyAppointment(props.docID);
             await deleteOrder(props.user, props.date, props.time, props.docID);
