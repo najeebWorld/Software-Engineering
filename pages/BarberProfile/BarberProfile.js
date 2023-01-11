@@ -54,7 +54,7 @@ export default function BarberProfile({ navigation, route }) {
               <Text style={styles.info}>Adress: {item.BarberAddress}</Text>
               <Text style={styles.info}>Working Days: {'\n'} {Object.keys(item.availableWorkHours).map((key, index) => (
                     
-                <Text key={index}>{key}  {Object.values(item.availableWorkHours)[0][0]}-{Object.values(item.availableWorkHours)[0][Object.values(item.availableWorkHours)[0].length-1]} {'\n'}</Text>
+                <Text key={index}>{key}  {Object.values(item.availableWorkHours)[index][0]}-{Object.values(item.availableWorkHours)[index][Object.values(item.availableWorkHours)[index].length-1]} {'\n'}</Text>
         
                   
             ))}</Text>
@@ -71,7 +71,7 @@ export default function BarberProfile({ navigation, route }) {
               <SafeAreaView style={styles.containerScroll}>
           <ScrollView style={styles.scrollView}>
             {item.reviews.map((review, index) => (
-              <Card key={index} style={{ borderWidth: 0 }}>
+              <Card key={index}>
                 <Card.Title>{review.userName}</Card.Title>
                 <Card.Divider />
                 <View>                
@@ -109,13 +109,15 @@ export default function BarberProfile({ navigation, route }) {
       containerScroll: {
         flex: 1,
         paddingTop: StatusBar.currentHeight,
-        width: "80%"
+        width: "80%",
+        maxHeight: "100%"
       },
 
       scrollView: {
         backgroundColor: "#E5C492",
+        flex: 1,
         marginHorizontal: 20,
-        height: '100%',
+        maxHeight: '60%',
         color: "grey",
       },
       header: {

@@ -55,6 +55,7 @@ export default function BreberCollection({ navigation }) {
       container: {
         flex: 1,
         paddingTop: StatusBar.currentHeight,
+        backgroundColor: "#E5C492",
       },
       scrollView: {
         backgroundColor: "#E5C492",
