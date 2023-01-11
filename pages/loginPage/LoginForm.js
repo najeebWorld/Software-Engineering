@@ -10,6 +10,8 @@ import {
   updateFirstEntry,
 } from "../../Firebase/BarberOperations";
 import { useFocusEffect } from "@react-navigation/native";
+
+
 export default function LoginForm({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -48,13 +50,13 @@ export default function LoginForm({ navigation }) {
               return;
             }
             if (user.setCustomer()) {
-              navigation.navigate("MyAppointments");
+              navigation.navigate("CustomerMenu");
             } else {
               if (await isFirstEntry(user.userID())) {
                 await updateFirstEntry(user.userID());
                 navigation.navigate("WorkingDays");
               } else {
-                navigation.navigate("CalendarPageBarber");
+                navigation.navigate("MenuBarber");
               }
             }
           } else {
