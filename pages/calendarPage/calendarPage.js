@@ -20,6 +20,7 @@ import { useFocusEffect } from "@react-navigation/native";
 
 export default function CalendarPage({ navigation }) {
   const _today = moment(new Date()).format("YYYY-MM-DD");
+  const _now = moment(new Date()).add(2,'hours').format("HH:mm"); // Add 2 hour, gor the current time in Israel (GMT+2).
   const _lastDay = moment(new Date()).add(14, "day").format("YYYY-MM-DD");
   const [_hour, setHour] = useState("Choose time");
   const [_selectedDate, setSelectedDate] = useState(_today);
@@ -138,9 +139,17 @@ export default function CalendarPage({ navigation }) {
   };
 
   const dayPress = (day) => {
-    setSelectedDate(day.dateString);
-
-    console.log("selected day: ", _selectedDate);
+    if(day.dateString == _today){
+      const workHours = [];
+        let counter = 1;
+        _workHours.forEach((hour) => {
+          if(hour.label >= _now){
+            workHours.push({ label: hour.label, value: counter++ })
+          }
+        });
+        setWorkHours(workHours);
+    }
+    setSelectedDate(day.dateString)
   };
 
   const OnBtnPress = async () => {
@@ -200,7 +209,7 @@ export default function CalendarPage({ navigation }) {
             maxDate={_lastDay}
             disableAllTouchEventsForDisabledDays={true}
             style={{ borderRadius: 10 }}
-            onDayPress={(day) => setSelectedDate(day.dateString)}
+            onDayPress={dayPress} //setSelectedDate(day.dateString)}
             markedDates={{
               ...dates,
               ...disabled,

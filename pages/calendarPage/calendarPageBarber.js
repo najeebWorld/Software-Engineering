@@ -110,7 +110,6 @@ export default function CalendarPage({ navigation }) {
         Object.values(parseAppointment).forEach((doc) => {
           doc.sort((a, b) => (a.time > b.time) ? 1 : -1);
         })
-        
         setAppointments(parseAppointment);
       };
       getBarberOrders_().catch((err) => alert(err));
