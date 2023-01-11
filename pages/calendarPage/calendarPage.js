@@ -68,6 +68,10 @@ export default function CalendarPage({  navigation, route }) {
 
   useFocusEffect(
     React.useCallback(() => {
+      if(route.params){
+        const item = {value: route.params.id, label: route.params.name}
+        changeOnDropDownBarber(item);
+      }
       const getBarbers = async () => {
         const Barbers = await getBarberList();
         SetBarberData(Barbers);
