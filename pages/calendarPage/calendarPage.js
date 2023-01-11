@@ -18,15 +18,17 @@ import {
 import user from "../../Firebase/User";
 import { useFocusEffect } from "@react-navigation/native";
 
-export default function CalendarPage({ navigation }) {
+export default function CalendarPage({  navigation, route }) {
   const _today = moment(new Date()).format("YYYY-MM-DD");
-  let _now = moment(new Date()).add(2,'hours').format("HH:mm"); // Add 2 hour, gor the current time in Israel (GMT+2).
+  let _now = moment(new Date()).add(2, "hours").format("HH:mm"); // Add 2 hour, gor the current time in Israel (GMT+2).
   const _lastDay = moment(new Date()).add(14, "day").format("YYYY-MM-DD");
   const [_hour, setHour] = useState("Choose time");
   const [_selectedDate, setSelectedDate] = useState(_today);
-  const [_chosenBarber, setChosenBarber] = useState("Choose barber");
+  const [_chosenBarber, setChosenBarber] = useState(
+    route.params.name ? route.params.name : "Choose barber"
+  );
   const [_barberData, SetBarberData] = useState([]);
-  const [_barber_id, setBarberID] = useState("");
+  const [_barber_id, setBarberID] = useState(route.params.id ? route.params.id : "");
   const [_workHours, setWorkHours] = useState([]);
   const [_findBarbers, setFindBarbers] = useState(false);
   const [DISABLED_DAYS, setDISABLED_DAYS] = useState([]);
@@ -41,26 +43,24 @@ export default function CalendarPage({ navigation }) {
           _selectedDate,
           _barber_id
         ).catch((err) => alert(err));
-        
+
         const workHours = [];
         let counter = 1;
         workHoursArr.forEach((hour) => {
-          if(_selectedDate == _today) { 
-            if(hour > _now){
+          if (_selectedDate == _today) {
+            if (hour > _now) {
               workHours.push({ label: hour, value: counter++ });
             }
-          }else{
+          } else {
             workHours.push({ label: hour, value: counter++ });
           }
-      });
-      
+        });
+
         setWorkHours(workHours);
         if (workHours.length === 0 && _barber_id) {
           setHour("Choose Time");
           alert("No available appointments on selected date");
         }
-        
-        
       }
     };
     getWorkDays().catch((err) => alert(err));
@@ -109,21 +109,12 @@ export default function CalendarPage({ navigation }) {
 
   const dates = removeBlueStyle();
 
-  
-  
   const changeOnDropDownBarber = async (item) => {
-    
     setChosenBarber(item.label);
     setBarberID(item.value);
     const workingDays = await getBarberWorkingDays(item.value);
-    setDisabled(getDaysInMonth(
-      moment().month(),
-      moment().year(),
-      workingDays
-    ));
-
+    setDisabled(getDaysInMonth(moment().month(), moment().year(), workingDays));
   };
-
 
   const getDaysInMonth = (month, year, days) => {
     let pivot = moment().month(month).year(year).startOf("month");
@@ -132,14 +123,14 @@ export default function CalendarPage({ navigation }) {
     let dates = {};
     const disabled = { disabled: true };
     while (pivot.isBefore(end)) {
-      if(days) {
+      if (days) {
         days.forEach((day) => {
           dates[pivot.day(day).format("YYYY-MM-DD")] = disabled;
         });
         pivot.add(7, "days");
       }
     }
-    
+
     return dates;
   };
 
@@ -149,17 +140,17 @@ export default function CalendarPage({ navigation }) {
   };
 
   const dayPress = (day) => {
-    if(day.dateString == _today){
+    if (day.dateString == _today) {
       let workHours = [];
-        let counter = 1;
-        _workHours.forEach((hour) => {
-          if(hour.label > _now){
-            workHours.push({ label: hour.label, value: counter++ })
-          }
-        });
-        setWorkHours(workHours);
+      let counter = 1;
+      _workHours.forEach((hour) => {
+        if (hour.label > _now) {
+          workHours.push({ label: hour.label, value: counter++ });
+        }
+      });
+      setWorkHours(workHours);
     }
-    setSelectedDate(day.dateString)
+    setSelectedDate(day.dateString);
   };
 
   const OnBtnPress = async () => {

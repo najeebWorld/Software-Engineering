@@ -35,7 +35,9 @@ export default function BreberCollection({ navigation }) {
             ))}</Text>
                 <Text style={{ marginBottom: 10 }}>Phone Number: {barber.userPhone}</Text>
                 <TouchableOpacity style={styles.btn} onPress={() => {
-                    navigation.navigate("AppointmentMaker");
+                    const id = barber.userId;
+                    const name = barber.userName;
+                    navigation.navigate("AppointmentMaker", { id, name });
                   }}>
                   <Text style={styles.text}>Make an appointment</Text>
                 </TouchableOpacity>
