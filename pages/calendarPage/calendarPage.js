@@ -20,7 +20,7 @@ import { useFocusEffect } from "@react-navigation/native";
 
 export default function CalendarPage({ navigation }) {
   const _today = moment(new Date()).format("YYYY-MM-DD");
-  const _now = moment(new Date()).add(2,'hours').format("HH:mm"); // Add 2 hour, gor the current time in Israel (GMT+2).
+  let _now = moment(new Date()).add(2,'hours').format("HH:mm"); // Add 2 hour, gor the current time in Israel (GMT+2).
   const _lastDay = moment(new Date()).add(14, "day").format("YYYY-MM-DD");
   const [_hour, setHour] = useState("Choose time");
   const [_selectedDate, setSelectedDate] = useState(_today);
@@ -41,16 +41,26 @@ export default function CalendarPage({ navigation }) {
           _selectedDate,
           _barber_id
         ).catch((err) => alert(err));
+        
         const workHours = [];
         let counter = 1;
-        workHoursArr.forEach((hour) =>
-          workHours.push({ label: hour, value: counter++ })
-        );
+        workHoursArr.forEach((hour) => {
+          if(_selectedDate == _today) { 
+            if(hour > _now){
+              workHours.push({ label: hour, value: counter++ });
+            }
+          }else{
+            workHours.push({ label: hour, value: counter++ });
+          }
+      });
+      
         setWorkHours(workHours);
         if (workHours.length === 0 && _barber_id) {
           setHour("Choose Time");
           alert("No available appointments on selected date");
         }
+        
+        
       }
     };
     getWorkDays().catch((err) => alert(err));
@@ -143,7 +153,7 @@ export default function CalendarPage({ navigation }) {
       let workHours = [];
         let counter = 1;
         _workHours.forEach((hour) => {
-          if(hour.label >= _now){
+          if(hour.label > _now){
             workHours.push({ label: hour.label, value: counter++ })
           }
         });
