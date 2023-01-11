@@ -341,5 +341,7 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: 15,
     textAlign: "center",
+    alignContent: "center",
+    alignItems: "center",
   },
 });

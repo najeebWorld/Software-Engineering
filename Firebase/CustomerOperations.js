@@ -36,11 +36,15 @@ export const getCustomer = async (uid) => {
 
 export const newReview = async (uId, _chosenBarber, _barberId, _review, rate, bool) => {
   var body = {};
+  console.log("await getCustomer(uId)", await getCustomer(uId));
 
+  var name = await getCustomer(uId)
+  
+  
   if (bool) { 
     body = {
       userId: uId,
-      userName: await getCustomer(uId),
+      userName: name.userName,
       barberId: _barberId,
       review: _review,
       rate: rate,

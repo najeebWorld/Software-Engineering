@@ -15,6 +15,14 @@ const MyAppointments = ({ navigation }) => {
     React.useCallback(() => {
       const getOrders = async () => {
         const app = await getCustomerOrders(user.userID());
+        // console.log("app", app);
+        // var appList = [];
+        // Object.values(app).forEach((doc) => {
+        //   appList.push(doc);
+        // })
+        // appList.sort((a, b) => (a.orderDate > b.orderDate) ? 1 : -1);
+        // console.log("appList", appList);
+        // setAppointments(appList);
         setAppointments(app);
       };
       getOrders().catch((err) => alert(err));

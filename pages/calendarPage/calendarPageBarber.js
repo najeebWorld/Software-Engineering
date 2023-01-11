@@ -14,9 +14,6 @@ import user from "../../Firebase/User";
 import { useFocusEffect } from "@react-navigation/native";
 import { Avatar } from "react-native-paper";
 
-/*
-TODO: 1.sort the hours on the calendar
-*/
 
 export default function CalendarPage({ navigation }) {
   const _today = moment(new Date()).format("YYYY-MM-DD");
@@ -107,7 +104,13 @@ export default function CalendarPage({ navigation }) {
           const currApp = generateApointments(date, app);
           parseAppointment = { ...parseAppointment, ...currApp };
         });
-        // console.log("parseAppointment:", parseAppointment);
+        console.log("parseAppointment:", parseAppointment);
+        
+        //sort the appointments
+        Object.values(parseAppointment).forEach((doc) => {
+          doc.sort((a, b) => (a.time > b.time) ? 1 : -1);
+        })
+        
         setAppointments(parseAppointment);
       };
       getBarberOrders_().catch((err) => alert(err));
@@ -145,7 +148,7 @@ export default function CalendarPage({ navigation }) {
             futureScrollRange={1}
             time_proportional={true}
             renderItem={(item) => {
-              console.log("name", item.name);
+              // console.log("name", item.name);
               if (item.name) {
                 var l = item.name.toString().toUpperCase().charAt(0);
               }
