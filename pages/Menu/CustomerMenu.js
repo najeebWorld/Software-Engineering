@@ -8,7 +8,7 @@ import user from "../../Firebase/User";
 import { styles } from '../styles';
 
 
-export default function BreberCollection({ navigation }) {
+export default function CustomerMenu({ navigation }) {
 
     const [barberData, SetBarberData] = useState([]);
     useFocusEffect(
