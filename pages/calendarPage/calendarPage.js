@@ -25,10 +25,10 @@ export default function CalendarPage({  navigation, route }) {
   const [_hour, setHour] = useState("Choose time");
   const [_selectedDate, setSelectedDate] = useState(_today);
   const [_chosenBarber, setChosenBarber] = useState(
-    route.params.name ? route.params.name : "Choose barber"
+    route.params ? route.params.name : "Choose barber"
   );
   const [_barberData, SetBarberData] = useState([]);
-  const [_barber_id, setBarberID] = useState(route.params.id ? route.params.id : "");
+  const [_barber_id, setBarberID] = useState(route.params ? route.params.id : "");
   const [_workHours, setWorkHours] = useState([]);
   const [_findBarbers, setFindBarbers] = useState(false);
   const [DISABLED_DAYS, setDISABLED_DAYS] = useState([]);
