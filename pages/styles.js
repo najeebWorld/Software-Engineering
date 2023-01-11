@@ -177,7 +177,7 @@ export const styles = StyleSheet.create({
   },
   btn: {
     width: "80%",
-    borderRadius: 10,
+    borderRadius: 25,
     height: 50,
     alignItems: "center",
     justifyContent: "center",
@@ -238,12 +238,15 @@ export const styles = StyleSheet.create({
   },
   orderDetailsButtons: {
     margin: 20,
+    alignContent: "center",
+    alignItems: 'center',
     width: 300,
     resizeMode: "center",
     borderRadius: 25,
   },
   userOrderDetails: {
     resizeMode: "contain",
+    marginTop: 40
   },
   imagecontainer: {
     alignItems: "center",
@@ -266,6 +269,7 @@ export const styles = StyleSheet.create({
     color: "black",
     fontSize: 20,
     marginTop: 10,
+    marginLeft: 10
   },
 
   popupBackground: {

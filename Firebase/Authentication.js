@@ -18,6 +18,7 @@ import { postMessage } from "./Utils";
 
 const setUserType = async (uid) => {
   const customer = await getCustomer(uid);
+  console.log("Customer", customer);
   if (customer) {
     user.setCustomer("Customer");
     user.userAppointments(await getCustomerOrders(uid));
@@ -30,9 +31,16 @@ export const authenticate = async (userEmail, userPassword) => {
   const uid = await postMessage("auth", {
     userEmail: userEmail,
     userPassword: userPassword,
-  });
-  user.userID(uid);
-  await setUserType(uid);
+  }).catch((err) => {});
+  if (uid.error) {
+    alert(uid.error);
+    return uid.error;
+  } else {
+    user.userID(uid);
+    await setUserType(uid).catch((err) => {
+      alert(err);
+    });
+  }
 };
 
 export const signUp = async (uName, uEmail, uPassword, uPhone) => {
@@ -42,6 +50,9 @@ export const signUp = async (uName, uEmail, uPassword, uPhone) => {
     uPassword: uPassword,
     uPhone: uPhone,
   });
+  if (uid.error) {
+    throw new Error(uid.error);
+  }
   return uid;
 };
 

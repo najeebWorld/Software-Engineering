@@ -10,10 +10,12 @@ import {
   updateFirstEntry,
 } from "../../Firebase/BarberOperations";
 import { useFocusEffect } from "@react-navigation/native";
+
+
 export default function LoginForm({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
+
   return (
     <View style={styles.container}>
       <Image
@@ -42,17 +44,23 @@ export default function LoginForm({ navigation }) {
       <TouchableOpacity
         style={styles.loginBtn}
         onPress={async () => {
-          await authenticate(email, password);
-          if (user.setCustomer()) {
-            navigation.navigate("MyAppointments");
-          } else {
-            console.log('user id singleton = ', user.userID());
-            if (await isFirstEntry(user.userID())) {
-              await updateFirstEntry(user.userID());
-              navigation.navigate("WorkingDays");
-            } else {
-              navigation.navigate("CalendarPageBarber");
+          if (email && password) {
+            const error = await authenticate(email, password);
+            if (error) {
+              return;
             }
+            if (user.setCustomer()) {
+              navigation.navigate("CustomerMenu");
+            } else {
+              if (await isFirstEntry(user.userID())) {
+                await updateFirstEntry(user.userID());
+                navigation.navigate("WorkingDays");
+              } else {
+                navigation.navigate("MenuBarber");
+              }
+            }
+          } else {
+            alert("please fill all fields.");
           }
         }}
       >

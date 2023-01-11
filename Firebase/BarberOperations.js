@@ -27,7 +27,7 @@ export const updateBarberWorkingDays = async (newWorkingDays) => {
   await postMessage(`barber/${user.userID()}/workdays`, newWorkingDays);
 };
 
-export const updateBarberAddress = async (address,info) => {
+export const updateBarberAddress = async (address, info) => {
   const body = {
     BarberAddress: address,
     BarberInfo: info
@@ -49,7 +49,12 @@ export const getBarber = async (uid) => {
 
 export const isFirstEntry = async (uid) => {
   const user = await getBarber(uid);
-  return user.firstEntry;
+  if(user){
+    return user.firstEntry;
+  }else{
+    console.log('firstEntry is null');
+    return null;
+  }
 
 };
 

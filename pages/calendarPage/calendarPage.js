@@ -156,7 +156,7 @@ export default function CalendarPage({ navigation }) {
     if (
       _chosenBarber != "Choose barber" &&
       _selectedDate != "" &&
-      _hour != "Choose Time"
+      _hour != "Choose time"
     ) {
       const id = await newOrder(_barber_id, _selectedDate, _hour);
       setOrderId(id);
@@ -171,7 +171,7 @@ export default function CalendarPage({ navigation }) {
         _hour
       );
     } else {
-      console.log("try again...");
+      alert("please fill all fields");
     }
     user.userAppointments(await getCustomerOrders(user.userID()));
   };
@@ -211,13 +211,13 @@ export default function CalendarPage({ navigation }) {
             style={{ borderRadius: 10 }}
             onDayPress={dayPress} //setSelectedDate(day.dateString)}
             markedDates={{
+              ...dates,
+              ...disabled,
               [_selectedDate]: {
                 selected: true,
                 selectedColor: "#E5C492",
                 selectedTextColor: "black",
               },
-              ...dates,
-              ...disabled,
             }}
           />
         </Fragment>
@@ -253,7 +253,7 @@ export default function CalendarPage({ navigation }) {
       <TouchableOpacity
         style={styles.btn}
         onPress={async () => {
-          await OnBtnPress(); 
+          await OnBtnPress();
         }}
       >
         <Text style={styles.text}>Make an appointment</Text>
@@ -350,5 +350,7 @@ const styles = StyleSheet.create({
     color: "black",
     fontSize: 15,
     textAlign: "center",
+    alignContent: "center",
+    alignItems: "center",
   },
 });

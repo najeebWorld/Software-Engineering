@@ -54,7 +54,14 @@ export default function OrderDetails({ navigation, route }) {
        * Layout header - contains the app's logo and user Img & name (name is the
        *    client name  in order Data).
        */}
-      <View style={{ flex: 3, justifyContent: "center", alignItems: "center" }}>
+      <View
+        style={{
+          flex: 3,
+          justifyContent: "center",
+          alignItems: "center",
+          marginTop: 30,
+        }}
+      >
         <Image
           source={require("../assets/logowithname.png")}
           style={styles.logoContainerOederDetail}
@@ -135,15 +142,15 @@ export default function OrderDetails({ navigation, route }) {
         style={{ flex: 2, justifyContent: "flex-start", alignItems: "center" }}
       >
         <View style={styles.orderDetailsButtons}>
-          <Button
+          <TouchableOpacity
             onPress={CancelAppointment}
-            title="Cancel Appointment"
-            color="#ff0000"
-            style={{ borderRadius: 25 }}
-          />
-        </View>
-        <View style={styles.orderDetailsButtons}>
-          <Button onPress={navigateBack} title="Appointments" color="#000000" />
+            style={{ ...styles.btn, backgroundColor: "red" }}
+          >
+            <Text style={{ ...styles.loginText }}>Cancel Appointment</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={navigateBack} style={{ ...styles.btn }}>
+            <Text style={{ ...styles.loginText }}>Appointments</Text>
+          </TouchableOpacity>
         </View>
       </View>
     </View>

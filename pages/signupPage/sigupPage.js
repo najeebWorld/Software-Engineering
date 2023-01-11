@@ -24,7 +24,7 @@ export default function SignupForm({ navigation }) {
   const [error, setError] = useState(false);
   const [isSelectedCustomer, setSelectionCustomer] = useState(false);
   const [isSelectedBarber, setSelectionBarber] = useState(false);
-
+  const IsraeliPhoneNumberRegex = /^0(5[^7]|[2-4]|[8-9]|7[0-9])[0-9]{7}$/;
   /**
    * These functions are to prevent two checkboxes to be clicked at the same time.
    * @param {*} currState
@@ -120,16 +120,32 @@ export default function SignupForm({ navigation }) {
         <TouchableOpacity
           style={styles.loginBtn}
           onPress={async () => {
-              if (password === verifypass) {
-                if (isSelectedCustomer) {
-                  await customerSignUp(name, email, password, phone).catch(err=>{console.log(err.message)});
-                } else {
-                  await barberSignUp(name, email, password, phone).catch(err=>{console.log(err.message)});
+            try {
+              if (
+                password &&
+                name &&
+                email &&
+                phone &&
+                (isSelectedBarber || isSelectedCustomer)
+              ) {
+                if (password != verifypass) {
+                  setError(true);
+                } else if(!IsraeliPhoneNumberRegex.test(phone)){
+                  alert('Phone number is not a valid Israeli phone number.')
+                }else {
+                  if (isSelectedCustomer) {
+                    await customerSignUp(name, email, password, phone);
+                  } else {
+                    await barberSignUp(name, email, password, phone);
+                  }
+                  navigation.navigate("Success");
                 }
-                navigation.navigate("Success");
               } else {
-                setError(true);
+                alert("Please fill all fields");
               }
+            } catch (err) {
+              alert(err.message);
+            }
           }}
         >
           <Text style={styles.loginText}>Sign up</Text>

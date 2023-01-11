@@ -18,6 +18,7 @@ const AppoinmentContainer = (props) => {
               barberName={props.appointments[key]["barberName"]}
               docID={key}
               reRender={props.reRender}
+              animate = {props.animate}
               key={Math.random()}
             />
           );
