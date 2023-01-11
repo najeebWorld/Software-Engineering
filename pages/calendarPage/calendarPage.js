@@ -202,13 +202,13 @@ export default function CalendarPage({ navigation }) {
             style={{ borderRadius: 10 }}
             onDayPress={(day) => setSelectedDate(day.dateString)}
             markedDates={{
+              ...dates,
+              ...disabled,
               [_selectedDate]: {
                 selected: true,
                 selectedColor: "#E5C492",
                 selectedTextColor: "black",
               },
-              ...dates,
-              ...disabled,
             }}
           />
         </Fragment>
@@ -244,7 +244,7 @@ export default function CalendarPage({ navigation }) {
       <TouchableOpacity
         style={styles.btn}
         onPress={async () => {
-          await OnBtnPress(); 
+          await OnBtnPress();
         }}
       >
         <Text style={styles.text}>Make an appointment</Text>
