@@ -23,9 +23,11 @@ const Appointment = (props) => {
         <TouchableOpacity
           style={{ marginBottom: 10, marginTop: 25 }}
           onPress={async () => {
+            props.animate();
             await findEarlyAppointment(props.docID);
             await deleteOrder(props.user, props.date, props.time, props.docID);
             props.reRender();
+            props.animate();
             alert("Appointment successfully canceled");
           }}
         >

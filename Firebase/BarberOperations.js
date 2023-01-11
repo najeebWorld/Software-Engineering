@@ -49,7 +49,12 @@ export const getBarber = async (uid) => {
 
 export const isFirstEntry = async (uid) => {
   const user = await getBarber(uid);
-  return user.firstEntry;
+  if(user){
+    return user.firstEntry;
+  }else{
+    console.log('firstEntry is null');
+    return null;
+  }
 
 };
 
