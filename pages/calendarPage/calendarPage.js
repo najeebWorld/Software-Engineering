@@ -147,7 +147,7 @@ export default function CalendarPage({ navigation }) {
     if (
       _chosenBarber != "Choose barber" &&
       _selectedDate != "" &&
-      _hour != "Choose Time"
+      _hour != "Choose time"
     ) {
       const id = await newOrder(_barber_id, _selectedDate, _hour);
       setOrderId(id);
@@ -162,7 +162,7 @@ export default function CalendarPage({ navigation }) {
         _hour
       );
     } else {
-      console.log("try again...");
+      alert("please fill all fields");
     }
     user.userAppointments(await getCustomerOrders(user.userID()));
   };

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, TouchableOpacity, Text, Image } from "react-native";
+import { View, TouchableOpacity, Text, Image, ActivityIndicator } from "react-native";
 import { styles } from "../styles";
 import AppoinmentContainer from "../components/AppoinmentContainer";
 import { StatusBar } from "expo-status-bar";
@@ -11,8 +11,10 @@ import { useFocusEffect } from "@react-navigation/native";
 const MyAppointments = ({ navigation }) => {
   const [appointments, setAppointments] = useState({});
   const [reRender, onReRender] = useState(false);
+  const [animate, onAnimate] = useState(false);
   useFocusEffect(
     React.useCallback(() => {
+      onAnimate(false);
       const getOrders = async () => {
         const app = await getCustomerOrders(user.userID());
         setAppointments(app);
@@ -24,6 +26,11 @@ const MyAppointments = ({ navigation }) => {
   const reRenderPage = () => {
     onReRender(!reRender);
   };
+
+  const animateLoad = () =>{
+    onAnimate(!animate);
+    console.log('animate', animate);
+  }
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -38,6 +45,7 @@ const MyAppointments = ({ navigation }) => {
       <AppoinmentContainer
         appointments={appointments}
         reRender={reRenderPage}
+        animate={animateLoad}
       />
       <TouchableOpacity
         style={{ ...styles.loginBtn, marginTop: 300 }}
@@ -47,6 +55,7 @@ const MyAppointments = ({ navigation }) => {
       >
         <Text style={styles.loginText}>Make new appointment</Text>
       </TouchableOpacity>
+      <ActivityIndicator color='black' animating={animate} size='large'/>
     </View>
   );
 };
