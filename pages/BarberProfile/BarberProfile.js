@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { SafeAreaView, ScrollView, StatusBar } from "react-native";
 // import { View, Image, TouchableOpacity} from 'react-native';
 import { Card, ListItem, Button, Icon } from "react-native-elements";
@@ -18,7 +18,15 @@ import { Rating, AirbnbRating } from "react-native-elements";
 export default function BarberProfile({ navigation, route }) {
   const item = route.params.barber;
   // console.log(item);
-
+  const [workDays,setDays] = useState({});
+  useEffect(()=>{
+    getWorkHours(item);
+  },[]);
+  const getWorkHours = (item) => {
+    const days = {'Sun': [], 'Mon': [], 'Tue': [], 'Wed':[], 'Thu':[], 'Fri': [], 'Sat':[]}
+    Object.keys(item.availableWorkHours).forEach((day)=>{days[day]=item.availableWorkHours[day]});
+    setDays(days);
+  }
   const callClient = (phoneNumber) => {
     Linking.openURL(`tel:${phoneNumber}`);
   };
@@ -43,17 +51,17 @@ export default function BarberProfile({ navigation, route }) {
           <Text style={styles.info}>Address: {item.BarberAddress}</Text>
           <Text style={styles.info}>
             Working Days: {"\n"}{" "}
-            {Object.keys(item.availableWorkHours).map((key, index) => (
+            {Object.keys(workDays).map((key, index) => (
               <Text key={index}>
-                {key} {Object.values(item.availableWorkHours)[index][0]}-
+                {key} {Object.values(workDays)[index][0]}-
                 {
-                  Object.values(item.availableWorkHours)[index][
-                    Object.values(item.availableWorkHours)[index].length - 1
+                  Object.values(workDays)[index][
+                    Object.values(workDays)[index].length - 1
                   ]
                 }{" "}
                 {"\n"}
               </Text>
-            ))}
+            )).filter((key,index)=>(Object.values(workDays)[index].length>0))}
           </Text>
 
           <Text style={styles.info}>{item.BarberInfo}</Text>
