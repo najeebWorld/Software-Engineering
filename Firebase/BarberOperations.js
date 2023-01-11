@@ -27,7 +27,7 @@ export const updateBarberWorkingDays = async (newWorkingDays) => {
   await postMessage(`barber/${user.userID()}/workdays`, newWorkingDays);
 };
 
-export const updateBarberAddress = async (address,info) => {
+export const updateBarberAddress = async (address, info) => {
   const body = {
     BarberAddress: address,
     BarberInfo: info

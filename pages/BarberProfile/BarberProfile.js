@@ -18,6 +18,7 @@ import { Rating, AirbnbRating } from 'react-native-elements';
 
 export default function BarberProfile({ navigation, route }) {
     const item = route.params.barber;
+    // console.log(item);
 
     const callClient = (phoneNumber) => {
         Linking.openURL(`tel:${phoneNumber}`);
