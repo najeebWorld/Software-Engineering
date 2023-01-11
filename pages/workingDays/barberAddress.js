@@ -78,7 +78,7 @@ export default function BarberAddress({ navigation }) {
           else{
             console.log("Updating user ",", to address: " ,address);
             updateBarberAddress(address,info);
-            navigation.navigate("CalendarPageBarber");
+            navigation.navigate("MenuBarber");
           }
           
         }}
