@@ -48,7 +48,7 @@ export default function BarberProfile({ navigation, route }) {
       </View>
       <View style={styles.body}>
         <View style={styles.bodyContent}>
-          <Text style={styles.info}>Address: {item.BarberAddress}</Text>
+          <Text style={styles.info}>Address: {item.BarberAddress}{"\n"}</Text>
           <Text style={styles.info}>
             Working Days: {"\n"}{" "}
             {Object.keys(workDays).map((key, index) => (
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
   },
   phoneContainer: {
     position: "absolute",
-    top: 130,
+    top: 120,
     right: 260,
   },
   bodyContent: {

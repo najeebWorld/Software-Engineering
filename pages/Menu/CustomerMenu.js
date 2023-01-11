@@ -32,6 +32,11 @@ export default function CustomerMenu({ navigation }) {
         navigation.navigate("BarberCollection");
     }
 
+    const onPressApp = async () => {
+
+        navigation.navigate("AppointmentMaker");
+    }
+
     const onOvverallPress = () => {
         navigation.navigate("Reviews");
     };
@@ -58,6 +63,10 @@ export default function CustomerMenu({ navigation }) {
             <StatusBar style="auto" />
                 <TouchableOpacity style={styles.btn} onPress={onPressCal}>
                     <Text style={styles.text}> All barbers </Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.btn} onPress={onPressApp}>
+                    <Text style={styles.text}> Make an appointment </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.btn} onPress={onOvverallPress}>
