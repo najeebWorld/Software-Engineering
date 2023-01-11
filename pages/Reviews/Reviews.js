@@ -62,11 +62,11 @@ export default function SuccessfullLogin({ navigation }) {
                 if (isSelectedName) {
                     console.log("sent");
                     await newReview(user.userID(), _chosenBarber, _barberId, _review, rate, false);
-                    navigation.navigate("MyAppointments");
+                    navigation.navigate("CustomerMenu");
                 } else {
                     console.log("sent");
                     await newReview(user.userID(), _chosenBarber, _barberId, _review, rate, true);
-                    navigation.navigate("MyAppointments");
+                    navigation.navigate("CustomerMenu");
                 }
             } else {
                 alert("Please choose rate");
